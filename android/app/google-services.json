@@ -1,0 +1,262 @@
+{
+  "project_info": {
+    "project_number": "385417541679",
+    "project_id": "amoeba-shop",
+    "storage_bucket": "amoeba-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385417541679:android:cafe7d3f56b7a6712c2eda",
+        "android_client_info": {
+          "package_name": "com.amoeba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385417541679-52i679kck8lig66mjcs8vd3bsslfibc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "b3683b1cf28d27418436ec896d6fa192e72c6fec"
+          }
+        },
+        {
+          "client_id": "385417541679-6q4q8c3n1jiv2iign24bjkgq1gcje72k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "870612187b2ada99b9d907d9be83041bd07c185d"
+          }
+        },
+        {
+          "client_id": "385417541679-cvdmp905rc7flu5hv82sq67fejkor0b7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "d2d4af8b91c5f929edd6f287fd542c25ca0f168e"
+          }
+        },
+        {
+          "client_id": "385417541679-fqc4i1vlsrsjvlccr4ssgiv45g77vhma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "3b0b102f2e72cd99e5819066040221c14cc150f1"
+          }
+        },
+        {
+          "client_id": "385417541679-mncnl3qa5n5059qj3v0bjsbuveu9kqvh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "c00e580aa2e5dd219a2b9766150a61f79aef987e"
+          }
+        },
+        {
+          "client_id": "385417541679-neidfk6k8mnroh23f7d17v3tsc96cck0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "d2a9202e406680635fa68fe6a9a2b91e2f612cad"
+          }
+        },
+        {
+          "client_id": "385417541679-up7mck8irkpoebiic4igl44bttuc7oei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "aef4301ebec59bab1c8da011fc5200b83a132e47"
+          }
+        },
+        {
+          "client_id": "385417541679-vei815evurgsorch7qbu4qpllj50sooo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "8cbb81f28bbbb0e8d05b06fb50e3a67b2281eadb"
+          }
+        },
+        {
+          "client_id": "385417541679-vn73n1oa2e5shs35jlg16jg0vu2d94h1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba",
+            "certificate_hash": "0862994cd316649f3d6f9ef1be8036a05ca611ff"
+          }
+        },
+        {
+          "client_id": "385417541679-rido6dq2h0kjm366dlodhq878v63srq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAJ7SLaCcIpc5NqQFS5bvEfLIrgDpgw3A"
+        },
+        {
+          "current_key": "AIzaSyA6PExqShqbQuCrbD1wcRRBVz3qKebLcus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385417541679-rido6dq2h0kjm366dlodhq878v63srq5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "385417541679-0fsmp20kdsqehjdfks27a04a5cm2el3e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amoebabill.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385417541679:android:1d0424d3b97e3dc82c2eda",
+        "android_client_info": {
+          "package_name": "com.amoeba.avenue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385417541679-rido6dq2h0kjm366dlodhq878v63srq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAJ7SLaCcIpc5NqQFS5bvEfLIrgDpgw3A"
+        },
+        {
+          "current_key": "AIzaSyA6PExqShqbQuCrbD1wcRRBVz3qKebLcus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385417541679-rido6dq2h0kjm366dlodhq878v63srq5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "385417541679-0fsmp20kdsqehjdfks27a04a5cm2el3e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amoebabill.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385417541679:android:c3d1236fd15ef28d2c2eda",
+        "android_client_info": {
+          "package_name": "com.amoeba.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385417541679-bboev66hkmv2t89037l15b2dolqgviqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba.dev",
+            "certificate_hash": "59671964fd608ca6084c579bc1feee9bedf7e191"
+          }
+        },
+        {
+          "client_id": "385417541679-fsu3540l1bken4idudlp300psnq4grl4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba.dev",
+            "certificate_hash": "d2d4af8b91c5f929edd6f287fd542c25ca0f168e"
+          }
+        },
+        {
+          "client_id": "385417541679-jie062kgciipkvlrkgledkn7i3nbne3c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba.dev",
+            "certificate_hash": "49680cdbf592098b0fc9ad33856058e8b78c7017"
+          }
+        },
+        {
+          "client_id": "385417541679-rido6dq2h0kjm366dlodhq878v63srq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAJ7SLaCcIpc5NqQFS5bvEfLIrgDpgw3A"
+        },
+        {
+          "current_key": "AIzaSyA6PExqShqbQuCrbD1wcRRBVz3qKebLcus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385417541679-rido6dq2h0kjm366dlodhq878v63srq5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "385417541679-0fsmp20kdsqehjdfks27a04a5cm2el3e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amoebabill.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385417541679:android:777b10e8dad21abe2c2eda",
+        "android_client_info": {
+          "package_name": "com.amoebabill.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385417541679-rido6dq2h0kjm366dlodhq878v63srq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAJ7SLaCcIpc5NqQFS5bvEfLIrgDpgw3A"
+        },
+        {
+          "current_key": "AIzaSyA6PExqShqbQuCrbD1wcRRBVz3qKebLcus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385417541679-rido6dq2h0kjm366dlodhq878v63srq5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "385417541679-0fsmp20kdsqehjdfks27a04a5cm2el3e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amoebabill.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
