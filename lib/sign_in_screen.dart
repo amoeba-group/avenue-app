@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:avenue/services/local_storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -35,7 +36,8 @@ class _SignInScreenState extends State<SignInScreen> {
             MaterialButton(
               onPressed: () async {
                 final result = await getGoogleAccount();
-                if (result != null) {
+                if (result != null && context.mounted) {
+                  LocalStorageService.saveLoginStatus(true);
                   Navigator.pushReplacementNamed(context, '/home');
                 }
               },
