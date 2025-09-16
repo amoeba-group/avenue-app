@@ -1,6 +1,7 @@
 import 'package:avenue/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'services/local_storage_service.dart';
 import 'sign_in_screen.dart';
 
 void main() async {
@@ -24,10 +25,17 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xFFFD7513),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SignInScreen(),
-      routes: {
-        '/home': (context) => HomeScreen(),
-      },
+      home: FutureBuilder<bool>(
+        future: LocalStorageService.getLoginStatus(),
+        builder: (context, snapshot) {
+          final isLoggedIn = snapshot.data ?? false;
+          if (isLoggedIn) {
+            return const HomeScreen();
+          } else {
+            return const SignInScreen();
+          }
+        },
+      ),
     );
   }
 }
