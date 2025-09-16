@@ -6,3 +6,4 @@ A new Flutter project.
 
 
 flutter build appbundle lib/main.dart
+flutter build ipa --release lib/main.dart
