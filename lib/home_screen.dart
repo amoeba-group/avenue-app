@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final WebViewController _webViewController;
   bool _isShowLeading = false;
-  bool _isFirstTime = true;
   DateTime? _lastPressedAt;
 
   @override
@@ -29,19 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          // onNavigationRequest: (request) {
-          //   if (request.isMainFrame) {
-          //     return NavigationDecision.navigate;
-          //   }
-          //   // Nếu là link target="_blank", load lại trong cùng webview
-          //   //webViewController.loadRequest(Uri.parse(request.url));
-          //   return NavigationDecision.navigate;
-          // },
           onProgress: (int progress) {},
           onPageStarted: (String url) {
-            // setState(() {
-            //   _isFirstTime = false;
-            // });
           },
           onPageFinished: (String url) {
             log('Page finished loading: $url');
@@ -137,11 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
           foregroundColor: Colors.white,
           iconTheme: IconThemeData(color: Color(0xFFFD7513)),
           actions: [
-            // IconButton(
-            //   icon: Icon(Icons.refresh),
-            //   onPressed: _refreshWebView,
-            //   tooltip: 'Làm mới',
-            // ),
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: showConfirmationLogout,
