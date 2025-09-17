@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>385417541679-vg8o7f0r04u2oltd24kqiqiia93k4j2q.apps.googleusercontent.com</string>
+	<string>1092035910524-tbtnkeb6bfa7457dli28fijedh9fdp49.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.385417541679-vg8o7f0r04u2oltd24kqiqiia93k4j2q</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>385417541679-1klbtr3a9arfvtm14geud8dt9o97afl8.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.1092035910524-tbtnkeb6bfa7457dli28fijedh9fdp49</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBxnooHlmk-kNtzZuCYmSmeDWAPMI77RRc</string>
+	<string>AIzaSyCP6eAxDJ8ZnyD2x0Tn-QH6evUOyU2SrGc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>385417541679</string>
+	<string>1092035910524</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.amoeba.avenue.shop</string>
+	<string>com.amoeba.gvmarket</string>
 	<key>PROJECT_ID</key>
-	<string>amoeba-shop</string>
+	<string>amoeba-avenue</string>
 	<key>STORAGE_BUCKET</key>
-	<string>amoeba-shop.appspot.com</string>
+	<string>amoeba-avenue.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:385417541679:ios:1001412e025a85f02c2eda</string>
+	<string>1:1092035910524:ios:644621bcfa94b5b7c4a2f9</string>
 </dict>
 </plist>

@@ -1,13 +1,16 @@
 import 'package:avenue/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'auth/auth_controller.dart';
 import 'services/local_storage_service.dart';
 import 'sign_in_screen.dart';
+
+final AuthController authController = AuthController();
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Future.delayed(const Duration(seconds: 1));
+  await Future.delayed(const Duration(milliseconds: 500));
   runApp(MyApp());
   FlutterNativeSplash.remove();
 }
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Amoeba Avenue',
+      title: 'GV Market',
       theme: ThemeData(
         useMaterial3: false,
         primaryColor: Color(0xFFFD7513),
@@ -37,6 +40,7 @@ class MyApp extends StatelessWidget {
         },
       ),
       routes: {
+        '/signIn': (context) => SignInScreen(),
         '/home': (context) => HomeScreen(),
       },
     );

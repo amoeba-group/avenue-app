@@ -15,9 +15,9 @@ val keyProperties = Properties().apply {
 }
 
 android {
-    namespace = "com.amoeba.avenue"
+    namespace = "com.amoeba.gvmarket"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -29,7 +29,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.amoeba.avenue"
+        applicationId = "com.amoeba.gvmarket"
         minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

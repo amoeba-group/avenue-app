@@ -1,8 +1,8 @@
-import 'dart:developer';
-import 'package:avenue/services/local_storage_service.dart';
+import 'dart:io';
+import 'home_screen.dart';
+import 'package:avenue/main.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:avenue/widgets/button_login.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -15,78 +15,66 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.only(top: 54, left: 16, right: 16),
         child: Column(
           spacing: 16,
           children: [
-            SignInWithAppleButton(
-              onPressed: () async {
-                final credential = await SignInWithApple.getAppleIDCredential(
-                  scopes: [
-                    AppleIDAuthorizationScopes.email,
-                    AppleIDAuthorizationScopes.fullName,
-                  ],
-                );
-
-                log(credential.toString());
-              },
+            const Text(
+              'Welcome to GV Market',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            MaterialButton(
-              onPressed: () async {
-                final result = await getGoogleAccount();
-                if (result != null && context.mounted) {
-                  LocalStorageService.saveLoginStatus(true);
-                  Navigator.pushReplacementNamed(context, '/home');
-                }
-              },
-              child: Text('Sign In Google'),
+            Image.asset('assets/logo_new.jpg', width: 200, height: 200),
+            SizedBox(height: 34),
+            Row(
+              spacing: 16,
+              children: [
+                Visibility(
+                  visible: Platform.isIOS,
+                  child: ButtonLogin(
+                    ic: "",
+                    title: "Apple Id",
+                    action: () async {
+                      final result = await authController.signAppleId();
+                      if (result) {
+                        navigateToHomeScreen();
+                      }
+                    },
+                  ),
+                ),
+                ButtonLogin(
+                  ic: "",
+                  title: "Google",
+                  action: () async {
+                    final result = await authController.signInGoogle();
+                    if (result) {
+                      navigateToHomeScreen();
+                    }
+                  },
+                ),
+                ButtonLogin(
+                  ic: "",
+                  title: "Facebook",
+                  action: () async {
+                    final result = await authController.signFacebook();
+                    if (result) {
+                      navigateToHomeScreen();
+                    }
+                  },
+                ),
+              ],
             ),
           ],
         ),
       ),
     );
   }
-}
 
-const List<String> scopes = <String>[
-  'email',
-  'https://www.googleapis.com/auth/contacts.readonly',
-];
-
-final _googleSignIn = GoogleSignIn.instance;
-bool _isGoogleSignInInitialized = false;
-
-Future<void> _initializeGoogleSignIn() async {
-  try {
-    await _googleSignIn.initialize(
-      serverClientId:
-          "385417541679-e2ir6p059q7cs4evk3sikjjmf4kc8r1d.apps.googleusercontent.com",
+  void navigateToHomeScreen() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()),
     );
-    _isGoogleSignInInitialized = true;
-  } catch (e) {
-    log('Failed to initialize Google Sign-In: $e');
-  }
-}
-
-Future<void> _ensureGoogleSignInInitialized() async {
-  if (!_isGoogleSignInInitialized) {
-    await _initializeGoogleSignIn();
-  }
-}
-
-Future<GoogleSignInAccount?> getGoogleAccount() async {
-  await _ensureGoogleSignInInitialized();
-  GoogleSignInAccount? account;
-  try {
-    account = await _googleSignIn.authenticate(scopeHint: scopes);
-    return account;
-  } on GoogleSignInException catch (e) {
-    log('Google Sign In error:\n$e');
-    return null;
-  } catch (error) {
-    log('Unexpected Google Sign-In error: $error');
-    return null;
   }
 }

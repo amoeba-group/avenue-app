@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:avenue/sign_in_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -27,11 +29,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
+          // onNavigationRequest: (request) {
+          //   if (request.isMainFrame) {
+          //     return NavigationDecision.navigate;
+          //   }
+          //   // Nếu là link target="_blank", load lại trong cùng webview
+          //   //webViewController.loadRequest(Uri.parse(request.url));
+          //   return NavigationDecision.navigate;
+          // },
           onProgress: (int progress) {},
           onPageStarted: (String url) {
-            setState(() {
-              _isFirstTime = false;
-            });
+            // setState(() {
+            //   _isFirstTime = false;
+            // });
           },
           onPageFinished: (String url) {
             log('Page finished loading: $url');
@@ -71,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return false;
     }
 
-    // Nếu không thể go back trong WebView, xử lý double tap to exit
     final now = DateTime.now();
     if (_lastPressedAt == null ||
         now.difference(_lastPressedAt!) > Duration(seconds: 2)) {
@@ -95,11 +104,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return WillPopScope(
       onWillPop: _handleBackPress,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: !_isShowLeading
               ? null
               : Text(
-                  'Amoeba avenue',
+                  'GV Market',
                   style: TextStyle(
                     color: Color(0xFFFD7513),
                     fontSize: 18,
@@ -127,20 +137,48 @@ class _HomeScreenState extends State<HomeScreen> {
           foregroundColor: Colors.white,
           iconTheme: IconThemeData(color: Color(0xFFFD7513)),
           actions: [
+            // IconButton(
+            //   icon: Icon(Icons.refresh),
+            //   onPressed: _refreshWebView,
+            //   tooltip: 'Làm mới',
+            // ),
             IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: _refreshWebView,
+              icon: Icon(Icons.logout),
+              onPressed: showConfirmationLogout,
               tooltip: 'Làm mới',
             ),
           ],
         ),
-        body: Stack(
-          children: [
-            !_isFirstTime
-                ? WebViewWidget(controller: _webViewController)
-                : SizedBox.shrink(),
-          ],
+        body: WebViewWidget(controller: _webViewController),
+      ),
+    );
+  }
+
+  void showConfirmationLogout() {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("Thông báo"),
+        content: Padding(
+          padding: const EdgeInsets.only(top: 8, bottom: 8),
+          child: Text("Bạn có muốn đăng xuất không?"),
         ),
+        actions: [
+          CupertinoDialogAction(
+            child: Text("Huỷ", style: const TextStyle(color: Colors.red)),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => SignInScreen()),
+                (Route<dynamic> route) => false,
+              );
+            },
+            child: Text("Đồng ý", style: TextStyle(color: Colors.green)),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,4 @@
-package com.amoeba.avenue
+package com.amoeba.gvmarket
 
 import io.flutter.embedding.android.FlutterActivity
 
