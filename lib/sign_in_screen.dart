@@ -60,7 +60,10 @@ bool _isGoogleSignInInitialized = false;
 
 Future<void> _initializeGoogleSignIn() async {
   try {
-    await _googleSignIn.initialize();
+    await _googleSignIn.initialize(
+      serverClientId:
+          "385417541679-e2ir6p059q7cs4evk3sikjjmf4kc8r1d.apps.googleusercontent.com",
+    );
     _isGoogleSignInInitialized = true;
   } catch (e) {
     log('Failed to initialize Google Sign-In: $e');
