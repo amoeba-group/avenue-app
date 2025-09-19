@@ -14,7 +14,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final WebViewController _webViewController;
-  bool _isShowLeading = false;
+  final ValueNotifier<bool> _isShowLeading = ValueNotifier(false);
+  bool _isLoading = true;
   DateTime? _lastPressedAt;
 
   @override
@@ -25,28 +26,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _initializeWebView() {
     _webViewController = WebViewController()
+      ..setBackgroundColor(Colors.white)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {},
           onPageStarted: (String url) {
-          },
-          onPageFinished: (String url) {
             log('Page finished loading: $url');
             if (url != 'https://avenue.amoeba.site/') {
-              if (_isShowLeading) {
-                return;
+              if (!_isShowLeading.value) {
+                _isShowLeading.value = true;
               }
-              setState(() {
-                _isShowLeading = true;
-              });
             } else {
-              if (_isShowLeading) {
-                setState(() {
-                  _isShowLeading = false;
-                });
+              if (_isShowLeading.value) {
+                _isShowLeading.value = false;
               }
             }
+          },
+          onPageFinished: (String url) {
+            // if (_isLoading) {
+            //   setState(() {
+            //     _isLoading = false;
+            //   });
+            // }
           },
           onUrlChange: (url) {},
           onWebResourceError: (WebResourceError error) {},
@@ -93,44 +95,51 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: _handleBackPress,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: !_isShowLeading
-              ? null
-              : Text(
-                  'GV Market',
-                  style: TextStyle(
-                    color: Color(0xFFFD7513),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: ValueListenableBuilder<bool>(
+            valueListenable: _isShowLeading,
+            builder: (context, showLeading, _) {
+              return AppBar(
+                title: !showLeading
+                    ? null
+                    : Text(
+                        'GV Market',
+                        style: TextStyle(
+                          color: Color(0xFFFD7513),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                leading: showLeading
+                    ? IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Color(0xFFFD7513),
+                        ),
+                        onPressed: () async {
+                          if (await _webViewController.canGoBack()) {
+                            _webViewController.goBack();
+                          } else {
+                            _handleBackPress();
+                          }
+                        },
+                      )
+                    : null,
+                elevation: 0,
+                centerTitle: true,
+                backgroundColor: Colors.white,
+                iconTheme: IconThemeData(color: Color(0xFFFD7513)),
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: showConfirmationLogout,
+                    tooltip: 'Làm mới',
                   ),
-                ),
-          leading: _isShowLeading
-              ? IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    color: Color(0xFFFD7513),
-                  ),
-                  onPressed: () async {
-                    if (await _webViewController.canGoBack()) {
-                      _webViewController.goBack();
-                    } else {
-                      _handleBackPress();
-                    }
-                  },
-                )
-              : null,
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Color(0xFFFD7513)),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: showConfirmationLogout,
-              tooltip: 'Làm mới',
-            ),
-          ],
+                ],
+              );
+            },
+          ),
         ),
         body: WebViewWidget(controller: _webViewController),
       ),

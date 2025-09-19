@@ -1,17 +1,17 @@
 import 'package:avenue/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'auth/auth_controller.dart';
 import 'services/local_storage_service.dart';
 import 'sign_in_screen.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 final AuthController authController = AuthController();
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Future.delayed(const Duration(milliseconds: 500));
   runApp(MyApp());
+  await Future.delayed(const Duration(milliseconds: 500));
   FlutterNativeSplash.remove();
 }
 
