@@ -1,17 +1,16 @@
 import 'dart:io';
-import 'home_screen.dart';
 import 'package:avenue/main.dart';
 import 'package:flutter/material.dart';
 import 'package:avenue/widgets/button_login.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,9 +71,9 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void navigateToHomeScreen() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
-    );
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => HomeScreen()),
+    // );
   }
 }
