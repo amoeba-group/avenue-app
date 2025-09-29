@@ -2,9 +2,13 @@ import 'package:avenue/features/bill/bill_page.dart';
 import 'package:avenue/features/home/home_page.dart';
 import 'package:avenue/features/notification/notification_page.dart';
 import 'package:avenue/features/profile/profile_page.dart';
-import 'package:flutter/foundation.dart';
+import 'package:avenue/widgets/bottom_nv_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import '../generated/l10n.dart';
+import '../providers/language_provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,26 +18,54 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int index = 0;
+  WebViewController buildController(String url) {
+    final controller = WebViewController()
+      ..setBackgroundColor(Colors.white)
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (url) {
+            Uri uri = Uri.parse(url);
+            String? lang = uri.queryParameters['lang'];
+            if (lang != null) {
+              context.read<LanguageProvider>().saveLocale(Locale(lang));
+            }
+          },
+          onPageFinished: (url) {
+            debugPrint("Finished: $url");
+          },
+          onWebResourceError: (error) {
+            debugPrint("Error: ${error.description}");
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(url));
+    return controller;
+  }
 
-  final List<Widget> _screens = [
-    HomePage(),
-    NotificationPage(),
-    BillPage(),
-    ProfilePage(),
-  ];
+  String lang = 'en';
+  int currentIndex = 0;
+
+  void _changeLang(String newLang) {
+    setState(() {
+      lang = newLang;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final lang = Localizations.localeOf(context).languageCode;
     return Scaffold(
-      appBar: AppBar(title: const Text('Main Screen')),
-      body: IndexedStack(index: index, children: _screens),
+      body: IndexedStack(
+        index: currentIndex,
+        children: [
+          HomePage(lang: lang,),
+          NotificationPage(),
+          BillPage(lang: lang),
+          ProfilePage(),
+        ],
+      ),
       bottomNavigationBar: Container(
-        width: MediaQuery.of(context).size.width,
-        height:
-            kBottomNavigationBarHeight +
-            MediaQuery.paddingOf(context).bottom +
-            (kDebugMode ? 16 : 0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.only(
@@ -49,80 +81,45 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ],
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  setState(() {
-                    index = 0;
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 8,
-                  children: <Widget>[
-                    SvgPicture.asset("assets/ic_home.svg"),
-                    Text("Home"),
-                  ],
-                ),
-              ),
+        child: BottomNavigationBar(
+          selectedFontSize: 10,
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: Color(0xFF212121),
+          selectedItemColor: Theme.of(context).primaryColor,
+          selectedLabelStyle: GoogleFonts.bricolageGrotesque(
+            fontWeight: FontWeight.bold,
+          ),
+          unselectedLabelStyle: GoogleFonts.bricolageGrotesque(
+            fontWeight: FontWeight.normal,
+          ),
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          currentIndex: currentIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: BottomNvItem(ic: "assets/ic_home.svg"),
+              activeIcon: BottomNvItem(ic: "assets/ic_selected_home.svg"),
+              label: S.of(context).tab_home,
             ),
-            Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  setState(() {
-                    index = 1;
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 8,
-                  children: <Widget>[
-                    SvgPicture.asset("assets/ic_notification.svg"),
-                    Text("Notifications"),
-                  ],
-                ),
+            BottomNavigationBarItem(
+              icon: BottomNvItem(ic: "assets/ic_notification.svg"),
+              activeIcon: BottomNvItem(
+                ic: "assets/ic_selected_notification.svg",
               ),
+              label: S.of(context).tab_notification,
             ),
-            Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  setState(() {
-                    index = 2;
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 8,
-                  children: <Widget>[
-                    SvgPicture.asset("assets/ic_billing.svg"),
-                    Text("Billing"),
-                  ],
-                ),
-              ),
+            BottomNavigationBarItem(
+              icon: BottomNvItem(ic: "assets/ic_billing.svg"),
+              activeIcon: BottomNvItem(ic: "assets/ic_selected_billing.svg"),
+              label: S.of(context).tab_billing,
             ),
-            Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  setState(() {
-                    index = 3;
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 8,
-                  children: <Widget>[
-                    SvgPicture.asset("assets/ic_profile.svg"),
-                    Text("Profile"),
-                  ],
-                ),
-              ),
+            BottomNavigationBarItem(
+              icon: BottomNvItem(ic: "assets/ic_profile.svg"),
+              activeIcon: BottomNvItem(ic: "assets/ic_selected_profile.svg"),
+              label: S.of(context).tab_profile,
             ),
           ],
         ),

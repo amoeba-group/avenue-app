@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
               'Welcome to GV Market',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            Image.asset('assets/logo_new.jpg', width: 200, height: 200),
+            Image.asset('assets/ic_logo.png', width: 200, height: 200),
             SizedBox(height: 34),
             Row(
               spacing: 16,

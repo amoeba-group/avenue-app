@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/custom_appbar.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -10,6 +12,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(appBar: CustomAppbar());
   }
 }
