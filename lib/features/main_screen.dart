@@ -5,10 +5,7 @@ import 'package:avenue/features/profile/profile_page.dart';
 import 'package:avenue/widgets/bottom_nv_item.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../generated/l10n.dart';
-import '../providers/language_provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,39 +15,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  WebViewController buildController(String url) {
-    final controller = WebViewController()
-      ..setBackgroundColor(Colors.white)
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (url) {
-            Uri uri = Uri.parse(url);
-            String? lang = uri.queryParameters['lang'];
-            if (lang != null) {
-              context.read<LanguageProvider>().saveLocale(Locale(lang));
-            }
-          },
-          onPageFinished: (url) {
-            debugPrint("Finished: $url");
-          },
-          onWebResourceError: (error) {
-            debugPrint("Error: ${error.description}");
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse(url));
-    return controller;
-  }
-
-  String lang = 'en';
   int currentIndex = 0;
-
-  void _changeLang(String newLang) {
-    setState(() {
-      lang = newLang;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

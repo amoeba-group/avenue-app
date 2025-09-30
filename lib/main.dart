@@ -1,11 +1,11 @@
+import 'auth/auth_controller.dart';
+import 'features/main_screen.dart';
+import 'generated/l10n.dart';
 import 'package:avenue/features/auth/login_page.dart';
 import 'package:avenue/providers/language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'auth/auth_controller.dart';
-import 'features/main_screen.dart';
-import 'generated/l10n.dart';
 import 'services/local_storage_service.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 

@@ -38,7 +38,7 @@ class AuthController {
       LocalStorageService.saveLoginStatus(true);
       return true;
     } on GoogleSignInException catch (e) {
-      log('Google Sign In error:\n$e');
+      log('Google Sign In error: $e');
       return false;
     } catch (error) {
       log('Unexpected Google Sign-In error: $error');

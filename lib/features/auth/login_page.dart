@@ -4,14 +4,9 @@ import 'package:avenue/main.dart';
 import 'package:flutter/material.dart';
 import 'package:avenue/widgets/button_login.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
                     title: "Apple Id",
                     action: () async {
                       final result = await authController.signAppleId();
-                      if (result) {
-                        navigateToHomeScreen();
+                      if (result && context.mounted) {
+                        navigateToHomeScreen(context);
                       }
                     },
                   ),
@@ -44,8 +39,8 @@ class _LoginPageState extends State<LoginPage> {
                   title: "Google",
                   action: () async {
                     final result = await authController.signInGoogle();
-                    if (result) {
-                      navigateToHomeScreen();
+                    if (result && context.mounted) {
+                      navigateToHomeScreen(context);
                     }
                   },
                 ),
@@ -54,8 +49,8 @@ class _LoginPageState extends State<LoginPage> {
                   title: "Facebook",
                   action: () async {
                     final result = await authController.signFacebook();
-                    if (result) {
-                      navigateToHomeScreen();
+                    if (result && context.mounted) {
+                      navigateToHomeScreen(context);
                     }
                   },
                 ),
@@ -67,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void navigateToHomeScreen() {
+  void navigateToHomeScreen(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => MainScreen()),
