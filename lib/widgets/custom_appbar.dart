@@ -24,9 +24,9 @@ class _CustomAppbarState extends State<CustomAppbar> {
       elevation: 0,
       leading: Padding(
         padding: const EdgeInsets.only(left: 16),
-        child: SvgPicture.asset("assets/logo.svg"),
+        child: SvgPicture.asset("assets/logo.svg", width: 146, height: 32,),
       ),
-      leadingWidth: 98,
+      leadingWidth: 154,
       actionsPadding: EdgeInsets.only(right: 16),
       actions: [
         Padding(

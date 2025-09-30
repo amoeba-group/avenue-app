@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final WebViewController _webViewController = WebViewController();
   DateTime? _lastPressedAt;
+  String newUrl = '';
 
   @override
   void initState() {
@@ -62,8 +63,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     final now = DateTime.now();
-    if (_lastPressedAt == null ||
-        now.difference(_lastPressedAt!) > Duration(seconds: 2)) {
+    if (_lastPressedAt == null || now.difference(_lastPressedAt!) > Duration(seconds: 2)) {
       _lastPressedAt = now;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

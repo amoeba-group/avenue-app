@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:avenue/features/main_screen.dart';
 import 'package:avenue/main.dart';
 import 'package:flutter/material.dart';
 import 'package:avenue/widgets/button_login.dart';
@@ -20,10 +21,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           spacing: 16,
           children: [
-            const Text(
-              'Welcome to GV Market',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
             Image.asset('assets/ic_logo.png', width: 200, height: 200),
             SizedBox(height: 34),
             Row(
@@ -71,9 +68,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void navigateToHomeScreen() {
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => HomeScreen()),
-    // );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => MainScreen()),
+    );
   }
 }

@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
             home: FutureBuilder<bool>(
               future: LocalStorageService.getLoginStatus(),
               builder: (context, snapshot) {
-                final isLoggedIn = snapshot.data ?? true;
+                final isLoggedIn = snapshot.data ?? false;
                 if (isLoggedIn) {
                   return const MainScreen();
                 } else {
