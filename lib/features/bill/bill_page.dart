@@ -54,10 +54,10 @@ class _BillPageState extends State<BillPage> {
   void autoFillInformation() async {
     String jsCode = "";
     jsCode = """
-             document.querySelector('input[name="email"]').value = 'test@gmail.com';
-             document.querySelector('input[name="phone"]').value = '0376249168';;
-             document.querySelector('input[name="seller_email"]').value = 'test@gmail.com';
-             document.querySelector('input[name="seller_phone"]').value = '0376249168';;
+             document.querySelector('input[name="email"]').value = '';
+             document.querySelector('input[name="phone"]').value = '';;
+             document.querySelector('input[name="seller_email"]').value = '';
+             document.querySelector('input[name="seller_phone"]').value = '';;
         """;
     _webViewController.runJavaScript(jsCode);
   }
