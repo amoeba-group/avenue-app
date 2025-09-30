@@ -1,18 +1,14 @@
 import 'package:avenue/features/auth/login_page.dart';
 import 'package:avenue/features/profile/widgets/menu_profile.dart';
+import 'package:avenue/services/local_storage_service.dart';
 import 'package:avenue/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/custom_appbar.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,13 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           title: "Thông báo",
                           message: "Bạn có chắc chắn muốn đăng xuất không?",
                           onConfirm: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ),
-                              (Route<dynamic> route) => false,
-                            );
+                            _logOut(context);
                           },
                         );
                       },
@@ -149,11 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   title: "Thông báo",
                   message: "Bạn có chắc chắn muốn xóa tài khoản không?",
                   onConfirm: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      (Route<dynamic> route) => false,
-                    );
+                    _logOut(context);
                   },
                 );
               },
@@ -161,6 +147,16 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _logOut(BuildContext context) {
+    LocalStorageService.clear("is_logged_in");
+    LocalStorageService.clear("device_token");
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+      (Route<dynamic> route) => false,
     );
   }
 }

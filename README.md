@@ -4,3 +4,5 @@
 - flutter build ipa --release lib/main.dart
 
   flutter pub run intl_utils:generate
+- 
+  open ios/Podfile

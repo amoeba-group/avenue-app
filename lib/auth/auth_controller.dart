@@ -38,8 +38,13 @@ class AuthController {
       LocalStorageService.saveLoginStatus(true);
       return true;
     } on GoogleSignInException catch (e) {
-      log('Google Sign In error: $e');
-      return false;
+      if (e.code == GoogleSignInExceptionCode.canceled) {
+        log('Login cancelled by user ${e.code} - ${e.description}');
+        return false;
+      } else {
+        log('Google Sign-In error: $e');
+        return false;
+      }
     } catch (error) {
       log('Unexpected Google Sign-In error: $error');
       return false;

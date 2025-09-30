@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:avenue/managers/firebase_messaging_manager.dart';
 import 'package:avenue/providers/language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
       ..loadRequest(
         Uri.parse('https://avenue.amoeba.site/?lang=${widget.lang}'),
       );
+    context.read<FirebaseMessagingManager>().registerTokenFCM();
   }
 
   Future<bool> _handleBackPress() async {
@@ -63,7 +65,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     final now = DateTime.now();
-    if (_lastPressedAt == null || now.difference(_lastPressedAt!) > Duration(seconds: 2)) {
+    if (_lastPressedAt == null ||
+        now.difference(_lastPressedAt!) > Duration(seconds: 2)) {
       _lastPressedAt = now;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -78,7 +81,6 @@ class _HomePageState extends State<HomePage> {
     SystemNavigator.pop();
     return true;
   }
-
 
   @override
   void didUpdateWidget(covariant HomePage oldWidget) {

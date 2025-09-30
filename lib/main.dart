@@ -1,3 +1,9 @@
+import 'dart:async';
+import 'package:avenue/managers/firebase_messaging_manager.dart';
+import 'package:avenue/repository/notification_repository.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'auth/auth_controller.dart';
 import 'features/main_screen.dart';
 import 'generated/l10n.dart';
@@ -12,12 +18,23 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 final AuthController authController = AuthController();
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  Provider.debugCheckInvalidValueType = null;
-  runApp(MyApp());
-  await Future.delayed(const Duration(milliseconds: 500));
-  FlutterNativeSplash.remove();
+  runZonedGuarded(
+    () async {
+      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp();
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+        kReleaseMode,
+      );
+      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+      Provider.debugCheckInvalidValueType = null;
+      runApp(MyApp());
+      await Future.delayed(const Duration(milliseconds: 500));
+      FlutterNativeSplash.remove();
+    },
+    (error, stackTrace) {
+      FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -25,8 +42,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LanguageProvider>(
-      create: (context) => LanguageProvider(),
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => NotificationRepository(), lazy: true,),
+        Provider(create: (context) => FirebaseMessagingManager(context.read())),
+        ChangeNotifierProvider<LanguageProvider>(
+          create: (context) => LanguageProvider(),
+        ),
+      ],
       child: Builder(
         builder: (context) {
           final language = context.watch<LanguageProvider>();
