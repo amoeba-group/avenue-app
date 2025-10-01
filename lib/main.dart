@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (context) => NotificationRepository(), lazy: true,),
+        Provider(create: (context) => NotificationRepository(), lazy: true),
         Provider(create: (context) => FirebaseMessagingManager(context.read())),
         ChangeNotifierProvider<LanguageProvider>(
           create: (context) => LanguageProvider(),
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
                 if (isLoggedIn) {
                   return const MainScreen();
                 } else {
-                  return const MainScreen();
+                  return const LoginPage();
                 }
               },
             ),

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:avenue/constants/constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../services/local_storage_service.dart';
@@ -32,9 +33,10 @@ class AuthController {
 
   Future<bool> signInGoogle() async {
     await _ensureGoogleSignInInitialized();
-    GoogleSignInAccount? account;
+    GoogleSignInAccount account;
     try {
       account = await _googleSignIn.authenticate(scopeHint: scopes);
+      LocalStorageService.save(keyEmail, account.email);
       LocalStorageService.saveLoginStatus(true);
       return true;
     } on GoogleSignInException catch (e) {
@@ -58,7 +60,7 @@ class AuthController {
         AppleIDAuthorizationScopes.fullName,
       ],
     );
-    log(credential.toString());
+    LocalStorageService.save(keyEmail, credential.email ?? "");
     LocalStorageService.saveLoginStatus(true);
     return true;
   }

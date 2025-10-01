@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class BillPage extends StatefulWidget {
 class _BillPageState extends State<BillPage> {
   final WebViewController _webViewController = WebViewController();
   DateTime? _lastPressedAt;
+  bool isError = false;
 
   @override
   void initState() {
@@ -43,9 +45,23 @@ class _BillPageState extends State<BillPage> {
           },
           onPageFinished: (String url) {
             autoFillInformation();
+            if (isError) {
+              isError = false;
+              setState(() {});
+            }
           },
           onUrlChange: (url) {},
-          onWebResourceError: (WebResourceError error) {},
+          onWebResourceError: (WebResourceError error) async {
+            final connectivityResult = await Connectivity().checkConnectivity();
+            if (connectivityResult.single == ConnectivityResult.none) {
+              isError = true;
+              setState(() {});
+            } else {
+              debugPrint(
+                "⚠️ Lỗi khác trong WebView: ${error.errorCode}, ${error.description}",
+              );
+            }
+          },
         ),
       )
       ..loadRequest(Uri.parse('https://bill.amoeba.site/?lang=${widget.lang}'));
@@ -108,10 +124,19 @@ class _BillPageState extends State<BillPage> {
         top: true,
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: WebViewWidget(
-            key: Key(widget.lang),
-            controller: _webViewController,
-          ),
+          body: isError
+              ? Center(
+                  child: TextButton(
+                    onPressed: () {
+                      _webViewController.reload();
+                    },
+                    child: Text('Lỗi kết nối'),
+                  ),
+                )
+              : WebViewWidget(
+                  key: Key(widget.lang),
+                  controller: _webViewController,
+                ),
         ),
       ),
     );

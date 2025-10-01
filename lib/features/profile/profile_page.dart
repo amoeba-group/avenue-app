@@ -4,6 +4,7 @@ import 'package:avenue/services/local_storage_service.dart';
 import 'package:avenue/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../constants/constants.dart';
 import '../../widgets/custom_appbar.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -27,13 +28,18 @@ class ProfilePage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 8),
-              child: Text(
-                "quintusnguyen91@gmail.com",
-                style: GoogleFonts.bricolageGrotesque(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18,
-                  color: Theme.of(context).primaryColor,
-                ),
+              child: FutureBuilder(
+                future: LocalStorageService.read(keyEmail),
+                builder: (context, snapshot) {
+                  return Text(
+                    snapshot.data ?? "",
+                    style: GoogleFonts.bricolageGrotesque(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  );
+                },
               ),
             ),
             Text(
@@ -152,6 +158,7 @@ class ProfilePage extends StatelessWidget {
 
   void _logOut(BuildContext context) {
     LocalStorageService.clear("is_logged_in");
+    LocalStorageService.clear("device_token");
     LocalStorageService.clear("device_token");
     Navigator.pushAndRemoveUntil(
       context,

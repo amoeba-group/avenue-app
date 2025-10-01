@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:avenue/constants/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -172,11 +173,13 @@ class FirebaseMessagingManager {
 
       if (firebaseToken != null) {
         log('Firebase Token: $firebaseToken');
-        final String? deviceToken = await LocalStorageService.getDeviceToken();
+        final String? deviceToken = await LocalStorageService.read(
+          keyDeviceToken,
+        );
         //
         if (deviceToken == null || deviceToken != firebaseToken) {
           await notificationRepository.sendDeviceToken(firebaseToken);
-          LocalStorageService.saveDeviceToken(firebaseToken);
+          LocalStorageService.save(keyDeviceToken, firebaseToken);
         }
       } else {
         log('Failed to get Firebase token');

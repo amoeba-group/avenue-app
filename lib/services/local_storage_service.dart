@@ -1,19 +1,8 @@
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../constants/constants.dart';
 
 class LocalStorageService {
-  static const keyIsLoggedIn = "is_logged_in";
-  static const keyDeviceToken = "device_token";
-
-  static Future<void> saveLang(String lang) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("locale", lang);
-  }
-
-  static Future<String?> getLang() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString("locale");
-  }
 
   static Future<void> saveLoginStatus(bool isLoggedIn) async {
     final prefs = await SharedPreferences.getInstance();
@@ -25,14 +14,14 @@ class LocalStorageService {
     return prefs.getBool(keyIsLoggedIn) ?? false;
   }
 
-  static Future<void> saveDeviceToken(String token) async {
+  static Future<void> save(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(keyDeviceToken, token);
+    await prefs.setString(key, value);
   }
 
-  static Future<String?> getDeviceToken() async {
+  static Future<String?> read(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(keyDeviceToken);
+    return prefs.getString(key);
   }
 
   static FutureOr clear(String key) async {

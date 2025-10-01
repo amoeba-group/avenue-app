@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:avenue/constants/constants.dart';
 import 'package:flutter/material.dart';
 import '../services/local_storage_service.dart';
 
@@ -12,11 +13,11 @@ class LanguageProvider with ChangeNotifier {
 
   Future<void> getLocale() async {
     try {
-      String? localeName = await LocalStorageService.getLang();
+      String? localeName = await LocalStorageService.read(keyLocale);
       if (localeName == null) {
         String deviceLocale = Platform.localeName.split('_')[0];
         localeName = deviceLocale != 'vi' ? 'en' : 'vi';
-        await LocalStorageService.saveLang(localeName);
+        await LocalStorageService.save(keyLocale, localeName);
       }
       _locale = Locale(localeName);
       notifyListeners();
@@ -29,6 +30,6 @@ class LanguageProvider with ChangeNotifier {
     }
     _locale = locale;
     notifyListeners();
-    await LocalStorageService.saveLang(_locale!.languageCode);
+    await LocalStorageService.save(keyLocale, _locale!.languageCode);
   }
 }

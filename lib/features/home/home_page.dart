@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:avenue/managers/firebase_messaging_manager.dart';
 import 'package:avenue/providers/language_provider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   final WebViewController _webViewController = WebViewController();
   DateTime? _lastPressedAt;
   String newUrl = '';
+  bool isError = false;
 
   @override
   void initState() {
@@ -43,9 +45,22 @@ class _HomePageState extends State<HomePage> {
               context.read<LanguageProvider>().saveLocale(Locale(lang!));
             }
           },
-          onPageFinished: (String url) {},
+          onPageFinished: (String url) {
+            if (isError) {
+              isError = false;
+              setState(() {});
+            }
+          },
           onUrlChange: (url) {},
-          onWebResourceError: (WebResourceError error) {},
+          onWebResourceError: (WebResourceError error) async{
+            final connectivityResult = await Connectivity().checkConnectivity();
+            if (connectivityResult.single == ConnectivityResult.none) {
+              isError = true;
+              setState(() {});
+            } else {
+              debugPrint("⚠️ Lỗi khác trong WebView: ${error.errorCode}, ${error.description}");
+            }
+          },
         ),
       )
       ..loadRequest(
@@ -107,7 +122,16 @@ class _HomePageState extends State<HomePage> {
         top: true,
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: WebViewWidget(controller: _webViewController),
+          body: isError
+              ? Center(
+                  child: TextButton(
+                    onPressed: () {
+                      _webViewController.reload();
+                    },
+                    child: Text('Lỗi kết nối'),
+                  ),
+                )
+              : WebViewWidget(controller: _webViewController),
         ),
       ),
     );
