@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -28,6 +29,7 @@ class CustomTextField extends StatelessWidget {
       validator: validator,
       keyboardType: keyboardType,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.only(left: 16),
         labelText: labelText,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
         suffixIcon: suffixIcon,
@@ -49,8 +51,12 @@ class CustomTextField extends StatelessWidget {
           borderSide: BorderSide(color: Colors.red),
         ),
         filled: true,
-        fillColor: Colors.grey[50],
-        labelStyle: TextStyle(color: Colors.grey[600]),
+        fillColor: Colors.white,
+        labelStyle: GoogleFonts.bricolageGrotesque(
+          fontWeight: FontWeight.w400,
+          fontSize: 14,
+          color: Colors.grey[600],
+        ),
       ),
     );
   }

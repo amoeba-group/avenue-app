@@ -52,13 +52,15 @@ class _HomePageState extends State<HomePage> {
             }
           },
           onUrlChange: (url) {},
-          onWebResourceError: (WebResourceError error) async{
+          onWebResourceError: (WebResourceError error) async {
             final connectivityResult = await Connectivity().checkConnectivity();
             if (connectivityResult.single == ConnectivityResult.none) {
               isError = true;
               setState(() {});
             } else {
-              debugPrint("⚠️ Lỗi khác trong WebView: ${error.errorCode}, ${error.description}");
+              debugPrint(
+                "⚠️ Lỗi khác trong WebView: ${error.errorCode}, ${error.description}",
+              );
             }
           },
         ),

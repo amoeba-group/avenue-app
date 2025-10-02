@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/constants.dart';
 import '../../widgets/custom_appbar.dart';
+import '../auth/change_password_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -63,7 +64,14 @@ class ProfilePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(21),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChangePasswordPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Change Password",
                         style: GoogleFonts.bricolageGrotesque(
