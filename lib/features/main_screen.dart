@@ -47,6 +47,8 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           selectedFontSize: 10,
           type: BottomNavigationBarType.fixed,
           unselectedItemColor: Color(0xFF212121),

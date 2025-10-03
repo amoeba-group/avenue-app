@@ -81,10 +81,6 @@ class MyApp extends StatelessWidget {
                 }
               },
             ),
-            routes: {
-              '/login': (context) => LoginPage(),
-              '/main': (context) => MainScreen(),
-            },
           );
         },
       ),
