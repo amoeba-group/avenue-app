@@ -32,7 +32,7 @@ class ChangePasswordPage extends StatelessWidget {
         padding: EdgeInsets.only(top: kToolbarHeight + 24, left: 16, right: 16),
         child: Column(
           children: [
-            Image.asset('assets/ic_logo.png', width: 150),
+            Image.asset('assets/logo_gv.png', width: 150),
             SizedBox(height: 32),
             CustomTextField(
               labelText: "Password",

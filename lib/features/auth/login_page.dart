@@ -7,7 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:avenue/widgets/button_login.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import '../../services/local_storage_service.dart';
 import '../../widgets/custom_text_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         child: Column(
           children: [
-            Image.asset('assets/ic_logo.png', width: 150),
+            Image.asset('assets/logo_gv.png', width: 150),
             SizedBox(height: 24),
             CustomTextField(
               labelText: "Email",
@@ -91,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               onPressed: () {
+                LocalStorageService.saveLoginStatus(true);
                 Navigator.pushReplacement<void, void>(
                   context,
                   MaterialPageRoute<void>(

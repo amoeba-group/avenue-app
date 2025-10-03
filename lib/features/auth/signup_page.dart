@@ -26,7 +26,7 @@ class SignUpPage extends StatelessWidget {
         padding: EdgeInsets.only(top: kToolbarHeight + 34, left: 16, right: 16),
         child: Column(
           children: [
-            Image.asset('assets/ic_logo.png', width: 150),
+            Image.asset('assets/logo_gv.png', width: 150),
             SizedBox(height: 24),
             CustomTextField(
               labelText: "Full Name",
