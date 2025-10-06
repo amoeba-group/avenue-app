@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../constants/constants.dart';
 import '../../providers/language_provider.dart';
 
 class BillPage extends StatefulWidget {
@@ -64,7 +65,7 @@ class _BillPageState extends State<BillPage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://bill.amoeba.site/?lang=${widget.lang}'));
+      ..loadRequest(Uri.parse("$kUrlAmoebaBill${widget.lang}"));
   }
 
   void autoFillInformation() async {
@@ -110,7 +111,7 @@ class _BillPageState extends State<BillPage> {
   void didUpdateWidget(covariant BillPage oldWidget) {
     if (oldWidget.lang != widget.lang) {
       _webViewController.loadRequest(
-        Uri.parse('https://bill.amoeba.site/?lang=${widget.lang}'),
+        Uri.parse("$kUrlAmoebaBill${widget.lang}"),
       );
     }
     super.didUpdateWidget(oldWidget);

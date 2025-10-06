@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../constants/constants.dart';
 
 class HomePage extends StatefulWidget {
   final String lang;
@@ -65,9 +66,7 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       )
-      ..loadRequest(
-        Uri.parse('https://avenue.amoeba.site/?lang=${widget.lang}'),
-      );
+      ..loadRequest(Uri.parse("$kUrlGvMarket${widget.lang}"));
     context.read<FirebaseMessagingManager>().registerTokenFCM();
   }
 
@@ -108,7 +107,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _checkAndReload() async {
-    final newUrl = 'https://avenue.amoeba.site/?lang=${widget.lang}';
+    final newUrl = "$kUrlGvMarket${widget.lang}";
     final currentUrl = await _webViewController.currentUrl();
 
     if (currentUrl != newUrl) {
