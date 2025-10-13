@@ -3,6 +3,8 @@ import 'package:avenue/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../generated/l10n.dart';
+
 class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});
 
@@ -12,14 +14,14 @@ class ForgotPasswordPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          "Forgot password",
+          S.of(context).forgot_password,
           style: GoogleFonts.bricolageGrotesque(
             fontWeight: FontWeight.w600,
             fontSize: 16,
             color: Colors.black,
           ),
         ),
-        elevation: 1,
+        elevation: 0,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -33,7 +35,7 @@ class ForgotPasswordPage extends StatelessWidget {
         child: Column(
           children: [
             Image.asset('assets/logo_gv.png', width: 150),
-            SizedBox(height: 32),
+            SizedBox(height: 54),
             CustomTextField(
               labelText: "Email",
               controller: TextEditingController(),
@@ -54,7 +56,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 );
               },
               child: Text(
-                "Continue",
+                S.of(context).txt_continue,
                 style: GoogleFonts.bricolageGrotesque(
                   fontWeight: FontWeight.w400,
                   fontSize: 16,

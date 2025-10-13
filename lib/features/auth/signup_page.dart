@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../generated/l10n.dart';
 import '../../widgets/custom_text_field.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -13,7 +14,7 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 1,
+        elevation: 0,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -22,14 +23,14 @@ class SignUpPage extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.only(top: kToolbarHeight + 34, left: 16, right: 16),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(top: kToolbarHeight, left: 16, right: 16),
         child: Column(
           children: [
             Image.asset('assets/logo_gv.png', width: 150),
-            SizedBox(height: 24),
+            SizedBox(height: 54),
             CustomTextField(
-              labelText: "Full Name",
+              labelText: S.of(context).full_name,
               controller: TextEditingController(),
             ),
             SizedBox(height: 16),
@@ -39,7 +40,7 @@ class SignUpPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             CustomTextField(
-              labelText: "Password",
+              labelText: S.of(context).password,
               controller: TextEditingController(),
             ),
             SizedBox(height: 32),
@@ -53,7 +54,7 @@ class SignUpPage extends StatelessWidget {
               ),
               onPressed: () {},
               child: Text(
-                "Sign up",
+                S.of(context).signup,
                 style: GoogleFonts.bricolageGrotesque(
                   fontWeight: FontWeight.w400,
                   fontSize: 16,
@@ -66,7 +67,7 @@ class SignUpPage extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: "You have an account? ",
+                    text: S.of(context).you_have_account,
                     style: GoogleFonts.bricolageGrotesque(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
@@ -78,7 +79,7 @@ class SignUpPage extends StatelessWidget {
                       ..onTap = () {
                         Navigator.pop(context);
                       },
-                    text: "Login",
+                    text: " ${S.of(context).login}",
                     style: GoogleFonts.bricolageGrotesque(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,

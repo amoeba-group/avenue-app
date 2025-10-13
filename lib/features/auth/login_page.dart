@@ -1,14 +1,14 @@
-import 'dart:io';
 import 'package:avenue/features/auth/forgot_password_page.dart';
 import 'package:avenue/features/auth/signup_page.dart';
 import 'package:avenue/features/main_screen.dart';
 import 'package:avenue/main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:avenue/widgets/button_login.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../generated/l10n.dart';
 import '../../services/local_storage_service.dart';
 import '../../widgets/custom_text_field.dart';
+import '../../widgets/sign_in_social.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.only(
           top: MediaQuery.paddingOf(context).top + kToolbarHeight + 44,
           left: 16,
@@ -51,14 +51,14 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             Image.asset('assets/logo_gv.png', width: 150),
-            SizedBox(height: 24),
+            SizedBox(height: 54),
             CustomTextField(
               labelText: "Email",
               controller: TextEditingController(),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
             CustomTextField(
-              labelText: "Password",
+              labelText: S.of(context).password,
               controller: TextEditingController(),
             ),
             SizedBox(height: 16),
@@ -72,11 +72,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Align(
                 alignment: Alignment.topRight,
                 child: Text(
-                  "Forgot password",
+                  S.of(context).forgot_password,
                   style: GoogleFonts.bricolageGrotesque(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
-                    color: Colors.grey,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                 );
               },
               child: Text(
-                "Login",
+                S.of(context).login,
                 style: GoogleFonts.bricolageGrotesque(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: "Don't have an account? ",
+                    text: S.of(context).dont_have_account,
                     style: GoogleFonts.bricolageGrotesque(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextSpan(
                     recognizer: _signUpRecognizer,
-                    text: "Sign up",
+                    text: " ${S.of(context).signup}",
                     style: GoogleFonts.bricolageGrotesque(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    "OR",
+                    S.of(context).or_login_with,
                     style: GoogleFonts.bricolageGrotesque(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
@@ -151,45 +151,25 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             SizedBox(height: 24),
-            Center(
-              child: Row(
-                spacing: 16,
-                children: [
-                  Visibility(
-                    visible: Platform.isIOS,
-                    child: ButtonLogin(
-                      ic: "",
-                      title: "Apple Id",
-                      action: () async {
-                        final result = await authController.signAppleId();
-                        if (result && context.mounted) {
-                          navigateToHomeScreen(context);
-                        }
-                      },
-                    ),
-                  ),
-                  ButtonLogin(
-                    ic: "",
-                    title: "Google",
-                    action: () async {
-                      final result = await authController.signInGoogle();
-                      if (result && context.mounted) {
-                        navigateToHomeScreen(context);
-                      }
-                    },
-                  ),
-                  ButtonLogin(
-                    ic: "",
-                    title: "Facebook",
-                    action: () async {
-                      final result = await authController.signFacebook();
-                      if (result && context.mounted) {
-                        navigateToHomeScreen(context);
-                      }
-                    },
-                  ),
-                ],
-              ),
+            SignInSocial(
+              onPressedFaceBook: () async {
+                final result = await authController.signFacebook();
+                if (result && context.mounted) {
+                  navigateToHomeScreen(context);
+                }
+              },
+              onPressedGoogle: () async {
+                final result = await authController.signInGoogle();
+                if (result && context.mounted) {
+                  navigateToHomeScreen(context);
+                }
+              },
+              onPressedApple: () async {
+                final result = await authController.signAppleId();
+                if (result && context.mounted) {
+                  navigateToHomeScreen(context);
+                }
+              },
             ),
           ],
         ),

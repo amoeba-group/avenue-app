@@ -1,35 +1,32 @@
 import 'dart:async';
-import 'package:avenue/managers/firebase_messaging_manager.dart';
-import 'package:avenue/repository/notification_repository.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
+import 'generated/l10n.dart';
+import 'package:flutter/material.dart';
 import 'auth/auth_controller.dart';
 import 'features/main_screen.dart';
-import 'generated/l10n.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
+import 'services/local_storage_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:avenue/features/auth/login_page.dart';
 import 'package:avenue/providers/language_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
-import 'services/local_storage_service.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:avenue/managers/firebase_messaging_manager.dart';
+import 'package:avenue/repository/notification_repository.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 final AuthController authController = AuthController();
 
 void main() async {
   runZonedGuarded(
     () async {
-      WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      WidgetsFlutterBinding.ensureInitialized();
       await Firebase.initializeApp();
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
         kReleaseMode,
       );
-      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
       Provider.debugCheckInvalidValueType = null;
       runApp(MyApp());
-      await Future.delayed(const Duration(milliseconds: 500));
-      FlutterNativeSplash.remove();
     },
     (error, stackTrace) {
       FirebaseCrashlytics.instance.recordError(error, stackTrace);
@@ -73,12 +70,19 @@ class MyApp extends StatelessWidget {
             home: FutureBuilder<bool>(
               future: LocalStorageService.getLoginStatus(),
               builder: (context, snapshot) {
-                final isLoggedIn = snapshot.data ?? false;
-                if (isLoggedIn) {
-                  return const MainScreen();
-                } else {
-                  return const LoginPage();
+                if (snapshot.hasData) {
+                  final isLoggedIn = snapshot.data ?? false;
+                  if (isLoggedIn) {
+                    return const MainScreen();
+                  } else {
+                    return const LoginPage();
+                  }
                 }
+                return Container(
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  child: SvgPicture.asset("assets/ic_logo.svg"),
+                );
               },
             ),
           );

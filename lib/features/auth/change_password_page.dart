@@ -2,6 +2,7 @@ import 'package:avenue/features/main_screen.dart';
 import 'package:avenue/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../generated/l10n.dart';
 
 class ChangePasswordPage extends StatelessWidget {
   const ChangePasswordPage({super.key});
@@ -11,15 +12,16 @@ class ChangePasswordPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        centerTitle: true,
         title: Text(
-          "Change password",
+          S.of(context).change_password,
           style: GoogleFonts.bricolageGrotesque(
             fontWeight: FontWeight.w600,
             fontSize: 16,
             color: Colors.black,
           ),
         ),
-        elevation: 1,
+        elevation: 0,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -33,14 +35,14 @@ class ChangePasswordPage extends StatelessWidget {
         child: Column(
           children: [
             Image.asset('assets/logo_gv.png', width: 150),
-            SizedBox(height: 32),
+            SizedBox(height: 54),
             CustomTextField(
-              labelText: "Password",
+              labelText: S.of(context).password,
               controller: TextEditingController(),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
             CustomTextField(
-              labelText: "Confirm password",
+              labelText: S.of(context).confirm_password,
               controller: TextEditingController(),
             ),
             SizedBox(height: 32),
@@ -62,7 +64,7 @@ class ChangePasswordPage extends StatelessWidget {
                 );
               },
               child: Text(
-                "Confirm",
+                S.of(context).confirm,
                 style: GoogleFonts.bricolageGrotesque(
                   fontWeight: FontWeight.w400,
                   fontSize: 16,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ButtonLogin extends StatelessWidget {
-  final String ic;
+  final Color color;
   final String title;
   final VoidCallback action;
 
   const ButtonLogin({
     super.key,
-    required this.ic,
+    required this.color,
     required this.title,
     required this.action,
   });
@@ -16,12 +16,17 @@ class ButtonLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: MaterialButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Colors.grey.shade400),
-        ),
+        color: color,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         onPressed: () => action.call(),
-        child: Text(title),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }

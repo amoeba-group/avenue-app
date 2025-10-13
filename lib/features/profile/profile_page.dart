@@ -5,6 +5,7 @@ import 'package:avenue/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/constants.dart';
+import '../../generated/l10n.dart';
 import '../../widgets/custom_appbar.dart';
 import '../auth/change_password_page.dart';
 
@@ -21,7 +22,7 @@ class ProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Tài khoản",
+              S.of(context).account,
               style: GoogleFonts.bricolageGrotesque(
                 fontWeight: FontWeight.bold,
                 fontSize: 26,
@@ -73,7 +74,7 @@ class ProfilePage extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        "Change Password",
+                        S.of(context).change_password,
                         style: GoogleFonts.bricolageGrotesque(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
@@ -96,15 +97,17 @@ class ProfilePage extends StatelessWidget {
                       onPressed: () {
                         AppUtils.showConfirmationDialog(
                           context,
-                          title: "Thông báo",
-                          message: "Bạn có chắc chắn muốn đăng xuất không?",
+                          title: S.of(context).title,
+                          confirmText: S.of(context).confirm,
+                          message: S.of(context).confirm_sign_out,
+                          cancelText: S.of(context).cancel,
                           onConfirm: () {
                             _logOut(context);
                           },
                         );
                       },
                       child: Text(
-                        "Sign out",
+                        S.of(context).sign_out,
                         style: GoogleFonts.bricolageGrotesque(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
@@ -120,7 +123,7 @@ class ProfilePage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 34, bottom: 20),
               child: MenuProfile(
                 ic: "assets/ic_term.svg",
-                title: "Terms of Service",
+                title: S.of(context).terms_of_service,
                 action: () =>
                     AppUtils.openUrl("https://gvmarket.vn/dieukiengiaodich"),
               ),
@@ -129,29 +132,106 @@ class ProfilePage extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 20),
               child: MenuProfile(
                 ic: "assets/ic_term.svg",
-                title: "Privacy Policies",
+                title: S.of(context).privacy_policies,
                 action: () => AppUtils.openUrl(
                   "https://gvmarket.vn/chinh-sach-thanh-toan",
                 ),
               ),
             ),
+            Text(
+              S.current.contact,
+              style: GoogleFonts.bricolageGrotesque(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                color: Color(0xff292D32),
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: MenuProfile(
-                ic: "assets/ic_contact.svg",
-                title: "Contact us",
-                action: () {},
+              padding: const EdgeInsets.only(top: 16),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: S.of(context).address,
+                      style: GoogleFonts.bricolageGrotesque(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: Color(0xff292D32),
+                      ),
+                    ),
+                    TextSpan(
+                      text: S.of(context).info_address,
+                      style: GoogleFonts.bricolageGrotesque(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        color: Color(0xff292D32),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: S.of(context).phone,
+                      style: GoogleFonts.bricolageGrotesque(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: Color(0xff292D32),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "+84 000 0000 000",
+                      style: GoogleFonts.bricolageGrotesque(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        color: Color(0xff292D32),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 24),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Email: ",
+                      style: GoogleFonts.bricolageGrotesque(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: Color(0xff292D32),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "brandnewk.marketing@gmail.com",
+                      style: GoogleFonts.bricolageGrotesque(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        color: Color(0xff292D32),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             MenuProfile(
               ic: "assets/ic_delete.svg",
-              title: "Delete account",
+              title: S.of(context).delete_account,
               color: Color(0xffED1C24),
               action: () {
                 AppUtils.showConfirmationDialog(
                   context,
-                  title: "Thông báo",
-                  message: "Bạn có chắc chắn muốn xóa tài khoản không?",
+                  title: S.of(context).title,
+                  message: S.of(context).confirm_delete_account,
+                  confirmText: S.of(context).confirm,
+                  cancelText: S.of(context).cancel,
                   onConfirm: () {
                     _logOut(context);
                   },
