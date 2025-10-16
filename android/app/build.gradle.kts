@@ -57,6 +57,25 @@ android {
             }
         }
     }
+
+//    flavorDimensions += "app"
+//
+//    productFlavors {
+//        create("dev") {
+//            dimension = "app"
+//            applicationId = "com.amoeba.gvmarket.dev"
+//            versionNameSuffix = "-dev"
+//            resValue("string", "app_name", "GV Market Dev")
+//            signingConfig = signingConfigs.getByName("dev")
+//        }
+//
+//        create("prod") {
+//            dimension = "app"
+//            applicationId = "com.amoeba.gvmarket"
+//            resValue("string", "app_name", "GV Market")
+//            signingConfig = signingConfigs.getByName("prod")
+//        }
+//    }
 }
 
 flutter {

@@ -2,7 +2,6 @@ import 'package:avenue/features/main_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../generated/l10n.dart';
 import '../../widgets/custom_text_field.dart';
 

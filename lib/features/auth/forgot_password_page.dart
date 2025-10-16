@@ -2,7 +2,6 @@ import 'package:avenue/features/auth/change_password_page.dart';
 import 'package:avenue/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../generated/l10n.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
