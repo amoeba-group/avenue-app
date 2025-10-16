@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:avenue/features/home/order_success_page.dart';
 import 'package:avenue/managers/firebase_messaging_manager.dart';
 import 'package:avenue/providers/language_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {},
-          onPageStarted: (String url) {
+          onPageStarted: (String url) async {
             log('Page finished loading: $url');
             Uri uri = Uri.parse(url);
             String? lang = uri.queryParameters['lang'];
@@ -46,7 +47,11 @@ class _HomePageState extends State<HomePage> {
               context.read<LanguageProvider>().saveLocale(Locale(lang!));
             }
           },
-          onPageFinished: (String url) {
+          onPageFinished: (String url) async {
+            String? title = await _webViewController.getTitle();
+            if (title != null && title.contains("Order Buy")) {
+              _orderSuccess();
+            }
             if (isError) {
               isError = false;
               setState(() {});
@@ -68,6 +73,14 @@ class _HomePageState extends State<HomePage> {
       )
       ..loadRequest(Uri.parse("$kUrlGvMarket${widget.lang}"));
     context.read<FirebaseMessagingManager>().registerTokenFCM();
+  }
+
+  void _orderSuccess() {
+    _webViewController.loadRequest(Uri.parse("$kUrlGvMarket${widget.lang}"));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => OrderSuccessPage()),
+    );
   }
 
   Future<bool> _handleBackPress() async {
