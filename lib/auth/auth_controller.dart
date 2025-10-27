@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:avenue/constants/constants.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../services/local_storage_service.dart';
@@ -65,7 +68,43 @@ class AuthController {
     return true;
   }
 
+
   Future<bool> signFacebook() async {
-    return true;
+    final LoginResult result = await FacebookAuth.instance.login();
+
+    if (result.status == LoginStatus.success) {
+      if (Platform.isIOS) {
+        LimitedToken limitedToken = result.accessToken as LimitedToken;
+        saveUser(limitedToken.userEmail ?? "");
+      } else {
+        //AccessToken? accessToken = result.accessToken;
+        //_printCredentials();
+        final userData = await FacebookAuth.instance.getUserData();
+        String id = userData["id"];
+        String name = userData["name"];
+        String? email = userData["email"];
+        saveUser(email ?? "");
+      }
+      return true;
+    } else {
+      print(result.status);
+      print(result.message);
+      return false;
+    }
+  }
+
+  void saveUser(String email) {
+    LocalStorageService.save(keyEmail, email);
+    LocalStorageService.saveLoginStatus(true);
+  }
+
+  // void _printCredentials() {
+  //   print(prettyPrint(_accessToken!.toJson()));
+  // }
+
+  String prettyPrint(Map json) {
+    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+    String pretty = encoder.convert(json);
+    return pretty;
   }
 }

@@ -5,6 +5,7 @@ import 'package:avenue/providers/language_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../constants/constants.dart';

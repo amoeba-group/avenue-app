@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Gv Market Dev</string>
+    <string name="facebook_app_id">824602119947976</string>
+    <string name="facebook_client_token">54b029333855d63bf14b7c9b8c09a6b2</string>
+    <string name="fb_login_protocol_scheme">fb824602119947976</string>
+</resources>

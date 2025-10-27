@@ -39,7 +39,7 @@ android {
 
     signingConfigs {
         if (keyProperties.isNotEmpty()) {
-            create("release") {
+            create("prod") {
                 storeFile = file(keyProperties["storeFile"] as String)
                 storePassword = keyProperties["storePassword"] as String
                 keyAlias = keyProperties["keyAlias"] as String
@@ -58,24 +58,25 @@ android {
         }
     }
 
-//    flavorDimensions += "app"
-//
-//    productFlavors {
-//        create("dev") {
-//            dimension = "app"
-//            applicationId = "com.amoeba.gvmarket.dev"
-//            versionNameSuffix = "-dev"
-//            resValue("string", "app_name", "GV Market Dev")
-//            signingConfig = signingConfigs.getByName("dev")
-//        }
-//
-//        create("prod") {
-//            dimension = "app"
-//            applicationId = "com.amoeba.gvmarket"
-//            resValue("string", "app_name", "GV Market")
-//            signingConfig = signingConfigs.getByName("prod")
-//        }
-//    }
+    flavorDimensions += "app"
+
+    productFlavors {
+        create("dev") {
+            dimension = "app"
+            applicationId = "com.amoeba.gvmarket.dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "GVMarket Dev")
+            manifestPlaceholders["facebookAppId"] = "824602119947976"
+        }
+
+        create("prod") {
+            dimension = "app"
+            applicationId = "com.amoeba.gvmarket"
+            resValue("string", "app_name", "GV Market")
+            signingConfig = signingConfigs.getByName("prod")
+            manifestPlaceholders["facebookAppId"] = "1325878712414469"
+        }
+    }
 }
 
 flutter {

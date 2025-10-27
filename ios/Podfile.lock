@@ -11,6 +11,14 @@ PODS:
     - PromisesObjC (~> 2.4)
   - connectivity_plus (0.0.1):
     - Flutter
+  - FBAEMKit (18.0.1):
+    - FBSDKCoreKit_Basics (= 18.0.1)
+  - FBSDKCoreKit (18.0.1):
+    - FBAEMKit (= 18.0.1)
+    - FBSDKCoreKit_Basics (= 18.0.1)
+  - FBSDKCoreKit_Basics (18.0.1)
+  - FBSDKLoginKit (18.0.1):
+    - FBSDKCoreKit (= 18.0.1)
   - Firebase/CoreOnly (12.2.0):
     - FirebaseCore (~> 12.2.0)
   - Firebase/Crashlytics (12.2.0):
@@ -72,7 +80,12 @@ PODS:
     - nanopb (~> 3.30910.0)
     - PromisesSwift (~> 2.1)
   - Flutter (1.0.0)
+  - flutter_facebook_auth (7.1.2):
+    - FBSDKLoginKit (~> 18.0.0)
+    - Flutter
   - flutter_local_notifications (0.0.1):
+    - Flutter
+  - flutter_secure_storage (6.0.0):
     - Flutter
   - google_sign_in_ios (0.0.1):
     - Flutter
@@ -147,7 +160,9 @@ DEPENDENCIES:
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
+  - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -159,6 +174,10 @@ SPEC REPOS:
   trunk:
     - AppAuth
     - AppCheckCore
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
     - Firebase
     - FirebaseCore
     - FirebaseCoreExtension
@@ -188,8 +207,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: Flutter
+  flutter_facebook_auth:
+    :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   path_provider_foundation:
@@ -207,6 +230,10 @@ SPEC CHECKSUMS:
   AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
+  FBAEMKit: b2ed182002dbcb65d5a60059c9693d322186cd00
+  FBSDKCoreKit: 7f96852f2539bdb88ba8d47e5ab4ae70a6f8d691
+  FBSDKCoreKit_Basics: 22d4c1a509ded4e45116f3bb167a14907550f62e
+  FBSDKLoginKit: f48c06446995cd209332831f692cea28b26e51da
   Firebase: 26f6f8d460603af3df970ad505b16b15f5e2e9a1
   firebase_core: dfc4bd142bee4bc53a5d482397ca322c2dd3165d
   firebase_crashlytics: e55dcf895eed0dd87c447dd5aff8db7f1bb8bbdb
@@ -220,7 +247,9 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfigInterop: 0896fd52ab72586a355c8f389ff85aaa9e5375e1
   FirebaseSessions: f4692789e770bec66ce17d772c0e9561c4f11737
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  flutter_facebook_auth: d97dc09216aebd99d7ac52360186a630f67bdf18
   flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
+  flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
   google_sign_in_ios: 205742c688aea0e64db9da03c33121694a365109
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77

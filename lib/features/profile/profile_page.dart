@@ -1,5 +1,6 @@
 import 'package:avenue/features/auth/login_page.dart';
 import 'package:avenue/features/profile/widgets/menu_profile.dart';
+import 'package:avenue/main.dart';
 import 'package:avenue/services/local_storage_service.dart';
 import 'package:avenue/utils/app_utils.dart';
 import 'package:flutter/material.dart';
@@ -247,7 +248,7 @@ class ProfilePage extends StatelessWidget {
   void _logOut(BuildContext context) {
     LocalStorageService.clear("is_logged_in");
     LocalStorageService.clear("device_token");
-    LocalStorageService.clear("device_token");
+    LocalStorageService.clear(keyEmail);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => LoginPage()),
