@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,6 +65,47 @@ class AppUtils {
             },
             child: Text(
               confirmText,
+              style: GoogleFonts.bricolageGrotesque(
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                color: Color(0xff111526),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static void showErrorDialog(
+    BuildContext context, {
+    required String message,
+    VoidCallback? callBack,
+    bool isDestructive = false,
+  }) {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        content: Padding(
+          padding: const EdgeInsets.only(top: 16, bottom: 16),
+          child: Text(
+            message,
+            style: GoogleFonts.bricolageGrotesque(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              color: Color(0xff111526),
+            ),
+          ),
+        ),
+        actions: [
+          CupertinoDialogAction(
+            isDestructiveAction: isDestructive,
+            onPressed: () {
+              Navigator.of(context).pop();
+              callBack?.call();
+            },
+            child: Text(
+              'Ok',
               style: GoogleFonts.bricolageGrotesque(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,

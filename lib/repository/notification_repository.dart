@@ -1,5 +1,7 @@
 import 'dart:async';
 
 class NotificationRepository {
-  FutureOr sendDeviceToken(String token) {}
+  FutureOr sendDeviceToken(String token) {
+
+  }
 }

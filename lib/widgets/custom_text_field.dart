@@ -9,9 +9,12 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
+  final Function(String)? onChanged;
+
 
   const CustomTextField({
     super.key,
+    required this.onChanged,
     required this.controller,
     required this.labelText,
     this.prefixIcon,
@@ -24,6 +27,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       controller: controller,
       obscureText: obscureText,
       validator: validator,

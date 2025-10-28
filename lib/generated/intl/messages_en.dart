@@ -40,7 +40,56 @@ class MessageLookup extends MessageLookupByLibrary {
     "contact": MessageLookupByLibrary.simpleMessage("Contact"),
     "delete_account": MessageLookupByLibrary.simpleMessage("Delete account"),
     "dont_have_account": MessageLookupByLibrary.simpleMessage(
-      "Dont have an account?",
+      "Dont have an account? ",
+    ),
+    "error_connection_timeout": MessageLookupByLibrary.simpleMessage(
+      "Kết nối tới máy chủ quá thời gian. Vui lòng kiểm tra kết nối mạng.",
+    ),
+    "error_incorrect_password": MessageLookupByLibrary.simpleMessage(
+      "Mật khẩu không chính xác",
+    ),
+    "error_invalid_data": MessageLookupByLibrary.simpleMessage(
+      "Dữ liệu không hợp lệ.",
+    ),
+    "error_network_unreachable": MessageLookupByLibrary.simpleMessage(
+      "Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng.",
+    ),
+    "error_not_found": MessageLookupByLibrary.simpleMessage(
+      "Không tìm thấy dữ liệu yêu cầu.",
+    ),
+    "error_not_found_account": MessageLookupByLibrary.simpleMessage(
+      "Tài khoản không tồn tại",
+    ),
+    "error_occurred": MessageLookupByLibrary.simpleMessage(
+      "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+    ),
+    "error_permission_denied": MessageLookupByLibrary.simpleMessage(
+      "Bạn không có quyền thực hiện hành động này.",
+    ),
+    "error_phone_number_already_registered":
+        MessageLookupByLibrary.simpleMessage(
+          "Số điện thoại này đã được đăng ký.",
+        ),
+    "error_receive_timeout": MessageLookupByLibrary.simpleMessage(
+      "Nhận dữ liệu quá thời gian. Vui lòng thử lại sau.",
+    ),
+    "error_request_cancelled": MessageLookupByLibrary.simpleMessage(
+      "Yêu cầu đã bị hủy.",
+    ),
+    "error_send_timeout": MessageLookupByLibrary.simpleMessage(
+      "Gửi dữ liệu quá thời gian. Vui lòng thử lại sau.",
+    ),
+    "error_server": MessageLookupByLibrary.simpleMessage(
+      "Lỗi máy chủ. Vui lòng thử lại sau.",
+    ),
+    "error_session_expired": MessageLookupByLibrary.simpleMessage(
+      "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+    ),
+    "error_too_short_password": MessageLookupByLibrary.simpleMessage(
+      "Mật khẩu cần có ít nhất 6 ký tự",
+    ),
+    "error_unknown": MessageLookupByLibrary.simpleMessage(
+      "Đã xảy ra lỗi không xác định.",
     ),
     "facebook": MessageLookupByLibrary.simpleMessage("Facebook"),
     "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot password"),
@@ -50,6 +99,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "2nd Floor, Building No. 19-21 Tan Cang, Thanh My Tay Ward, Ho Chi Minh City",
     ),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "no_connect_internet": MessageLookupByLibrary.simpleMessage(
+      "Vui lòng kiểm tra lại kết nối mạng",
+    ),
     "or_login_with": MessageLookupByLibrary.simpleMessage("Or login with"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "phone": MessageLookupByLibrary.simpleMessage("Phone number: "),
@@ -68,7 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "title": MessageLookupByLibrary.simpleMessage("Notification"),
     "txt_continue": MessageLookupByLibrary.simpleMessage("Continue"),
     "you_have_account": MessageLookupByLibrary.simpleMessage(
-      "You have an account?",
+      "You have an account? ",
     ),
   };
 }

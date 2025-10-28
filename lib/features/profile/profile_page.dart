@@ -1,4 +1,4 @@
-import 'package:avenue/features/auth/login_page.dart';
+import 'package:avenue/features/auth/login/login_page.dart';
 import 'package:avenue/features/profile/widgets/menu_profile.dart';
 import 'package:avenue/main.dart';
 import 'package:avenue/services/local_storage_service.dart';

@@ -5,17 +5,21 @@ import 'auth/auth_controller.dart';
 import 'features/main_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'services/client_service.dart';
 import 'services/local_storage_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:avenue/features/auth/login_page.dart';
+import 'package:avenue/features/auth/login/login_page.dart';
 import 'package:avenue/providers/language_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:avenue/managers/firebase_messaging_manager.dart';
 import 'package:avenue/repository/notification_repository.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:avenue/repository/authentication_repository.dart';
 
 final AuthController authController = AuthController();
+
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   runZonedGuarded(
@@ -41,7 +45,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider(create: (context) => ClientService(), lazy: true),
         Provider(create: (context) => NotificationRepository(), lazy: true),
+        Provider(
+          create: (context) => AuthenticationRepository(context.read()),
+          lazy: true,
+        ),
         Provider(create: (context) => FirebaseMessagingManager(context.read())),
         ChangeNotifierProvider<LanguageProvider>(
           create: (context) => LanguageProvider(),
@@ -51,6 +60,7 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           final language = context.watch<LanguageProvider>();
           return MaterialApp(
+            key: navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'GV Market',
             theme: ThemeData(

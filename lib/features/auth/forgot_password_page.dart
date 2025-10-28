@@ -12,6 +12,7 @@ class ForgotPasswordPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        centerTitle: true,
         title: Text(
           S.of(context).forgot_password,
           style: GoogleFonts.bricolageGrotesque(
@@ -30,7 +31,7 @@ class ForgotPasswordPage extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.only(top: kToolbarHeight + 24, left: 16, right: 16),
+        padding: EdgeInsets.only(top: kToolbarHeight, left: 16, right: 16),
         child: Column(
           children: [
             Image.asset('assets/logo_gv.png', width: 150),
@@ -38,6 +39,7 @@ class ForgotPasswordPage extends StatelessWidget {
             CustomTextField(
               labelText: "Email",
               controller: TextEditingController(),
+              onChanged: (String p1) {},
             ),
             SizedBox(height: 32),
             TextButton(

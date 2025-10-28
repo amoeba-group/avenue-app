@@ -63,11 +63,29 @@ class AuthController {
         AppleIDAuthorizationScopes.fullName,
       ],
     );
-    LocalStorageService.save(keyEmail, credential.email ?? "");
+
+    // User identifier duy nhất de lay thong tin email va name
+    final userId = credential.userIdentifier;
+
+    // Email có thể null nếu user đã login trước
+    String? email = credential.email;
+
+    // Name có thể null nếu đã login trước
+    String? name = credential.givenName;
+
+    // Nếu email null -> yêu cầu nhập thủ công
+    if (email == null) {
+      // show dialog nhập email hoặc phone
+    }
+
+    log(userId ?? "");
+    log(email ?? "");
+    log(name ?? "");
+
+    LocalStorageService.save(keyEmail, email ?? "");
     LocalStorageService.saveLoginStatus(true);
     return true;
   }
-
 
   Future<bool> signFacebook() async {
     final LoginResult result = await FacebookAuth.instance.login();

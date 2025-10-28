@@ -31,7 +31,7 @@ class ChangePasswordPage extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.only(top: kToolbarHeight + 24, left: 16, right: 16),
+        padding: EdgeInsets.only(top: kToolbarHeight, left: 16, right: 16),
         child: Column(
           children: [
             Image.asset('assets/logo_gv.png', width: 150),
@@ -39,11 +39,13 @@ class ChangePasswordPage extends StatelessWidget {
             CustomTextField(
               labelText: S.of(context).password,
               controller: TextEditingController(),
+              onChanged: (String p1) {},
             ),
             SizedBox(height: 24),
             CustomTextField(
               labelText: S.of(context).confirm_password,
               controller: TextEditingController(),
+              onChanged: (String p1) {},
             ),
             SizedBox(height: 32),
             TextButton(

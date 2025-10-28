@@ -16,6 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   intl: ^0.20.2
   http: ^1.5.0
+  dio: ^5.9.0
   intl_utils: ^2.8.8
   url_launcher: ^6.3.2
   provider: ^6.1.5+1
@@ -31,7 +32,7 @@ dependencies:
   shared_preferences: ^2.5.3
   connectivity_plus: ^7.0.0
   flutter_local_notifications: ^19.2.1
-
+  flutter_secure_storage: ^9.2.4
 
 dev_dependencies:
   flutter_test:
