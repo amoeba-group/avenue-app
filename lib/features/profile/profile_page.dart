@@ -2,9 +2,11 @@ import 'package:avenue/features/auth/login/login_page.dart';
 import 'package:avenue/features/profile/widgets/menu_profile.dart';
 import 'package:avenue/main.dart';
 import 'package:avenue/services/local_storage_service.dart';
+import 'package:avenue/services/sign_in_social_service.dart';
 import 'package:avenue/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../constants/constants.dart';
 import '../../generated/l10n.dart';
 import '../../widgets/custom_appbar.dart';
@@ -249,6 +251,7 @@ class ProfilePage extends StatelessWidget {
     LocalStorageService.clear("is_logged_in");
     LocalStorageService.clear("device_token");
     LocalStorageService.clear(keyEmail);
+    context.read<SignInSocialService>().signOut();
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => LoginPage()),

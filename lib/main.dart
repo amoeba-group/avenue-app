@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'auth/auth_controller.dart';
 import 'features/main_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
@@ -16,8 +15,7 @@ import 'package:avenue/managers/firebase_messaging_manager.dart';
 import 'package:avenue/repository/notification_repository.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:avenue/repository/authentication_repository.dart';
-
-final AuthController authController = AuthController();
+import 'package:avenue/services/sign_in_social_service.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -46,6 +44,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (context) => ClientService(), lazy: true),
+        Provider(create: (context) => SignInSocialService(), lazy: true),
         Provider(create: (context) => NotificationRepository(), lazy: true),
         Provider(
           create: (context) => AuthenticationRepository(context.read()),
