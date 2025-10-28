@@ -15,81 +15,86 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AuthenticationProvider>(
-      create: (context) => AuthenticationProvider(
-        context,
-        context.read(),
-        AuthenticationType.register,
-        null,
-      ),
-      child: Consumer<AuthenticationProvider>(
-        builder: (context, controller, child) {
-          return LoadingOverlay(
-            isLoading: controller.isLoading,
-            color: Colors.black.withOpacity(0.5),
-            progressIndicator: CircularProgressIndicator(
-              color: Theme.of(context).primaryColor,
-            ),
-            child: Scaffold(
-              appBar: AppBar(
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: ChangeNotifierProvider<AuthenticationProvider>(
+        create: (context) => AuthenticationProvider(
+          context,
+          context.read(),
+          AuthenticationType.register,
+          null,
+        ),
+        child: Consumer<AuthenticationProvider>(
+          builder: (context, controller, child) {
+            return LoadingOverlay(
+              isLoading: controller.isLoading,
+              color: Colors.black.withOpacity(0.5),
+              progressIndicator: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.white,
+                  centerTitle: true,
+                  elevation: 0,
+                ),
                 backgroundColor: Colors.white,
-                centerTitle: true,
-                elevation: 0,
-              ),
-              backgroundColor: Colors.white,
-              body: SingleChildScrollView(
-                padding: EdgeInsets.only(
-                  top: kToolbarHeight,
-                  left: 16,
-                  right: 16,
-                ),
-                child: Column(
-                  children: [
-                    Image.asset('assets/logo_gv.png', width: 150),
-                    SizedBox(height: 54),
-                    InputFullName(),
-                    SizedBox(height: 16),
-                    EmailInput(),
-                    SizedBox(height: 16),
-                    PassWordInput(),
-                    SizedBox(height: 34),
-                    AuthenticationButton(
-                      text: S.of(context).signup,
-                      type: AuthenticationType.register,
-                    ),
-                    SizedBox(height: 24),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: S.of(context).you_have_account,
-                            style: GoogleFonts.bricolageGrotesque(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: Colors.black,
-                            ),
-                          ),
-                          TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pop(context);
-                              },
-                            text: " ${S.of(context).login}",
-                            style: GoogleFonts.bricolageGrotesque(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ],
+                body: SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    top: kToolbarHeight,
+                    left: 16,
+                    right: 16,
+                  ),
+                  child: Column(
+                    children: [
+                      Image.asset('assets/logo_gv.png', width: 150),
+                      SizedBox(height: 54),
+                      InputFullName(),
+                      SizedBox(height: 16),
+                      EmailInput(),
+                      SizedBox(height: 16),
+                      PassWordInput(),
+                      SizedBox(height: 34),
+                      AuthenticationButton(
+                        text: S.of(context).signup,
+                        type: AuthenticationType.register,
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 24),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: S.of(context).you_have_account,
+                              style: GoogleFonts.bricolageGrotesque(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pop(context);
+                                },
+                              text: " ${S.of(context).login}",
+                              style: GoogleFonts.bricolageGrotesque(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }
+            );
+          }
+        ),
       ),
     );
   }

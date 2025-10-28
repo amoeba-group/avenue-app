@@ -33,7 +33,7 @@ class CustomTextField extends StatelessWidget {
       validator: validator,
       keyboardType: keyboardType,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(left: 16),
+        contentPadding: EdgeInsets.only(left: 16, top: 16, bottom: 16),
         labelText: labelText,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
         suffixIcon: suffixIcon,
