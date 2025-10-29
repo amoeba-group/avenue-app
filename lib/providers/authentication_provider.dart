@@ -156,6 +156,7 @@ class AuthenticationProvider with ChangeNotifier {
       if (ggInfo != null) {
         String email = ggInfo.email;
         String name = ggInfo.displayName ?? '';
+        onGotoHome();
       }
 
       if (fbInfo != null) {
@@ -166,6 +167,7 @@ class AuthenticationProvider with ChangeNotifier {
           String id = userData["id"];
           String name = userData["name"];
           String? email = userData["email"];
+          onGotoHome();
         }
       }
 
@@ -173,9 +175,9 @@ class AuthenticationProvider with ChangeNotifier {
         final userId = appleInfo.userIdentifier;
         String? email = appleInfo.email;
         String? name = appleInfo.givenName;
+        onGotoHome();
       }
 
-      onGotoHome();
 
     } on AppException catch (e) {
       _showError(e.message);

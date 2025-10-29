@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../config/env_config.dart';
 import '../../constants/constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   DateTime? _lastPressedAt;
   String newUrl = '';
   bool isError = false;
+  String url = EnvConfig.current['urlGvMarket'];
 
   @override
   void initState() {
@@ -72,12 +74,12 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse("$kUrlGvMarket${widget.lang}"));
+      ..loadRequest(Uri.parse("$url${widget.lang}"));
     context.read<FirebaseMessagingManager>().registerTokenFCM();
   }
 
   void _orderSuccess() {
-    _webViewController.loadRequest(Uri.parse("$kUrlGvMarket${widget.lang}"));
+    _webViewController.loadRequest(Uri.parse("$url${widget.lang}"));
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => OrderSuccessPage()),
@@ -121,7 +123,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _checkAndReload() async {
-    final newUrl = "$kUrlGvMarket${widget.lang}";
+    final newUrl = "$url${widget.lang}";
     final currentUrl = await _webViewController.currentUrl();
 
     if (currentUrl != newUrl) {

@@ -71,7 +71,7 @@ android {
 
         create("prod") {
             dimension = "app"
-            applicationId = "com.amoeba.gvmarket"
+            applicationId = "com.amoeba.avenue.gvmarket"
             resValue("string", "app_name", "GV Market")
             signingConfig = signingConfigs.getByName("prod")
             manifestPlaceholders["facebookAppId"] = "1325878712414469"

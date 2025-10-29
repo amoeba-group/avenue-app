@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import '../constants/constants.dart';
 
 class SignInSocialService {
   List<String> scopes = <String>[
@@ -15,10 +16,7 @@ class SignInSocialService {
 
   Future<void> _initializeGoogleSignIn() async {
     try {
-      await _googleSignIn.initialize(
-        serverClientId:
-            "1092035910524-73uf4vbonjh8roto3jip8dbrcn2hrduc.apps.googleusercontent.com",
-      );
+      await _googleSignIn.initialize(serverClientId: serverClientId);
       _isGoogleSignInInitialized = true;
     } catch (e) {
       log('Failed to initialize Google Sign-In: $e');
@@ -33,9 +31,10 @@ class SignInSocialService {
 
   Future<GoogleSignInAccount?> signInGoogle(BuildContext context) async {
     await _ensureGoogleSignInInitialized();
-    GoogleSignInAccount account;
     try {
-      account = await _googleSignIn.authenticate(scopeHint: scopes);
+      GoogleSignInAccount account = await _googleSignIn.authenticate(
+        scopeHint: scopes,
+      );
       return account;
     } on GoogleSignInException catch (e) {
       if (e.code == GoogleSignInExceptionCode.canceled) {

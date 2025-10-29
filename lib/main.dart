@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'config/env_config.dart';
 import 'generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'features/main_screen.dart';
@@ -23,6 +24,7 @@ void main() async {
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      await EnvConfig().init();
       await Firebase.initializeApp();
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
         kReleaseMode,

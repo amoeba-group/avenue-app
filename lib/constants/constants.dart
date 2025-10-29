@@ -4,6 +4,4 @@ const keyDeviceToken = "device_token";
 const keyEmail = "email";
 const String accessToken = "access_token";
 const String refreshToken = "refresh_token";
-const kUrlGvMarket = "https://dev.amoeba.site:9000/avenue/gvmarket?lang=";
-//const kUrlGvMarket = "https://avenue.amoeba.site/gvmarket?lang=";
-const kUrlAmoebaBill = "https://bill.amoeba.site?lang=";
+const serverClientId = "889643954329-27pb0uga968ek389fehfkaelqggugtcn.apps.googleusercontent.com";

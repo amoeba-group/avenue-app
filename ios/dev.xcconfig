@@ -1,0 +1,8 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include "Flutter/Generated.xcconfig"
+
+
+APP_ENV=dev
+FACEBOOK_DISPLAY_NAME=GV Market Dev
+FACEBOOK_APP_ID=1325878712414469
+FACEBOOK_CLIENT_TOKEN=fb1325878712414469

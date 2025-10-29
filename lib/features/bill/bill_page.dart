@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../config/env_config.dart';
 import '../../constants/constants.dart';
 import '../../providers/language_provider.dart';
 
@@ -20,6 +21,7 @@ class _BillPageState extends State<BillPage> {
   final WebViewController _webViewController = WebViewController();
   DateTime? _lastPressedAt;
   bool isError = false;
+  String url = EnvConfig.current['urlAmoebaBill'];
 
   @override
   void initState() {
@@ -65,7 +67,7 @@ class _BillPageState extends State<BillPage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse("$kUrlAmoebaBill${widget.lang}"));
+      ..loadRequest(Uri.parse("$url${widget.lang}"));
   }
 
   void autoFillInformation() async {
@@ -111,7 +113,7 @@ class _BillPageState extends State<BillPage> {
   void didUpdateWidget(covariant BillPage oldWidget) {
     if (oldWidget.lang != widget.lang) {
       _webViewController.loadRequest(
-        Uri.parse("$kUrlAmoebaBill${widget.lang}"),
+        Uri.parse("$url${widget.lang}"),
       );
     }
     super.didUpdateWidget(oldWidget);
