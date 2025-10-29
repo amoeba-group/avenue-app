@@ -37,18 +37,18 @@ class _CustomAppbarState extends State<CustomAppbar> {
               _showPopUpMenu(details.globalPosition);
             },
             child: Row(
-              spacing: 4,
+              spacing: 2,
               children: [
                 Text(
                   lang.toUpperCase(),
                   style: GoogleFonts.bricolageGrotesque(
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w500,
                     fontSize: 16,
                     color: Colors.black,
                   ),
                 ),
                 SvgPicture.asset("assets/ic_language.svg"),
-                Icon(Icons.arrow_drop_down, color: Colors.black)
+                SvgPicture.asset("assets/ic_caret_down.svg", height: 12, width: 12,),
               ],
             ),
           ),
