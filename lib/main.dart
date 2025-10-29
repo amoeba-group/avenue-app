@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final language = context.watch<LanguageProvider>();
+          print('-----> ${language.locale.languageCode}');
           return MaterialApp(
             key: navigatorKey,
             debugShowCheckedModeBanner: false,

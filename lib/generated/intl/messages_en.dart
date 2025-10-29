@@ -43,53 +43,51 @@ class MessageLookup extends MessageLookupByLibrary {
       "Dont have an account? ",
     ),
     "error_connection_timeout": MessageLookupByLibrary.simpleMessage(
-      "Kết nối tới máy chủ quá thời gian. Vui lòng kiểm tra kết nối mạng.",
+      "Connection to the server timed out. Please check your network connection.",
     ),
     "error_incorrect_password": MessageLookupByLibrary.simpleMessage(
-      "Mật khẩu không chính xác",
+      "Incorrect password.",
     ),
-    "error_invalid_data": MessageLookupByLibrary.simpleMessage(
-      "Dữ liệu không hợp lệ.",
-    ),
+    "error_invalid_data": MessageLookupByLibrary.simpleMessage("Invalid data."),
     "error_network_unreachable": MessageLookupByLibrary.simpleMessage(
-      "Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng.",
+      "Cannot connect to the server. Please check your network connection.",
     ),
     "error_not_found": MessageLookupByLibrary.simpleMessage(
-      "Không tìm thấy dữ liệu yêu cầu.",
+      "Requested data not found.",
     ),
     "error_not_found_account": MessageLookupByLibrary.simpleMessage(
-      "Tài khoản không tồn tại",
+      "Account does not exist.",
     ),
     "error_occurred": MessageLookupByLibrary.simpleMessage(
-      "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+      "An error has occurred. Please try again later.",
     ),
     "error_permission_denied": MessageLookupByLibrary.simpleMessage(
-      "Bạn không có quyền thực hiện hành động này.",
+      "You do not have permission to perform this action.",
     ),
     "error_phone_number_already_registered":
         MessageLookupByLibrary.simpleMessage(
-          "Số điện thoại này đã được đăng ký.",
+          "This phone number is already registered.",
         ),
     "error_receive_timeout": MessageLookupByLibrary.simpleMessage(
-      "Nhận dữ liệu quá thời gian. Vui lòng thử lại sau.",
+      "Receiving data timed out. Please try again later.",
     ),
     "error_request_cancelled": MessageLookupByLibrary.simpleMessage(
-      "Yêu cầu đã bị hủy.",
+      "The request was cancelled.",
     ),
     "error_send_timeout": MessageLookupByLibrary.simpleMessage(
-      "Gửi dữ liệu quá thời gian. Vui lòng thử lại sau.",
+      "Sending data timed out. Please try again later.",
     ),
     "error_server": MessageLookupByLibrary.simpleMessage(
-      "Lỗi máy chủ. Vui lòng thử lại sau.",
+      "Server error. Please try again later.",
     ),
     "error_session_expired": MessageLookupByLibrary.simpleMessage(
-      "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+      "Your session has expired. Please log in again.",
     ),
     "error_too_short_password": MessageLookupByLibrary.simpleMessage(
-      "Mật khẩu cần có ít nhất 6 ký tự",
+      "Password must be at least 6 characters long.",
     ),
     "error_unknown": MessageLookupByLibrary.simpleMessage(
-      "Đã xảy ra lỗi không xác định.",
+      "An unknown error has occurred.",
     ),
     "facebook": MessageLookupByLibrary.simpleMessage("Facebook"),
     "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot password"),
@@ -100,7 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
     "no_connect_internet": MessageLookupByLibrary.simpleMessage(
-      "Vui lòng kiểm tra lại kết nối mạng",
+      "Please check your internet connection.",
     ),
     "or_login_with": MessageLookupByLibrary.simpleMessage("Or login with"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),

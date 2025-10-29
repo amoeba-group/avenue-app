@@ -22,53 +22,91 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "account": MessageLookupByLibrary.simpleMessage("Account"),
-    "address": MessageLookupByLibrary.simpleMessage("Address: "),
-    "apple_id": MessageLookupByLibrary.simpleMessage("Apple Id"),
-    "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-    "change_password": MessageLookupByLibrary.simpleMessage("Change password"),
-    "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+    "account": MessageLookupByLibrary.simpleMessage("계정"),
+    "address": MessageLookupByLibrary.simpleMessage("주소: "),
+    "apple_id": MessageLookupByLibrary.simpleMessage("Apple ID"),
+    "cancel": MessageLookupByLibrary.simpleMessage("취소"),
+    "change_password": MessageLookupByLibrary.simpleMessage("비밀번호 변경"),
+    "confirm": MessageLookupByLibrary.simpleMessage("확인"),
     "confirm_delete_account": MessageLookupByLibrary.simpleMessage(
-      "Are you sure you want to delete your account?",
+      "정말로 계정을 삭제하시겠습니까?",
     ),
-    "confirm_password": MessageLookupByLibrary.simpleMessage(
-      "Confirm password",
-    ),
+    "confirm_password": MessageLookupByLibrary.simpleMessage("비밀번호 확인"),
     "confirm_sign_out": MessageLookupByLibrary.simpleMessage(
-      "Are you sure you want to sign out?",
+      "정말로 로그아웃 하시겠습니까?",
     ),
-    "contact": MessageLookupByLibrary.simpleMessage("Contact"),
-    "delete_account": MessageLookupByLibrary.simpleMessage("Delete account"),
-    "dont_have_account": MessageLookupByLibrary.simpleMessage(
-      "Dont have an account? ",
+    "contact": MessageLookupByLibrary.simpleMessage("연락처"),
+    "delete_account": MessageLookupByLibrary.simpleMessage("계정 삭제"),
+    "dont_have_account": MessageLookupByLibrary.simpleMessage("계정이 없으신가요? "),
+    "error_connection_timeout": MessageLookupByLibrary.simpleMessage(
+      "서버 연결 시간이 초과되었습니다. 네트워크 연결을 확인해 주세요.",
     ),
-    "facebook": MessageLookupByLibrary.simpleMessage("Facebook"),
-    "forgot_password": MessageLookupByLibrary.simpleMessage("Forgot password"),
-    "full_name": MessageLookupByLibrary.simpleMessage("Full name"),
-    "google": MessageLookupByLibrary.simpleMessage("Google"),
+    "error_incorrect_password": MessageLookupByLibrary.simpleMessage(
+      "비밀번호가 올바르지 않습니다.",
+    ),
+    "error_invalid_data": MessageLookupByLibrary.simpleMessage(
+      "유효하지 않은 데이터입니다.",
+    ),
+    "error_network_unreachable": MessageLookupByLibrary.simpleMessage(
+      "서버에 연결할 수 없습니다. 네트워크 연결을 확인해 주세요.",
+    ),
+    "error_not_found": MessageLookupByLibrary.simpleMessage(
+      "요청한 데이터를 찾을 수 없습니다.",
+    ),
+    "error_not_found_account": MessageLookupByLibrary.simpleMessage(
+      "계정을 찾을 수 없습니다.",
+    ),
+    "error_occurred": MessageLookupByLibrary.simpleMessage(
+      "오류가 발생했습니다. 나중에 다시 시도해 주세요.",
+    ),
+    "error_permission_denied": MessageLookupByLibrary.simpleMessage(
+      "이 작업을 수행할 권한이 없습니다.",
+    ),
+    "error_phone_number_already_registered":
+        MessageLookupByLibrary.simpleMessage("이 전화번호는 이미 등록되어 있습니다."),
+    "error_receive_timeout": MessageLookupByLibrary.simpleMessage(
+      "데이터 수신 시간이 초과되었습니다. 나중에 다시 시도해 주세요.",
+    ),
+    "error_request_cancelled": MessageLookupByLibrary.simpleMessage(
+      "요청이 취소되었습니다.",
+    ),
+    "error_send_timeout": MessageLookupByLibrary.simpleMessage(
+      "데이터 전송 시간이 초과되었습니다. 나중에 다시 시도해 주세요.",
+    ),
+    "error_server": MessageLookupByLibrary.simpleMessage(
+      "서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.",
+    ),
+    "error_session_expired": MessageLookupByLibrary.simpleMessage(
+      "세션이 만료되었습니다. 다시 로그인해 주세요.",
+    ),
+    "error_too_short_password": MessageLookupByLibrary.simpleMessage(
+      "비밀번호는 최소 6자리 이상이어야 합니다.",
+    ),
+    "error_unknown": MessageLookupByLibrary.simpleMessage("알 수 없는 오류가 발생했습니다."),
+    "facebook": MessageLookupByLibrary.simpleMessage("페이스북"),
+    "forgot_password": MessageLookupByLibrary.simpleMessage("비밀번호를 잊으셨나요?"),
+    "full_name": MessageLookupByLibrary.simpleMessage("전체 이름"),
+    "google": MessageLookupByLibrary.simpleMessage("구글"),
     "info_address": MessageLookupByLibrary.simpleMessage(
-      "2nd Floor, Building No. 19-21 Tan Cang, Thanh My Tay Ward, Ho Chi Minh City",
+      "호치민시, 탄깡, 탄깡 19-21번지 2층",
     ),
-    "login": MessageLookupByLibrary.simpleMessage("Login"),
-    "or_login_with": MessageLookupByLibrary.simpleMessage("Or login with"),
-    "password": MessageLookupByLibrary.simpleMessage("Password"),
-    "phone": MessageLookupByLibrary.simpleMessage("Phone number: "),
-    "privacy_policies": MessageLookupByLibrary.simpleMessage(
-      "Privacy Policies",
+    "login": MessageLookupByLibrary.simpleMessage("로그인"),
+    "no_connect_internet": MessageLookupByLibrary.simpleMessage(
+      "인터넷 연결을 확인해 주세요.",
     ),
-    "sign_out": MessageLookupByLibrary.simpleMessage("Sign out"),
-    "signup": MessageLookupByLibrary.simpleMessage("Sign up"),
-    "tab_billing": MessageLookupByLibrary.simpleMessage("Billing"),
-    "tab_home": MessageLookupByLibrary.simpleMessage("Home"),
-    "tab_notification": MessageLookupByLibrary.simpleMessage("Notifications"),
-    "tab_profile": MessageLookupByLibrary.simpleMessage("Profile"),
-    "terms_of_service": MessageLookupByLibrary.simpleMessage(
-      "Terms of Service",
-    ),
-    "title": MessageLookupByLibrary.simpleMessage("Notification"),
-    "txt_continue": MessageLookupByLibrary.simpleMessage("Continue"),
-    "you_have_account": MessageLookupByLibrary.simpleMessage(
-      "You have an account? ",
-    ),
+    "or_login_with": MessageLookupByLibrary.simpleMessage("다음 계정으로 로그인"),
+    "password": MessageLookupByLibrary.simpleMessage("비밀번호"),
+    "phone": MessageLookupByLibrary.simpleMessage("전화번호: "),
+    "privacy_policies": MessageLookupByLibrary.simpleMessage("개인정보 처리방침"),
+    "sign_out": MessageLookupByLibrary.simpleMessage("로그아웃"),
+    "signup": MessageLookupByLibrary.simpleMessage("회원가입"),
+    "tab_billing": MessageLookupByLibrary.simpleMessage("청구"),
+    "tab_home": MessageLookupByLibrary.simpleMessage("홈"),
+    "tab_notification": MessageLookupByLibrary.simpleMessage("알림"),
+    "tab_profile": MessageLookupByLibrary.simpleMessage("프로필"),
+    "terms_of_service": MessageLookupByLibrary.simpleMessage("서비스 이용약관"),
+    "title": MessageLookupByLibrary.simpleMessage("알림"),
+    "txt_continue": MessageLookupByLibrary.simpleMessage("계속"),
+    "you_have_account": MessageLookupByLibrary.simpleMessage("계정이 있으신가요? "),
   };
 }

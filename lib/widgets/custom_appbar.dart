@@ -48,7 +48,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
                   ),
                 ),
                 SvgPicture.asset("assets/ic_language.svg"),
-                SvgPicture.asset("assets/ic_arrow_down.svg"),
+                Icon(Icons.arrow_drop_down, color: Colors.black)
               ],
             ),
           ),

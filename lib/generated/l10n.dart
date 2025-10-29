@@ -279,170 +279,170 @@ class S {
     );
   }
 
-  /// `Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.`
+  /// `Your session has expired. Please log in again.`
   String get error_session_expired {
     return Intl.message(
-      'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
+      'Your session has expired. Please log in again.',
       name: 'error_session_expired',
       desc: '',
       args: [],
     );
   }
 
-  /// `Bạn không có quyền thực hiện hành động này.`
+  /// `You do not have permission to perform this action.`
   String get error_permission_denied {
     return Intl.message(
-      'Bạn không có quyền thực hiện hành động này.',
+      'You do not have permission to perform this action.',
       name: 'error_permission_denied',
       desc: '',
       args: [],
     );
   }
 
-  /// `Không tìm thấy dữ liệu yêu cầu.`
+  /// `Requested data not found.`
   String get error_not_found {
     return Intl.message(
-      'Không tìm thấy dữ liệu yêu cầu.',
+      'Requested data not found.',
       name: 'error_not_found',
       desc: '',
       args: [],
     );
   }
 
-  /// `Dữ liệu không hợp lệ.`
+  /// `Invalid data.`
   String get error_invalid_data {
     return Intl.message(
-      'Dữ liệu không hợp lệ.',
+      'Invalid data.',
       name: 'error_invalid_data',
       desc: '',
       args: [],
     );
   }
 
-  /// `Lỗi máy chủ. Vui lòng thử lại sau.`
+  /// `Server error. Please try again later.`
   String get error_server {
     return Intl.message(
-      'Lỗi máy chủ. Vui lòng thử lại sau.',
+      'Server error. Please try again later.',
       name: 'error_server',
       desc: '',
       args: [],
     );
   }
 
-  /// `Kết nối tới máy chủ quá thời gian. Vui lòng kiểm tra kết nối mạng.`
+  /// `Connection to the server timed out. Please check your network connection.`
   String get error_connection_timeout {
     return Intl.message(
-      'Kết nối tới máy chủ quá thời gian. Vui lòng kiểm tra kết nối mạng.',
+      'Connection to the server timed out. Please check your network connection.',
       name: 'error_connection_timeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Nhận dữ liệu quá thời gian. Vui lòng thử lại sau.`
+  /// `Receiving data timed out. Please try again later.`
   String get error_receive_timeout {
     return Intl.message(
-      'Nhận dữ liệu quá thời gian. Vui lòng thử lại sau.',
+      'Receiving data timed out. Please try again later.',
       name: 'error_receive_timeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Gửi dữ liệu quá thời gian. Vui lòng thử lại sau.`
+  /// `Sending data timed out. Please try again later.`
   String get error_send_timeout {
     return Intl.message(
-      'Gửi dữ liệu quá thời gian. Vui lòng thử lại sau.',
+      'Sending data timed out. Please try again later.',
       name: 'error_send_timeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Yêu cầu đã bị hủy.`
+  /// `The request was cancelled.`
   String get error_request_cancelled {
     return Intl.message(
-      'Yêu cầu đã bị hủy.',
+      'The request was cancelled.',
       name: 'error_request_cancelled',
       desc: '',
       args: [],
     );
   }
 
-  /// `Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng.`
+  /// `Cannot connect to the server. Please check your network connection.`
   String get error_network_unreachable {
     return Intl.message(
-      'Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng.',
+      'Cannot connect to the server. Please check your network connection.',
       name: 'error_network_unreachable',
       desc: '',
       args: [],
     );
   }
 
-  /// `Đã xảy ra lỗi không xác định.`
+  /// `An unknown error has occurred.`
   String get error_unknown {
     return Intl.message(
-      'Đã xảy ra lỗi không xác định.',
+      'An unknown error has occurred.',
       name: 'error_unknown',
       desc: '',
       args: [],
     );
   }
 
-  /// `Mật khẩu không chính xác`
+  /// `Incorrect password.`
   String get error_incorrect_password {
     return Intl.message(
-      'Mật khẩu không chính xác',
+      'Incorrect password.',
       name: 'error_incorrect_password',
       desc: '',
       args: [],
     );
   }
 
-  /// `Tài khoản không tồn tại`
+  /// `Account does not exist.`
   String get error_not_found_account {
     return Intl.message(
-      'Tài khoản không tồn tại',
+      'Account does not exist.',
       name: 'error_not_found_account',
       desc: '',
       args: [],
     );
   }
 
-  /// `Số điện thoại này đã được đăng ký.`
+  /// `This phone number is already registered.`
   String get error_phone_number_already_registered {
     return Intl.message(
-      'Số điện thoại này đã được đăng ký.',
+      'This phone number is already registered.',
       name: 'error_phone_number_already_registered',
       desc: '',
       args: [],
     );
   }
 
-  /// `Mật khẩu cần có ít nhất 6 ký tự`
+  /// `Password must be at least 6 characters long.`
   String get error_too_short_password {
     return Intl.message(
-      'Mật khẩu cần có ít nhất 6 ký tự',
+      'Password must be at least 6 characters long.',
       name: 'error_too_short_password',
       desc: '',
       args: [],
     );
   }
 
-  /// `Đã xảy ra lỗi. Vui lòng thử lại sau.`
+  /// `An error has occurred. Please try again later.`
   String get error_occurred {
     return Intl.message(
-      'Đã xảy ra lỗi. Vui lòng thử lại sau.',
+      'An error has occurred. Please try again later.',
       name: 'error_occurred',
       desc: '',
       args: [],
     );
   }
 
-  /// `Vui lòng kiểm tra lại kết nối mạng`
+  /// `Please check your internet connection.`
   String get no_connect_internet {
     return Intl.message(
-      'Vui lòng kiểm tra lại kết nối mạng',
+      'Please check your internet connection.',
       name: 'no_connect_internet',
       desc: '',
       args: [],
