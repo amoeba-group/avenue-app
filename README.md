@@ -5,6 +5,7 @@
 - flutter pub run intl_utils:generate
 - open ios/Podfile
 - sh scripts/ios_build_dev.sh
+- sh scripts/ios_build_prod.sh
 
 
 Create hash for facebook: 

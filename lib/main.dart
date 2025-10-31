@@ -9,7 +9,6 @@ import 'services/client_service.dart';
 import 'services/local_storage_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:avenue/features/auth/login/login_page.dart';
 import 'package:avenue/providers/language_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:avenue/managers/firebase_messaging_manager.dart';
@@ -24,13 +23,11 @@ void main() async {
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      await EnvConfig().init();
       await Firebase.initializeApp();
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
-        kReleaseMode,
-      );
+      await EnvConfig().init();
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(kReleaseMode,);
       Provider.debugCheckInvalidValueType = null;
-      runApp(MyApp());
+      runApp(GvMarketApp());
     },
     (error, stackTrace) {
       FirebaseCrashlytics.instance.recordError(error, stackTrace);
@@ -38,8 +35,8 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class GvMarketApp extends StatelessWidget {
+  const GvMarketApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +57,6 @@ class MyApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final language = context.watch<LanguageProvider>();
-          print('-----> ${language.locale.languageCode}');
           return MaterialApp(
             key: navigatorKey,
             debugShowCheckedModeBanner: false,
@@ -87,7 +83,7 @@ class MyApp extends StatelessWidget {
                   if (isLoggedIn) {
                     return const MainScreen();
                   } else {
-                    return const LoginPage();
+                    return const MainScreen();
                   }
                 }
                 return Container(

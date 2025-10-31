@@ -25,6 +25,7 @@ dependencies:
   firebase_core: ^4.1.1
   firebase_messaging: ^16.0.2
   firebase_crashlytics: ^5.0.2
+  flutter_native_splash: ^2.4.7
   webview_flutter: ^4.4.2
   flutter_svg: ^2.2.0
   sign_in_with_apple: ^7.0.1
@@ -54,5 +55,9 @@ flutter_launcher_icons:
   ios: true
   image_path: assets/ic_app.png
   remove_alpha_ios: true
+
+
+
+
 
 
