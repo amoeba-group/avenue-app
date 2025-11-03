@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../generated/l10n.dart';
 
 class AppUtils {
   static void openUrl(String url) async {
@@ -114,5 +117,21 @@ class AppUtils {
         ],
       ),
     );
+  }
+
+  static void checkVersionApp(BuildContext context) async {
+    NewVersionPlus newVersion = NewVersionPlus();
+    final status = await newVersion.getVersionStatus();
+    if (status != null && status.canUpdate && context.mounted) {
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status,
+        dialogTitle: S.of(context).title_update_app,
+        dialogText: S.of(context).mgs_update_app(status.storeVersion),
+        updateButtonText: S.of(context).btn_update,
+        launchModeVersion: LaunchModeVersion.external,
+        allowDismissal: false,
+      );
+    }
   }
 }

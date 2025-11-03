@@ -448,6 +448,31 @@ class S {
       args: [],
     );
   }
+
+  /// `Update Information`
+  String get title_update_app {
+    return Intl.message(
+      'Update Information',
+      name: 'title_update_app',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A new version ({ver}) of the app is available. Please update to continue using it.`
+  String mgs_update_app(Object ver) {
+    return Intl.message(
+      'A new version ($ver) of the app is available. Please update to continue using it.',
+      name: 'mgs_update_app',
+      desc: '',
+      args: [ver],
+    );
+  }
+
+  /// `Update Now`
+  String get btn_update {
+    return Intl.message('Update Now', name: 'btn_update', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

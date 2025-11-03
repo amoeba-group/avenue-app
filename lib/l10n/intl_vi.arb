@@ -47,5 +47,13 @@
   "error_phone_number_already_registered": "Số điện thoại này đã được đăng ký.",
   "error_too_short_password": "Mật khẩu cần có ít nhất 6 ký tự",
   "error_occurred": "Đã xảy ra lỗi. Vui lòng thử lại sau.",
-  "no_connect_internet": "Vui lòng kiểm tra lại kết nối mạng"
+  "no_connect_internet": "Vui lòng kiểm tra lại kết nối mạng",
+  "title_update_app": "Thông tin cập nhật",
+  "mgs_update_app": "Ứng dụng đã có phiên bản mới ({ver}). Bạn cần cập nhật để tiếp tục sử dụng.",
+  "@mgs_update_app": {
+    "placeholders": {
+      "ver": {}
+    }
+  },
+  "btn_update": "Cập nhật ngay"
 }

@@ -2,6 +2,7 @@ import 'package:avenue/features/bill/bill_page.dart';
 import 'package:avenue/features/home/home_page.dart';
 import 'package:avenue/features/notification/notification_page.dart';
 import 'package:avenue/features/profile/profile_page.dart';
+import 'package:avenue/utils/app_utils.dart';
 import 'package:avenue/widgets/bottom_nv_item.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +17,14 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    if (mounted) {
+      AppUtils.checkVersionApp(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

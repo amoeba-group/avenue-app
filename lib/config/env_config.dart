@@ -1,4 +1,4 @@
-import 'package:package_info_plus/package_info_plus.dart';
+import 'dart:developer';
 
 enum Flavor { dev, prod }
 
@@ -6,8 +6,9 @@ class EnvConfig {
   static late final Flavor _flavor;
 
   Future<void> init() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    switch (packageInfo.packageName.split('.').last) {
+    const String appFlavor = String.fromEnvironment('FLAVOR');
+    log("APP_FLAVOR: $appFlavor");
+    switch (appFlavor) {
       case 'dev':
         _flavor = Flavor.dev;
         break;

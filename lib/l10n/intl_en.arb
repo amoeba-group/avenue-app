@@ -47,5 +47,13 @@
   "error_phone_number_already_registered": "This phone number is already registered.",
   "error_too_short_password": "Password must be at least 6 characters long.",
   "error_occurred": "An error has occurred. Please try again later.",
-  "no_connect_internet": "Please check your internet connection."
+  "no_connect_internet": "Please check your internet connection.",
+  "title_update_app": "Update Information",
+  "mgs_update_app": "A new version ({ver}) of the app is available. Please update to continue using it.",
+  "@mgs_update_app": {
+    "placeholders": {
+      "ver": {}
+    }
+  },
+  "btn_update": "Update Now"
 }

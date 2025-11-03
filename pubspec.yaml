@@ -35,7 +35,7 @@ dependencies:
   connectivity_plus: ^7.0.0
   flutter_local_notifications: ^19.2.1
   flutter_secure_storage: ^9.2.4
-  package_info_plus: ^9.0.0
+  new_version_plus: ^0.1.1
 
 dev_dependencies:
   flutter_test:

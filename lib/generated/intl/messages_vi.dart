@@ -20,11 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
+  static String m0(ver) =>
+      "Ứng dụng đã có phiên bản mới (${ver}). Bạn cần cập nhật để tiếp tục sử dụng.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
     "address": MessageLookupByLibrary.simpleMessage("Địa chỉ: "),
     "apple_id": MessageLookupByLibrary.simpleMessage("Apple Id"),
+    "btn_update": MessageLookupByLibrary.simpleMessage("Cập nhật ngay"),
     "cancel": MessageLookupByLibrary.simpleMessage("Hủy"),
     "change_password": MessageLookupByLibrary.simpleMessage("Đổi mật khẩu"),
     "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
@@ -99,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Tầng 2, Tòa nhà số 19-21 Tân Cảng, Phường Thạnh Mỹ Tây, TP. HCM",
     ),
     "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+    "mgs_update_app": m0,
     "no_connect_internet": MessageLookupByLibrary.simpleMessage(
       "Vui lòng kiểm tra lại kết nối mạng",
     ),
@@ -120,6 +125,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Điều khoản dịch vụ",
     ),
     "title": MessageLookupByLibrary.simpleMessage("Thông báo"),
+    "title_update_app": MessageLookupByLibrary.simpleMessage(
+      "Thông tin cập nhật",
+    ),
     "txt_continue": MessageLookupByLibrary.simpleMessage("Tiếp tục"),
     "you_have_account": MessageLookupByLibrary.simpleMessage(
       "Bạn đã có tài khoản? ",

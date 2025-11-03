@@ -20,11 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(ver) =>
+      "A new version (${ver}) of the app is available. Please update to continue using it.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "account": MessageLookupByLibrary.simpleMessage("Account"),
     "address": MessageLookupByLibrary.simpleMessage("Address: "),
     "apple_id": MessageLookupByLibrary.simpleMessage("Apple Id"),
+    "btn_update": MessageLookupByLibrary.simpleMessage("Update Now"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "change_password": MessageLookupByLibrary.simpleMessage("Change password"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -97,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "2nd Floor, Building No. 19-21 Tan Cang, Thanh My Tay Ward, Ho Chi Minh City",
     ),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "mgs_update_app": m0,
     "no_connect_internet": MessageLookupByLibrary.simpleMessage(
       "Please check your internet connection.",
     ),
@@ -116,6 +121,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Terms of Service",
     ),
     "title": MessageLookupByLibrary.simpleMessage("Notification"),
+    "title_update_app": MessageLookupByLibrary.simpleMessage(
+      "Update Information",
+    ),
     "txt_continue": MessageLookupByLibrary.simpleMessage("Continue"),
     "you_have_account": MessageLookupByLibrary.simpleMessage(
       "You have an account? ",

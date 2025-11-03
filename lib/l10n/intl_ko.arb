@@ -47,5 +47,13 @@
   "error_phone_number_already_registered": "이 전화번호는 이미 등록되어 있습니다.",
   "error_too_short_password": "비밀번호는 최소 6자리 이상이어야 합니다.",
   "error_occurred": "오류가 발생했습니다. 나중에 다시 시도해 주세요.",
-  "no_connect_internet": "인터넷 연결을 확인해 주세요."
+  "no_connect_internet": "인터넷 연결을 확인해 주세요.",
+  "title_update_app": "업데이트 정보",
+  "mgs_update_app": "앱의 새 버전({ver})이 출시되었습니다. 계속 사용하려면 업데이트하세요.",
+  "@mgs_update_app": {
+    "placeholders": {
+      "ver": {}
+    }
+  },
+  "btn_update": "지금 업데이트"
 }

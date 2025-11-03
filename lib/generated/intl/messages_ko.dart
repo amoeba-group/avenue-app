@@ -20,11 +20,14 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ko';
 
+  static String m0(ver) => "앱의 새 버전(${ver})이 출시되었습니다. 계속 사용하려면 업데이트하세요.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "account": MessageLookupByLibrary.simpleMessage("계정"),
     "address": MessageLookupByLibrary.simpleMessage("주소: "),
     "apple_id": MessageLookupByLibrary.simpleMessage("Apple ID"),
+    "btn_update": MessageLookupByLibrary.simpleMessage("지금 업데이트"),
     "cancel": MessageLookupByLibrary.simpleMessage("취소"),
     "change_password": MessageLookupByLibrary.simpleMessage("비밀번호 변경"),
     "confirm": MessageLookupByLibrary.simpleMessage("확인"),
@@ -91,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "호치민시, 탄깡, 탄깡 19-21번지 2층",
     ),
     "login": MessageLookupByLibrary.simpleMessage("로그인"),
+    "mgs_update_app": m0,
     "no_connect_internet": MessageLookupByLibrary.simpleMessage(
       "인터넷 연결을 확인해 주세요.",
     ),
@@ -106,6 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tab_profile": MessageLookupByLibrary.simpleMessage("프로필"),
     "terms_of_service": MessageLookupByLibrary.simpleMessage("서비스 이용약관"),
     "title": MessageLookupByLibrary.simpleMessage("알림"),
+    "title_update_app": MessageLookupByLibrary.simpleMessage("업데이트 정보"),
     "txt_continue": MessageLookupByLibrary.simpleMessage("계속"),
     "you_have_account": MessageLookupByLibrary.simpleMessage("계정이 있으신가요? "),
   };
