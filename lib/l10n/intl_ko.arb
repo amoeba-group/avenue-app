@@ -55,5 +55,9 @@
       "ver": {}
     }
   },
-  "btn_update": "지금 업데이트"
+  "btn_update": "지금 업데이트",
+  "btn_retry": "다시 시도",
+  "payment_success_title": "결제가 완료되었습니다",
+  "btn_back_home": "홈으로 돌아가기",
+  "press_back_again_to_exit": "뒤로 버튼을 한 번 더 누르면 앱이 종료됩니다"
 }

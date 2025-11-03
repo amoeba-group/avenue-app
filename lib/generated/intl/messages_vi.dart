@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
     "address": MessageLookupByLibrary.simpleMessage("Địa chỉ: "),
     "apple_id": MessageLookupByLibrary.simpleMessage("Apple Id"),
+    "btn_back_home": MessageLookupByLibrary.simpleMessage("Về trang chủ"),
+    "btn_retry": MessageLookupByLibrary.simpleMessage("Thử lại"),
     "btn_update": MessageLookupByLibrary.simpleMessage("Cập nhật ngay"),
     "cancel": MessageLookupByLibrary.simpleMessage("Hủy"),
     "change_password": MessageLookupByLibrary.simpleMessage("Đổi mật khẩu"),
@@ -111,7 +113,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hoặc đăng nhập bằng",
     ),
     "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
+    "payment_success_title": MessageLookupByLibrary.simpleMessage(
+      "Thanh toán thành công",
+    ),
     "phone": MessageLookupByLibrary.simpleMessage("Số điện thoại: "),
+    "press_back_again_to_exit": MessageLookupByLibrary.simpleMessage(
+      "Nhấn back lần nữa để thoát ứng dụng",
+    ),
     "privacy_policies": MessageLookupByLibrary.simpleMessage(
       "Chính sách bảo mật",
     ),

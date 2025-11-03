@@ -2,10 +2,12 @@ import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../config/env_config.dart';
-import '../../constants/constants.dart';
+import '../../generated/l10n.dart';
 import '../../providers/language_provider.dart';
 
 class BillPage extends StatefulWidget {
@@ -112,9 +114,7 @@ class _BillPageState extends State<BillPage> {
   @override
   void didUpdateWidget(covariant BillPage oldWidget) {
     if (oldWidget.lang != widget.lang) {
-      _webViewController.loadRequest(
-        Uri.parse("$url${widget.lang}"),
-      );
+      _webViewController.loadRequest(Uri.parse("$url${widget.lang}"));
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -129,11 +129,31 @@ class _BillPageState extends State<BillPage> {
           backgroundColor: Colors.white,
           body: isError
               ? Center(
-                  child: TextButton(
-                    onPressed: () {
-                      _webViewController.reload();
-                    },
-                    child: Text('Lỗi kết nối'),
+                  child: Column(
+                    spacing: 20,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/error.svg",
+                        height: 120,
+                        width: 120,
+                        theme: SvgTheme(currentColor: Color(0xFFFC9501)),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          _webViewController.reload();
+                        },
+                        child: Text(
+                          S.of(context).btn_retry,
+                          style: GoogleFonts.bricolageGrotesque(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               : WebViewWidget(

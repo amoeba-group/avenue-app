@@ -5,11 +5,12 @@ import 'package:avenue/providers/language_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../config/env_config.dart';
-import '../../constants/constants.dart';
+import '../../generated/l10n.dart';
 
 class HomePage extends StatefulWidget {
   final String lang;
@@ -78,12 +79,12 @@ class _HomePageState extends State<HomePage> {
     context.read<FirebaseMessagingManager>().registerTokenFCM();
   }
 
-  void _orderSuccess() {
-    _webViewController.loadRequest(Uri.parse("$url${widget.lang}"));
+  void _orderSuccess() async {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => OrderSuccessPage()),
     );
+    await _webViewController.loadRequest(Uri.parse("$url${widget.lang}"));
   }
 
   Future<bool> _handleBackPress() async {
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage> {
       _lastPressedAt = now;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Nhấn back lần nữa để thoát ứng dụng'),
+          content: Text(S.current.press_back_again_to_exit),
           duration: Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
         ),
@@ -141,11 +142,31 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
           body: isError
               ? Center(
-                  child: TextButton(
-                    onPressed: () {
-                      _webViewController.reload();
-                    },
-                    child: Text('Lỗi kết nối'),
+                  child: Column(
+                    spacing: 20,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/error.svg",
+                        height: 120,
+                        width: 120,
+                        theme: SvgTheme(currentColor: Color(0xFFFC9501)),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          _webViewController.reload();
+                        },
+                        child: Text(
+                          S.of(context).btn_retry,
+                          style: GoogleFonts.bricolageGrotesque(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               : WebViewWidget(controller: _webViewController),

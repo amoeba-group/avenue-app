@@ -55,5 +55,9 @@
       "ver": {}
     }
   },
-  "btn_update": "Cập nhật ngay"
+  "btn_update": "Cập nhật ngay",
+  "btn_retry": "Thử lại",
+  "payment_success_title": "Thanh toán thành công",
+  "btn_back_home": "Về trang chủ",
+  "press_back_again_to_exit": "Nhấn back lần nữa để thoát ứng dụng"
 }

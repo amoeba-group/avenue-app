@@ -55,5 +55,10 @@
       "ver": {}
     }
   },
-  "btn_update": "Update Now"
+  "btn_update": "Update Now",
+  "btn_retry": "Retry",
+  "payment_success_title": "Payment Successful",
+  "btn_back_home": "Back to Home",
+  "press_back_again_to_exit": "Press back again to exit the app"
+
 }

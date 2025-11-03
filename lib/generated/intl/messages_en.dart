@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "account": MessageLookupByLibrary.simpleMessage("Account"),
     "address": MessageLookupByLibrary.simpleMessage("Address: "),
     "apple_id": MessageLookupByLibrary.simpleMessage("Apple Id"),
+    "btn_back_home": MessageLookupByLibrary.simpleMessage("Back to Home"),
+    "btn_retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "btn_update": MessageLookupByLibrary.simpleMessage("Update Now"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "change_password": MessageLookupByLibrary.simpleMessage("Change password"),
@@ -107,7 +109,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "or_login_with": MessageLookupByLibrary.simpleMessage("Or login with"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
+    "payment_success_title": MessageLookupByLibrary.simpleMessage(
+      "Payment Successful",
+    ),
     "phone": MessageLookupByLibrary.simpleMessage("Phone number: "),
+    "press_back_again_to_exit": MessageLookupByLibrary.simpleMessage(
+      "Press back again to exit the app",
+    ),
     "privacy_policies": MessageLookupByLibrary.simpleMessage(
       "Privacy Policies",
     ),

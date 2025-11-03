@@ -473,6 +473,41 @@ class S {
   String get btn_update {
     return Intl.message('Update Now', name: 'btn_update', desc: '', args: []);
   }
+
+  /// `Retry`
+  String get btn_retry {
+    return Intl.message('Retry', name: 'btn_retry', desc: '', args: []);
+  }
+
+  /// `Payment Successful`
+  String get payment_success_title {
+    return Intl.message(
+      'Payment Successful',
+      name: 'payment_success_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back to Home`
+  String get btn_back_home {
+    return Intl.message(
+      'Back to Home',
+      name: 'btn_back_home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Press back again to exit the app`
+  String get press_back_again_to_exit {
+    return Intl.message(
+      'Press back again to exit the app',
+      name: 'press_back_again_to_exit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

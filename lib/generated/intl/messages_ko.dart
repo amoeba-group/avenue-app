@@ -27,6 +27,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "account": MessageLookupByLibrary.simpleMessage("계정"),
     "address": MessageLookupByLibrary.simpleMessage("주소: "),
     "apple_id": MessageLookupByLibrary.simpleMessage("Apple ID"),
+    "btn_back_home": MessageLookupByLibrary.simpleMessage("홈으로 돌아가기"),
+    "btn_retry": MessageLookupByLibrary.simpleMessage("다시 시도"),
     "btn_update": MessageLookupByLibrary.simpleMessage("지금 업데이트"),
     "cancel": MessageLookupByLibrary.simpleMessage("취소"),
     "change_password": MessageLookupByLibrary.simpleMessage("비밀번호 변경"),
@@ -100,7 +102,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "or_login_with": MessageLookupByLibrary.simpleMessage("다음 계정으로 로그인"),
     "password": MessageLookupByLibrary.simpleMessage("비밀번호"),
+    "payment_success_title": MessageLookupByLibrary.simpleMessage(
+      "결제가 완료되었습니다",
+    ),
     "phone": MessageLookupByLibrary.simpleMessage("전화번호: "),
+    "press_back_again_to_exit": MessageLookupByLibrary.simpleMessage(
+      "뒤로 버튼을 한 번 더 누르면 앱이 종료됩니다",
+    ),
     "privacy_policies": MessageLookupByLibrary.simpleMessage("개인정보 처리방침"),
     "sign_out": MessageLookupByLibrary.simpleMessage("로그아웃"),
     "signup": MessageLookupByLibrary.simpleMessage("회원가입"),
