@@ -57,8 +57,12 @@ class _HomePageState extends State<HomePage> {
               _orderSuccess();
             }
             if (isError) {
-              isError = false;
-              setState(() {});
+              final connectivityResult = await Connectivity()
+                  .checkConnectivity();
+              if (connectivityResult.single != ConnectivityResult.none) {
+                isError = false;
+                setState(() {});
+              }
             }
           },
           onUrlChange: (url) {},
