@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'features/main_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'managers/remote_config_manager.dart';
 import 'services/client_service.dart';
 import 'services/local_storage_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,6 +25,8 @@ void main() async {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
       await Firebase.initializeApp();
+      // final remoteConfigManager = RemoteConfigManager();
+      // await remoteConfigManager.init();
       await EnvConfig().init();
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(kReleaseMode,);
       Provider.debugCheckInvalidValueType = null;

@@ -1,12 +1,12 @@
 import 'package:avenue/features/bill/bill_page.dart';
 import 'package:avenue/features/home/home_page.dart';
-import 'package:avenue/features/notification/notification_page.dart';
 import 'package:avenue/features/profile/profile_page.dart';
 import 'package:avenue/utils/app_utils.dart';
 import 'package:avenue/widgets/bottom_nv_item.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../generated/l10n.dart';
+import 'notification/notification_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
         index: currentIndex,
         children: [
           HomePage(lang: lang,),
-          NotificationPage(),
+          // NotificationPage(),
           BillPage(lang: lang),
           ProfilePage(),
         ],
@@ -80,13 +80,13 @@ class _MainScreenState extends State<MainScreen> {
               activeIcon: BottomNvItem(ic: "assets/ic_selected_home.svg"),
               label: S.of(context).tab_home,
             ),
-            BottomNavigationBarItem(
-              icon: BottomNvItem(ic: "assets/ic_notification.svg"),
-              activeIcon: BottomNvItem(
-                ic: "assets/ic_selected_notification.svg",
-              ),
-              label: S.of(context).tab_notification,
-            ),
+            // BottomNavigationBarItem(
+            //   icon: BottomNvItem(ic: "assets/ic_notification.svg"),
+            //   activeIcon: BottomNvItem(
+            //     ic: "assets/ic_selected_notification.svg",
+            //   ),
+            //   label: S.of(context).tab_notification,
+            // ),
             BottomNavigationBarItem(
               icon: BottomNvItem(ic: "assets/ic_billing.svg"),
               activeIcon: BottomNvItem(ic: "assets/ic_selected_billing.svg"),

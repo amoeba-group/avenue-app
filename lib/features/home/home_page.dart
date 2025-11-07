@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'package:avenue/features/home/order_success_page.dart';
 import 'package:avenue/managers/firebase_messaging_manager.dart';
 import 'package:avenue/providers/language_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -9,12 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import '../../config/env_config.dart';
 import '../../generated/l10n.dart';
 
 class HomePage extends StatefulWidget {
   final String lang;
-
   const HomePage({super.key, required this.lang});
 
   @override
@@ -22,76 +20,63 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final WebViewController _webViewController = WebViewController();
+  late WebViewController _webViewController;
   DateTime? _lastPressedAt;
   String newUrl = '';
   bool isError = false;
   String url = EnvConfig.current['urlGvMarket'];
+  final ValueNotifier<bool> isDetailOrder = ValueNotifier(false);
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      _initializeWebView();
-    });
+    _createWebView();
   }
 
-  void _initializeWebView() async {
-    _webViewController
+  void _createWebView() {
+    final controller = WebKitWebViewController(
+      WebKitWebViewControllerCreationParams(allowsInlineMediaPlayback: true),
+    );
+    controller.setAllowsBackForwardNavigationGestures(true);
+    _webViewController = WebViewController.fromPlatform(controller)
       ..setBackgroundColor(Colors.white)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {},
           onPageStarted: (String url) async {
-            log('Page finished loading: $url');
             Uri uri = Uri.parse(url);
             String? lang = uri.queryParameters['lang'];
-            if (widget.lang != lang) {
-              context.read<LanguageProvider>().saveLocale(Locale(lang!));
+            if (widget.lang != lang && lang != null) {
+              context.read<LanguageProvider>().saveLocale(Locale(lang));
             }
           },
           onPageFinished: (String url) async {
             String? title = await _webViewController.getTitle();
             if (title != null && title.contains("Order Buy")) {
-              _orderSuccess();
+              isDetailOrder.value = true;
             }
             if (isError) {
               final connectivityResult = await Connectivity()
                   .checkConnectivity();
               if (connectivityResult.single != ConnectivityResult.none) {
-                isError = false;
-                setState(() {});
+                setState(() => isError = false);
               }
-            }
-          },
-          onUrlChange: (url) {},
-          onWebResourceError: (WebResourceError error) async {
-            final connectivityResult = await Connectivity().checkConnectivity();
-            if (connectivityResult.single == ConnectivityResult.none) {
-              isError = true;
-              setState(() {});
-            } else {
-              debugPrint(
-                "⚠️ Lỗi khác trong WebView: ${error.errorCode}, ${error.description}",
-              );
             }
           },
         ),
       )
       ..loadRequest(Uri.parse("$url${widget.lang}"));
+
     context.read<FirebaseMessagingManager>().registerTokenFCM();
   }
 
-  void _orderSuccess() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => OrderSuccessPage()),
-    );
-    await _webViewController.loadRequest(Uri.parse("$url${widget.lang}"));
-  }
-
   Future<bool> _handleBackPress() async {
+    if (isDetailOrder.value) {
+      clearWebViewHistory();
+      return true;
+    }
+
     if (await _webViewController.canGoBack()) {
       _webViewController.goBack();
       return false;
@@ -173,9 +158,45 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 )
-              : WebViewWidget(controller: _webViewController),
+              : Stack(
+                  children: [
+                    WebViewWidget(controller: _webViewController),
+                    ValueListenableBuilder(
+                      valueListenable: isDetailOrder,
+                      builder: (context, isEnable, _) {
+                        if (isEnable) {
+                          return Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 16, top: 20),
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  clearWebViewHistory();
+                                },
+                                child: Icon(
+                                  Icons.clear_rounded,
+                                  color: Colors.black,
+                                  size: 28,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        return SizedBox.shrink();
+                      },
+                    ),
+                  ],
+                ),
         ),
       ),
     );
+  }
+
+  Future<void> clearWebViewHistory() async {
+    setState(() {
+      _createWebView();
+      isDetailOrder.value = false;
+    });
   }
 }

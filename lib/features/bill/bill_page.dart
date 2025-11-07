@@ -99,7 +99,7 @@ class _BillPageState extends State<BillPage> {
       _lastPressedAt = now;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Nhấn back lần nữa để thoát ứng dụng'),
+          content: Text(S.current.press_back_again_to_exit),
           duration: Duration(seconds: 2),
           behavior: SnackBarBehavior.floating,
         ),
