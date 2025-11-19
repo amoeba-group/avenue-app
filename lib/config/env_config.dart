@@ -19,13 +19,11 @@ class EnvConfig {
   }
 
   static const Map<String, dynamic> dev = {
-    'baseUrl': 'http://54.179.168.192/api/',
     'urlGvMarket': 'https://dev.amoeba.site:9000/avenue/gvmarket?lang=',
     'urlAmoebaBill': 'https://bill.amoeba.site?lang=',
   };
 
   static const Map<String, dynamic> prod = {
-    'baseUrl': 'http://54.179.168.192/api/',
     'urlGvMarket': 'https://avenue.amoeba.site/gvmarket?lang=',
     'urlAmoebaBill': 'https://bill.amoeba.site?lang=',
   };
@@ -35,7 +33,7 @@ class EnvConfig {
       case 'dev':
         return dev;
       default:
-        return dev;
+        return prod;
     }
   }
 }
