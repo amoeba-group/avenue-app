@@ -1,4 +1,4 @@
-import 'package:avenue/managers/firebase_messaging_manager.dart';
+import 'dart:io';
 import 'package:avenue/providers/language_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +34,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _createWebView() {
-    final controller = WebKitWebViewController(
-      WebKitWebViewControllerCreationParams(allowsInlineMediaPlayback: true),
-    );
-    controller.setAllowsBackForwardNavigationGestures(true);
-    _webViewController = WebViewController.fromPlatform(controller)
+    if (Platform.isIOS) {
+      final controller = WebKitWebViewController(
+        WebKitWebViewControllerCreationParams(allowsInlineMediaPlayback: true),
+      );
+      controller.setAllowsBackForwardNavigationGestures(true);
+      _webViewController = WebViewController.fromPlatform(controller);
+    } else {
+      _webViewController = WebViewController();
+    }
+    _webViewController
       ..setBackgroundColor(Colors.white)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -67,8 +72,6 @@ class _HomePageState extends State<HomePage> {
         ),
       )
       ..loadRequest(Uri.parse("$url${widget.lang}"));
-
-    context.read<FirebaseMessagingManager>().registerTokenFCM();
   }
 
   Future<bool> _handleBackPress() async {

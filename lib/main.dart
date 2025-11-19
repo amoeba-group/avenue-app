@@ -24,16 +24,16 @@ void main() async {
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp();
+      //await Firebase.initializeApp();
       // final remoteConfigManager = RemoteConfigManager();
       // await remoteConfigManager.init();
       await EnvConfig().init();
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(kReleaseMode,);
+      //await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(kReleaseMode,);
       Provider.debugCheckInvalidValueType = null;
       runApp(GvMarketApp());
     },
     (error, stackTrace) {
-      FirebaseCrashlytics.instance.recordError(error, stackTrace);
+      //FirebaseCrashlytics.instance.recordError(error, stackTrace);
     },
   );
 }
@@ -52,7 +52,7 @@ class GvMarketApp extends StatelessWidget {
           create: (context) => AuthenticationRepository(context.read()),
           lazy: true,
         ),
-        Provider(create: (context) => FirebaseMessagingManager(context.read())),
+        //Provider(create: (context) => FirebaseMessagingManager(context.read())),
         ChangeNotifierProvider<LanguageProvider>(
           create: (context) => LanguageProvider(),
         ),

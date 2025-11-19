@@ -35,7 +35,7 @@ class EnvConfig {
       case 'dev':
         return dev;
       default:
-        return prod;
+        return dev;
     }
   }
 }
