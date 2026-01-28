@@ -19,13 +19,16 @@ class EnvConfig {
   }
 
   static const Map<String, dynamic> dev = {
-    'urlGvMarket': 'https://dev.amoeba.site:9000/avenue/gvmarket?lang=',
-    'urlAmoebaBill': 'https://bill.amoeba.site/gvmarket?lang=',
+    // 'urlGvMarket': 'https://dev.amoeba.site:9000/avenue/gvmarket?lang=',
+    // 'urlAmoebaBill': 'https://bill.amoeba.site/gvmarket?lang=',
+    'urlGvMarket': 'https://gvmarket.vn/shop?lang=',
+    'urlAmoebaBill': 'https://gvmarket.vn/my/orders?lang=',
   };
 
   static const Map<String, dynamic> prod = {
-    'urlGvMarket': 'https://avenue.amoeba.site/gvmarket?lang=',
-    'urlAmoebaBill': 'https://bill.amoeba.site/gvmarket?lang=',
+    // 'urlGvMarket': 'https://avenue.amoeba.site/gvmarket?lang=',
+    'urlGvMarket': 'https://gvmarket.vn/shop?lang=',
+    'urlAmoebaBill': 'https://gvmarket.vn/my/orders?lang=',
   };
 
   static Map<String, dynamic> get current {
