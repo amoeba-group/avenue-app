@@ -1,7 +1,7 @@
 name: avenue
-description: "A new Flutter project."
+description: "Ứng dụng GVMarket - Mua sắm tiện lợi"
 publish_to: 'none'
-version: 1.0.0+16
+version: 1.0.0+17
 
 environment:
   sdk: ^3.8.1
@@ -55,7 +55,7 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/ic_app.png
+  image_path: "assets/icon/icon.png"
   remove_alpha_ios: true
 
 

@@ -1,104 +1,46 @@
-import 'dart:async';
-import 'config/env_config.dart';
-import 'generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'features/main_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart';
-import 'managers/remote_config_manager.dart';
-import 'services/client_service.dart';
-import 'services/local_storage_service.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:avenue/providers/language_provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:avenue/managers/firebase_messaging_manager.dart';
-import 'package:avenue/repository/notification_repository.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:avenue/repository/authentication_repository.dart';
-import 'package:avenue/services/sign_in_social_service.dart';
+import 'package:flutter/services.dart';
+import 'app.dart';
+import 'services/connectivity_service.dart';
+import 'services/notification_service.dart';
 
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
+/// Entry point của ứng dụng
+/// 
+/// Đây là nơi ứng dụng Flutter bắt đầu chạy
 void main() async {
-  runZonedGuarded(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
-      //await Firebase.initializeApp();
-      // final remoteConfigManager = RemoteConfigManager();
-      // await remoteConfigManager.init();
-      await EnvConfig().init();
-      //await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(kReleaseMode,);
-      Provider.debugCheckInvalidValueType = null;
-      runApp(GvMarketApp());
-    },
-    (error, stackTrace) {
-      //FirebaseCrashlytics.instance.recordError(error, stackTrace);
-    },
+  // Đảm bảo Flutter đã được khởi tạo
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Cấu hình orientation (chỉ cho phép portrait)
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  
+  // Cấu hình style cho status bar
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+    ),
   );
+  
+  // Khởi tạo các services
+  await _initializeServices();
+  
+  // Chạy ứng dụng
+  runApp(const GVMarketApp());
 }
 
-class GvMarketApp extends StatelessWidget {
-  const GvMarketApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider(create: (context) => ClientService(), lazy: true),
-        Provider(create: (context) => SignInSocialService(), lazy: true),
-        Provider(create: (context) => NotificationRepository(), lazy: true),
-        Provider(
-          create: (context) => AuthenticationRepository(context.read()),
-          lazy: true,
-        ),
-        //Provider(create: (context) => FirebaseMessagingManager(context.read())),
-        ChangeNotifierProvider<LanguageProvider>(
-          create: (context) => LanguageProvider(),
-        ),
-      ],
-      child: Builder(
-        builder: (context) {
-          final language = context.watch<LanguageProvider>();
-          return MaterialApp(
-            key: navigatorKey,
-            debugShowCheckedModeBanner: false,
-            title: 'GV Market',
-            theme: ThemeData(
-              useMaterial3: false,
-              primaryColor: Color(0xFFFC9501),
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              appBarTheme: AppBarTheme(backgroundColor: Color(0xFFFC9501)),
-            ),
-            locale: language.locale,
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [Locale("vi"), Locale("en"), Locale("ko")],
-            home: FutureBuilder<bool>(
-              future: LocalStorageService.getLoginStatus(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final isLoggedIn = snapshot.data ?? false;
-                  if (isLoggedIn) {
-                    return const MainScreen();
-                  } else {
-                    return const MainScreen();
-                  }
-                }
-                return Container(
-                  color: Colors.white,
-                  alignment: Alignment.center,
-                  child: SvgPicture.asset("assets/ic_logo.svg"),
-                );
-              },
-            ),
-          );
-        },
-      ),
-    );
-  }
+/// Khởi tạo các services cần thiết
+Future<void> _initializeServices() async {
+  // 1. Khởi tạo Connectivity Service
+  ConnectivityService().initialize();
+  
+  // 2. Khởi tạo Notification Service
+  // (Uncomment khi đã cấu hình Firebase)
+  await NotificationService().initialize();
+  
+  // 3. Các service khác...
 }
