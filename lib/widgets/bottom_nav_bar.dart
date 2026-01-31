@@ -1,103 +1,143 @@
 import 'package:flutter/material.dart';
-import 'package:avenue/widgets/bottom_nv_item.dart';
 
-/// Bottom Navigation Bar cho ứng dụng
+/// ══════════════════════════════════════════════════════════════════════════════
+/// Bottom Navigation Bar cho ứng dụng GVmarket
+/// ══════════════════════════════════════════════════════════════════════════════
 ///
-/// Bao gồm 4 tab:
-/// - Trang chủ
-/// - Danh mục
-/// - Đăng nhập / Cá nhân (động theo trạng thái login)
-/// - Liên hệ
+/// 5 tabs:
+/// ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+/// │ Trang    │ Sản      │ Tài      │ Hỗ trợ   │ Giới     │
+/// │ chủ      │ phẩm     │ khoản    │          │ thiệu    │
+/// ├──────────┼──────────┼──────────┼──────────┼──────────┤
+/// │ 🏠       │ 🛍️       │ 👤       │ 🎧       │ ℹ️       │
+/// │ WebView  │ WebView  │ WebView  │ NATIVE   │ NATIVE   │
+/// │ /        │ /shop    │ /my      │ Contact  │ Profile  │
+/// └──────────┴──────────┴──────────┴──────────┴──────────┘
+///
+/// Tab 1: Trang chủ  → WebView gvmarket.vn
+/// Tab 2: Sản phẩm   → WebView gvmarket.vn/shop
+/// Tab 3: Tài khoản  → WebView đăng nhập/my account
+/// Tab 4: Hỗ trợ     → NATIVE - FAQ, Liên hệ, Social media (ContactScreen)
+/// Tab 5: Giới thiệu → NATIVE - Thông tin công ty, Chính sách (ProfileScreen)
+///
+/// ══════════════════════════════════════════════════════════════════════════════
 class AppBottomNavBar extends StatelessWidget {
-  /// Tab hiện tại đang được chọn
+  /// Tab hiện tại đang được chọn (0-4)
   final int currentIndex;
 
   /// Callback khi người dùng chọn tab
   final Function(int) onTap;
 
-  /// ✅ MỚI: Trạng thái đăng nhập để đổi label/icon
-  final bool isLoggedIn;
-
   const AppBottomNavBar({
     super.key,
     required this.currentIndex,
     required this.onTap,
-    this.isLoggedIn = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        // Đổ bóng cho navigation bar
+        color: Colors.white,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 20,
+            spreadRadius: 0,
+            offset: const Offset(0, -4),
           ),
         ],
       ),
-      child: BottomNavigationBar(
-        // Tab hiện tại
-        currentIndex: currentIndex,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+        child: BottomNavigationBar(
+          // ─────────────────────────────────────────────
+          // Cấu hình cơ bản
+          // ─────────────────────────────────────────────
+          currentIndex: currentIndex,
+          onTap: onTap,
+          type: BottomNavigationBarType.fixed,
 
-        // Callback khi tap
-        onTap: onTap,
+          // ─────────────────────────────────────────────
+          // Style
+          // ─────────────────────────────────────────────
+          backgroundColor: Colors.white,
+          elevation: 0,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: const Color(0xFF9E9E9E),
+          selectedFontSize: 11,
+          unselectedFontSize: 11,
+          iconSize: 24,
 
-        // Kiểu hiển thị - fixed để luôn hiện label
-        type: BottomNavigationBarType.fixed,
+          // ─────────────────────────────────────────────
+          // Tab Items
+          // ─────────────────────────────────────────────
+          items: const [
 
-        // Màu sắc
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
-
-        // Font size
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
-
-        // Icon size
-        iconSize: 26,
-
-        // Các tab items
-        items: [
-          // Tab 1: Trang chủ
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            // icon: BottomNvItem(ic: "assets/ic_home.svg"),
-            // activeIcon: BottomNvItem(ic: "assets/ic_selected_home.svg"),
-            label: 'Trang chủ',
-          ),
-
-          // Tab 2: Danh mục
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.inventory_2_outlined),
-            activeIcon: Icon(Icons.inventory_2),
-            label: 'Danh mục',
-          ),
-
-          // Tab 3: Đăng nhập / Cá nhân (✅ ĐỘNG theo trạng thái login)
-          BottomNavigationBarItem(
-            icon: Icon(
-              // isLoggedIn ? Icons.person_outline : Icons.login_outlined,
-              Icons.person_outline,
+            // ═══════════════════════════════════════════
+            // TAB 1: TRANG CHỦ
+            // WebView → gvmarket.vn
+            // ═══════════════════════════════════════════
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home_rounded),
+              label: 'Trang chủ',
             ),
-            activeIcon: Icon(
-              // isLoggedIn ? Icons.person : Icons.login,
-              Icons.person,
-            ),
-            // label: isLoggedIn ? 'Cá nhân' : 'Đăng nhập',
-            label: 'Cá nhân',
-          ),
 
-          // Tab 4: Liên hệ
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.contact_support_outlined),
-            activeIcon: Icon(Icons.contact_support),
-            label: 'Liên hệ',
-          ),
-        ],
+            // ═══════════════════════════════════════════
+            // TAB 2: SẢN PHẨM
+            // WebView → gvmarket.vn/shop
+            // ═══════════════════════════════════════════
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag_outlined),
+              activeIcon: Icon(Icons.shopping_bag_rounded),
+              label: 'Sản phẩm',
+            ),
+
+            // ═══════════════════════════════════════════
+            // TAB 3: TÀI KHOẢN
+            // WebView → gvmarket.vn/web/login (chưa login)
+            //         → gvmarket.vn/my (đã login)
+            // ═══════════════════════════════════════════
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline_rounded),
+              activeIcon: Icon(Icons.person_rounded),
+              label: 'Tài khoản',
+            ),
+
+            // ═══════════════════════════════════════════
+            // TAB 4: HỖ TRỢ ⭐ NATIVE
+            // ContactScreen:
+            // - FAQ (Câu hỏi thường gặp)
+            // - Liên hệ (Hotline, Email, Zalo)
+            // - Social media (Facebook, Instagram, YouTube)
+            // ═══════════════════════════════════════════
+            BottomNavigationBarItem(
+              icon: Icon(Icons.support_agent_outlined),
+              activeIcon: Icon(Icons.support_agent_rounded),
+              label: 'Hỗ trợ',
+            ),
+
+            // ═══════════════════════════════════════════
+            // TAB 5: GIỚI THIỆU ⭐ NATIVE
+            // ProfileScreen:
+            // - Thông tin công ty
+            // - Chính sách pháp lý (6 policies)
+            // ═══════════════════════════════════════════
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info_outline_rounded),
+              activeIcon: Icon(Icons.info_rounded),
+              label: 'Giới thiệu',
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -3,6 +3,11 @@ import '../utils/constants.dart';
 
 /// Màn hình Profile - Trang NATIVE (không phải WebView)
 ///
+/// Tab "Cá nhân" - Chứa:
+/// - Header với logo và tên app
+/// - Thông tin công ty
+/// - Cài đặt & Pháp lý (6 chính sách)
+///
 /// Trang này rất quan trọng để Apple approve!
 /// Apple yêu cầu app phải có tính năng native, không chỉ là wrapper website
 class ProfileScreen extends StatelessWidget {
@@ -25,9 +30,6 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 24),
               _buildSectionTitle('Cài đặt & Pháp lý'),
               _buildSettingsCard(context),
-              const SizedBox(height: 24),
-              _buildSectionTitle('Hỗ trợ'),
-              _buildSupportCard(context),
               const SizedBox(height: 24),
               Center(
                 child: Text(
@@ -172,17 +174,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSupportCard(BuildContext context) {
-    return _buildCard(
-      children: [
-        _buildMenuItem(context, Icons.help_outline, 'Trung tâm trợ giúp', () => _showHelpCenter(context)),
-        _buildMenuItem(context, Icons.chat_bubble_outline, 'Liên hệ hỗ trợ', () => _showContactSupport(context)),
-        // TODO: Bật lại sau khi publish app lên Store
-        // _buildMenuItem(context, Icons.star_outline, 'Đánh giá ứng dụng', () => _rateApp(context)),
-      ],
-    );
-  }
-
   // ============================================
   // REUSABLE COMPONENTS
   // ============================================
@@ -258,10 +249,9 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // ============================================
-  // CONTENT DIALOG COMPONENTS (Reusable)
+  // CONTENT DIALOG COMPONENTS
   // ============================================
 
-  /// Widget hiển thị Section với title in đậm
   Widget _buildContentSection({
     required String title,
     required List<String> items,
@@ -272,17 +262,12 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Title in đậm
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
+          if (title.isNotEmpty)
+            Text(
+              title,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
             ),
-          ),
-          const SizedBox(height: 8),
-          // Nội dung
+          if (title.isNotEmpty) const SizedBox(height: 8),
           ...items.asMap().entries.map((entry) {
             final index = entry.key;
             final item = entry.value;
@@ -295,12 +280,7 @@ class ProfileScreen extends StatelessWidget {
                     isNumberedList ? '${index + 1}. ' : '• ',
                     style: const TextStyle(fontSize: 14, height: 1.5),
                   ),
-                  Expanded(
-                    child: Text(
-                      item,
-                      style: const TextStyle(fontSize: 14, height: 1.5),
-                    ),
-                  ),
+                  Expanded(child: Text(item, style: const TextStyle(fontSize: 14, height: 1.5))),
                 ],
               ),
             );
@@ -310,43 +290,13 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  /// Widget hiển thị đoạn văn bản thường
   Widget _buildContentParagraph(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: Text(
-        text,
-        style: const TextStyle(fontSize: 14, height: 1.6),
-      ),
+      child: Text(text, style: const TextStyle(fontSize: 14, height: 1.6)),
     );
   }
 
-  /// Widget hiển thị Q&A
-  Widget _buildContentQA({required String question, required String answer}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Q: $question',
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'A: $answer',
-            style: const TextStyle(fontSize: 14, height: 1.5),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Widget hiển thị thông tin liên hệ
   Widget _buildContactInfo() {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -357,10 +307,7 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Liên hệ:',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          ),
+          const Text('Liên hệ:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -382,21 +329,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  /// Widget hiển thị ngày cập nhật
-  Widget _buildLastUpdated(String date) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Text(
-        'Cập nhật lần cuối: $date',
-        style: TextStyle(
-          fontSize: 12,
-          fontStyle: FontStyle.italic,
-          color: Colors.grey[600],
-        ),
-      ),
-    );
-  }
-
   // ============================================
   // DIALOG FUNCTIONS
   // ============================================
@@ -409,151 +341,56 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tiêu đề chính
-            const Text(
-              'ĐIỀU KIỆN GIAO DỊCH CHUNG',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
+            const Text('ĐIỀU KIỆN GIAO DỊCH CHUNG', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
             const SizedBox(height: 12),
-
-            // Đoạn mở đầu
             _buildContentParagraph(
               'Khi truy cập và sử dụng website https://gvmarket.vn/ (sau đây gọi là "Website"), '
                   'Quý khách đồng ý với các điều kiện giao dịch chung dưới đây. Chúng tôi có quyền '
-                  'điều chỉnh, bổ sung các điều kiện này vào bất kỳ thời điểm nào và sẽ công bố '
-                  'công khai trên Website. Việc tiếp tục sử dụng dịch vụ sau khi có thay đổi đồng '
-                  'nghĩa với việc Quý khách chấp nhận các nội dung đã được cập nhật.',
+                  'điều chỉnh, bổ sung các điều kiện này vào bất kỳ thời điểm nào.',
             ),
-
-            // Điều 1
             _buildContentSection(
               title: 'Điều 1. Nguyên tắc chung',
               items: [
-                'Website được xây dựng và vận hành bởi GVmarket nhằm cung cấp thông tin, giới thiệu và bán sản phẩm/dịch vụ đến người tiêu dùng.',
-                'Khách hàng khi tham gia giao dịch trên Website được hiểu là đã tìm hiểu, đồng ý và tuân thủ các điều kiện giao dịch chung cũng như các chính sách liên quan được công bố tại Website.',
+                'Website được xây dựng và vận hành bởi GVmarket nhằm cung cấp thông tin, giới thiệu và bán sản phẩm/dịch vụ.',
+                'Khách hàng khi giao dịch trên Website được hiểu là đã đồng ý và tuân thủ các điều kiện giao dịch chung.',
               ],
             ),
-
-            // Điều 2
             _buildContentSection(
-              title: 'Điều 2. Phạm vi áp dụng',
+              title: 'Điều 2. Quy trình giao dịch',
               items: [
-                'Website cung cấp sản phẩm/dịch vụ trên toàn lãnh thổ Việt Nam. Việc cung cấp sản phẩm/dịch vụ ra ngoài lãnh thổ Việt Nam (nếu có) sẽ tuân theo quy định riêng được công bố kèm theo từng sản phẩm.',
-                'Website có thể tạm ngừng hoạt động để bảo trì, nâng cấp hoặc khắc phục sự cố kỹ thuật, trong trường hợp đó chúng tôi sẽ thông báo trên Website trước (nếu có thể).',
-              ],
-            ),
-
-            // Điều 3
-            _buildContentSection(
-              title: 'Điều 3. Quy trình giao dịch',
-              items: [
-                'Khách hàng truy cập Website, lựa chọn sản phẩm/dịch vụ, thực hiện đặt hàng và cung cấp đầy đủ thông tin cá nhân cần thiết.',
-                'Hệ thống Website ghi nhận đơn hàng.',
-                'Khách hàng tiến hành thanh toán theo phương thức đã lựa chọn (nếu có).',
-                'Sau khi hệ thống xác nhận thông tin đặt hàng và/hoặc thanh toán thành công, Website sẽ gửi thông tin xác nhận đơn hàng qua email/điện thoại cho Quý khách.',
-                'Website tiến hành giao hàng/cung cấp dịch vụ theo thỏa thuận.',
-                'Quý khách có quyền khiếu nại, yêu cầu đổi trả hoặc bảo hành theo chính sách công bố.',
-                'Mọi biểu phí, thời gian xử lý, điều kiện hạn chế (nếu có) sẽ được công bố công khai trong từng chính sách liên quan (vận chuyển, thanh toán, đổi trả, hoàn tiền).',
+                'Truy cập Website, lựa chọn sản phẩm/dịch vụ, thực hiện đặt hàng.',
+                'Hệ thống ghi nhận đơn hàng.',
+                'Thanh toán theo phương thức đã lựa chọn.',
+                'Xác nhận đơn hàng qua email/điện thoại.',
+                'Giao hàng/cung cấp dịch vụ theo thỏa thuận.',
               ],
               isNumberedList: true,
             ),
-
-            // Chính sách bảo hành (sub-section)
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.orange.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.orange.withOpacity(0.3)),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Chính sách bảo hành:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'GVmarket áp dụng chính sách bảo hành theo quy định của nhà sản xuất đối với từng sản phẩm cụ thể. '
-                        'Chi tiết điều kiện, thời hạn và phạm vi bảo hành được công bố tại phần thông tin sản phẩm hoặc phiếu bảo hành đi kèm. '
-                        'Với sản phẩm không có chính sách bảo hành riêng, GVmarket không chịu trách nhiệm bảo hành ngoài phạm vi lỗi sản xuất/nhà cung cấp.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-
-            // Điều 4
             _buildContentSection(
-              title: 'Điều 4. Quyền và nghĩa vụ của GVmarket',
+              title: 'Điều 3. Quyền và nghĩa vụ của GVmarket',
               items: [
-                'Đảm bảo chất lượng hàng hóa/dịch vụ cung cấp đúng như thông tin đã công bố trên Website.',
-                'Cung cấp đầy đủ hóa đơn, chứng từ theo quy định pháp luật (nếu có).',
-                'Duy trì hoạt động bình thường, an toàn và bảo mật của Website, trừ trường hợp bất khả kháng.',
-                'Bảo mật thông tin khách hàng theo chính sách bảo mật được công bố.',
-                'Có quyền từ chối, hủy đơn hàng trong trường hợp: (i) khách hàng cung cấp thông tin không chính xác; (ii) khách hàng vi phạm nghĩa vụ thanh toán; hoặc (iii) sản phẩm/dịch vụ không còn khả năng cung cấp.',
-                'Chúng tôi có quyền giới hạn số lượng sản phẩm trên mỗi đơn hàng hoặc từ chối các đơn hàng bất thường (ví dụ: đặt số lượng lớn bất thường, nghi ngờ mục đích đầu cơ hoặc gian lận).',
+                'Đảm bảo chất lượng hàng hóa/dịch vụ đúng như thông tin đã công bố.',
+                'Cung cấp đầy đủ hóa đơn, chứng từ theo quy định pháp luật.',
+                'Duy trì hoạt động bình thường, an toàn và bảo mật của Website.',
+                'Bảo mật thông tin khách hàng theo chính sách bảo mật.',
               ],
             ),
-
-            // Điều 5
             _buildContentSection(
-              title: 'Điều 5. Quyền và nghĩa vụ của khách hàng',
+              title: 'Điều 4. Quyền và nghĩa vụ của khách hàng',
               items: [
                 'Cung cấp thông tin chính xác, đầy đủ khi đăng ký và đặt hàng.',
-                'Thanh toán đầy đủ giá trị đơn hàng theo đúng phương thức đã lựa chọn.',
-                'Không sử dụng Website để thực hiện các hành vi gian lận, vi phạm pháp luật, gây cản trở hoặc ảnh hưởng đến quyền lợi của Website và khách hàng khác.',
-                'Kiểm tra tình trạng hàng hóa/dịch vụ ngay khi nhận và phản hồi kịp thời cho Website nếu phát sinh khiếu nại.',
-                'Chịu trách nhiệm về tính hợp pháp của thông tin do Quý khách cung cấp.',
-                'Quý khách có trách nhiệm bảo mật thông tin tài khoản (tên đăng nhập, mật khẩu) và chịu trách nhiệm đối với mọi hoạt động phát sinh từ tài khoản của mình trên Website.',
+                'Thanh toán đầy đủ giá trị đơn hàng.',
+                'Không sử dụng Website để thực hiện hành vi gian lận, vi phạm pháp luật.',
+                'Chịu trách nhiệm bảo mật thông tin tài khoản.',
               ],
             ),
-
-            // Điều 6
             _buildContentSection(
-              title: 'Điều 6. Quyền sở hữu trí tuệ',
+              title: 'Điều 5. Giải quyết tranh chấp',
               items: [
-                'Toàn bộ nội dung, thiết kế, hình ảnh, phần mềm, mã nguồn, cơ sở dữ liệu, nhãn hiệu, biểu trưng và các tài sản trí tuệ khác hiển thị trên Website thuộc quyền sở hữu hợp pháp của GVmarket hoặc bên thứ ba được cấp phép.',
-                'Nghiêm cấm mọi hành vi sao chép, phát tán, sử dụng cho mục đích thương mại nếu không có sự đồng ý bằng văn bản từ GVmarket.',
+                'Mọi tranh chấp sẽ được ưu tiên giải quyết bằng thương lượng và hòa giải.',
+                'Nếu không đạt được thỏa thuận, tranh chấp sẽ được giải quyết tại Tòa án theo quy định pháp luật Việt Nam.',
               ],
             ),
-
-            // Điều 7
-            _buildContentSection(
-              title: 'Điều 7. Giới hạn trách nhiệm và miễn trừ trách nhiệm',
-              items: [
-                'GVmarket không chịu trách nhiệm trong trường hợp dịch vụ bị gián đoạn do sự cố kỹ thuật, bất khả kháng hoặc nguyên nhân khách quan ngoài khả năng kiểm soát.',
-                'GVmarket không chịu trách nhiệm với những thiệt hại phát sinh từ việc Quý khách sử dụng Website không đúng hướng dẫn hoặc vi phạm pháp luật.',
-                'GVmarket không chịu trách nhiệm đối với những thiệt hại gián tiếp, hệ quả hoặc mất lợi nhuận phát sinh từ việc sử dụng Website hoặc sản phẩm/dịch vụ.',
-                'Trong mọi trường hợp, trách nhiệm tối đa của GVmarket đối với khách hàng (nếu có) sẽ không vượt quá tổng giá trị đơn hàng gây tranh chấp.',
-              ],
-            ),
-
-            // Điều 8
-            _buildContentSection(
-              title: 'Điều 8. Giải quyết tranh chấp',
-              items: [
-                'Mọi tranh chấp phát sinh từ giao dịch trên Website sẽ được ưu tiên giải quyết bằng thương lượng và hòa giải.',
-                'Nếu không đạt được thỏa thuận, tranh chấp sẽ được giải quyết tại Tòa án hoặc cơ quan có thẩm quyền theo quy định của pháp luật Việt Nam.',
-              ],
-            ),
-
-            // Điều 9
-            _buildContentSection(
-              title: 'Điều 9. Hiệu lực thi hành',
-              items: [
-                'Các điều kiện giao dịch chung này có hiệu lực kể từ ngày đăng tải trên Website.',
-                'Chúng tôi có quyền sửa đổi, bổ sung nội dung vào bất kỳ thời điểm nào. Quý khách vui lòng thường xuyên truy cập Website và cập nhật thông tin mới nhất được công bố.',
-                'Các chính sách khác (thanh toán, giao hàng, đổi trả, bảo mật, v.v.) được công bố trên Website là bộ phận không tách rời của điều kiện giao dịch chung này.',
-              ],
-            ),
-
             _buildContactInfo(),
           ],
         ),
@@ -569,78 +406,45 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tiêu đề chính
-            const Text(
-              'CHÍNH SÁCH BẢO MẬT',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
+            const Text('CHÍNH SÁCH BẢO MẬT', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
             const SizedBox(height: 12),
-
-            // Đoạn mở đầu
             _buildContentParagraph(
               'GVmarket tôn trọng và cam kết bảo vệ dữ liệu cá nhân của người dùng. '
-                  'Chúng tôi áp dụng các biện pháp an toàn và tuân thủ quy định pháp luật hiện hành '
-                  'nhằm bảo mật thông tin cá nhân mà Quý khách cung cấp.',
+                  'Chúng tôi áp dụng các biện pháp an toàn và tuân thủ quy định pháp luật hiện hành.',
             ),
-
-            _buildContentParagraph(
-              'Khi truy cập trang web, đăng ký tài khoản hoặc sử dụng dịch vụ của GVmarket, '
-                  'Quý khách xác nhận và đồng ý rằng chúng tôi có thể thu thập, sử dụng, tiết lộ '
-                  'và xử lý dữ liệu cá nhân theo nội dung của chính sách này. Nếu Quý khách không '
-                  'đồng ý với bất kỳ điều khoản nào, vui lòng cân nhắc và ngừng sử dụng dịch vụ của chúng tôi.',
-            ),
-
-            _buildContentParagraph(
-              'Để đảm bảo phù hợp với thực tế và các yêu cầu pháp luật, GVmarket có thể sửa đổi, '
-                  'bổ sung hoặc cập nhật chính sách bảo mật theo từng thời điểm. Mọi thay đổi quan trọng '
-                  'sẽ được chúng tôi công bố công khai trên trang web để Quý khách tiện theo dõi.',
-            ),
-
-            // 1. Thông tin cá nhân được thu thập
             _buildContentSection(
-              title: '1. Thông tin cá nhân được thu thập',
+              title: '1. Thông tin được thu thập',
               items: [
-                'Thông tin tài khoản: họ tên, email, số điện thoại, địa chỉ liên hệ, ảnh hồ sơ.',
-                'Dữ liệu truy cập: địa chỉ IP, loại trình duyệt, lịch sử và thời lượng truy cập.',
-                'Dữ liệu vị trí: vị trí thiết bị, thông tin định vị kèm theo hình ảnh hoặc video mà Quý khách chia sẻ.',
-                'Thông tin khác: dữ liệu Quý khách cung cấp trong quá trình sử dụng dịch vụ (ví dụ: cài đặt tài khoản, sở thích nhận thông tin tiếp thị).',
-                'Thông tin tổng hợp: dữ liệu thống kê và phân tích hành vi người dùng nhằm cải thiện trải nghiệm.',
+                'Thông tin tài khoản: họ tên, email, số điện thoại, địa chỉ.',
+                'Dữ liệu truy cập: địa chỉ IP, loại trình duyệt, lịch sử truy cập.',
+                'Dữ liệu vị trí: vị trí thiết bị (nếu được cho phép).',
               ],
             ),
-
-            // Box: Trường hợp thu thập
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Thông tin có thể được thu thập khi:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '• Đăng ký hoặc mở tài khoản\n'
-                        '• Sử dụng các dịch vụ của chúng tôi\n'
-                        '• Tham gia khảo sát, chương trình khuyến mại hoặc sự kiện\n'
-                        '• Gửi phản hồi, khiếu nại hoặc liên hệ trực tiếp\n'
-                        '• Liên kết tài khoản hoặc chia sẻ thông tin qua mạng xã hội',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                ],
-              ),
+            _buildContentSection(
+              title: '2. Mục đích sử dụng',
+              items: [
+                'Cung cấp và duy trì dịch vụ: xử lý đơn hàng và giao dịch.',
+                'Cải thiện trải nghiệm người dùng.',
+                'Hỗ trợ khách hàng: gửi thông báo, hỗ trợ kỹ thuật.',
+                'Bảo mật và an toàn: phát hiện, ngăn chặn hành vi gian lận.',
+              ],
             ),
-
-            // Box: Khuyến khích cung cấp thông tin chính xác
+            _buildContentSection(
+              title: '3. Bảo mật dữ liệu',
+              items: [
+                'Giới hạn quyền truy cập: Thông tin chỉ được truy cập bởi nhân sự có thẩm quyền.',
+                'Mã hóa dữ liệu: Triển khai chứng chỉ SSL 256-bit.',
+                'Quản lý vòng đời dữ liệu: Xóa hoặc ẩn danh thông tin khi không còn cần thiết.',
+              ],
+            ),
+            _buildContentSection(
+              title: '4. Quyền của người dùng',
+              items: [
+                'Xem và chỉnh sửa thông tin cá nhân tại trang Hồ sơ.',
+                'Yêu cầu truy cập, chỉnh sửa hoặc xóa dữ liệu cá nhân.',
+                'Rút lại sự đồng ý cho việc thu thập, sử dụng dữ liệu.',
+              ],
+            ),
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
@@ -649,301 +453,11 @@ class ProfileScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Text(
-                'Chúng tôi khuyến khích Quý khách cung cấp thông tin chính xác và cập nhật thường xuyên '
-                    'để đảm bảo quyền lợi của mình. Trong một số trường hợp cần thiết, chúng tôi có thể đề nghị '
-                    'Quý khách cung cấp tài liệu xác minh nhằm đảm bảo độ chính xác, an toàn và bảo mật cho '
-                    'tài khoản cũng như dữ liệu cá nhân của Quý khách.',
+                'Chính sách này tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.',
                 style: TextStyle(fontSize: 14, height: 1.5, fontStyle: FontStyle.italic),
               ),
             ),
-
-            // 2. Mục đích sử dụng thông tin
-            _buildContentSection(
-              title: '2. Mục đích sử dụng thông tin',
-              items: [
-                'Cung cấp và duy trì dịch vụ: đảm bảo các đơn hàng và giao dịch của Quý khách được xử lý nhanh chóng, chính xác.',
-                'Cải thiện trải nghiệm người dùng: nâng cao chất lượng sản phẩm, dịch vụ và tối ưu hóa giao diện, tính năng của trang web.',
-                'Hỗ trợ khách hàng: gửi thông báo liên quan đến đơn hàng, hỗ trợ kỹ thuật và giải đáp thắc mắc trong quá trình Quý khách sử dụng dịch vụ.',
-                'Tiếp thị và khuyến mãi: gửi đến Quý khách thông tin về chương trình ưu đãi, sản phẩm hoặc dịch vụ mới khi Quý khách đồng ý nhận thông tin tiếp thị từ chúng tôi.',
-                'Bảo mật và an toàn: phát hiện, ngăn chặn hành vi gian lận, giả mạo hoặc vi phạm pháp luật.',
-                'Tuân thủ pháp luật: thực hiện các nghĩa vụ báo cáo, lưu trữ hoặc cung cấp thông tin theo quy định của pháp luật Việt Nam.',
-              ],
-            ),
-
-            // 3. Chia sẻ thông tin cá nhân
-            const Text(
-              '3. Chia sẻ thông tin cá nhân',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Chúng tôi cam kết không bán, trao đổi hoặc chia sẻ thông tin cá nhân của Quý khách cho bên thứ ba '
-                  'vì mục đích thương mại. Việc chia sẻ thông tin, nếu có, chỉ được thực hiện trong phạm vi cần thiết '
-                  'và phù hợp với quy định pháp luật, nhằm phục vụ việc cung cấp và nâng cao chất lượng dịch vụ. Các bên có thể bao gồm:',
-            ),
-
-            _buildContentSection(
-              title: '',
-              items: [
-                'Đối tác xử lý và phân tích dữ liệu phục vụ vận hành và cải thiện trải nghiệm người dùng.',
-                'Đối tác cung cấp dịch vụ truyền thông như SMS, email hoặc cuộc gọi nhằm gửi thông báo, hỗ trợ kỹ thuật hoặc chăm sóc khách hàng.',
-                'Đối tác tiếp thị, chi nhánh và công ty liên kết trong hệ thống để triển khai chương trình ưu đãi, giới thiệu dịch vụ, sản phẩm mới.',
-                'Các đơn vị hỗ trợ bảo mật nhằm đảm bảo an toàn, ngăn ngừa gian lận và bảo vệ quyền lợi hợp pháp của khách hàng cũng như của chúng tôi.',
-                'Cơ quan nhà nước có thẩm quyền khi có yêu cầu theo quy định pháp luật hiện hành.',
-              ],
-            ),
-
-            _buildContentParagraph(
-              'Trong mọi trường hợp, thông tin được chia sẻ sẽ được giới hạn trong phạm vi cần thiết, '
-                  'và có thể được xử lý dưới dạng ẩn danh hoặc mã hóa để đảm bảo an toàn dữ liệu cá nhân.',
-            ),
-
-            // 4. Cookie
-            _buildContentSection(
-              title: '4. Cookie',
-              items: [
-                'Lưu trữ thông tin đăng nhập, giúp Quý khách truy cập và sử dụng dịch vụ thuận tiện hơn.',
-                'Phân tích dữ liệu truy cập nhằm cải thiện hiệu suất và tối ưu hóa hoạt động của trang web.',
-                'Cá nhân hóa nội dung và hiển thị phù hợp với nhu cầu, sở thích của từng người dùng.',
-                'Cookie không có khả năng truy cập dữ liệu trên ổ cứng của Quý khách hoặc thu thập thông tin từ các trang web khác ngoài nền tảng của chúng tôi.',
-              ],
-            ),
-
-            _buildContentParagraph(
-              'Quý khách có thể quản lý hoặc xóa cookie bất kỳ lúc nào thông qua cài đặt trình duyệt. '
-                  'Tuy nhiên, xin lưu ý rằng việc tắt cookie có thể làm giảm hoặc hạn chế một số tính năng '
-                  'và trải nghiệm khi sử dụng dịch vụ.',
-            ),
-
-            // 5. Quyền của người dùng
-            const Text(
-              '5. Quyền của người dùng',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Chúng tôi tôn trọng và bảo vệ quyền lợi hợp pháp của Quý khách đối với dữ liệu cá nhân. '
-                  'Quý khách có thể thực hiện các quyền sau:',
-            ),
-
-            _buildContentSection(
-              title: '',
-              items: [
-                'Xem và chỉnh sửa thông tin cá nhân trực tiếp tại trang Hồ sơ.',
-                'Yêu cầu truy cập, chỉnh sửa hoặc chấm dứt việc sử dụng thông tin cá nhân Quý khách bằng cách liên hệ với chúng tôi qua email hỗ trợ.',
-                'Rút lại sự đồng ý cho việc thu thập, sử dụng hoặc chia sẻ dữ liệu cá nhân.',
-              ],
-            ),
-
-            // Box: Lưu ý về quyền
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.amber.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.amber.withOpacity(0.3)),
-              ),
-              child: const Text(
-                'Lưu ý: Việc rút lại sự đồng ý có thể ảnh hưởng đến khả năng chúng tôi cung cấp một số dịch vụ cho Quý khách.',
-                style: TextStyle(fontSize: 14, height: 1.5, fontStyle: FontStyle.italic),
-              ),
-            ),
-
-            // Box: Trường hợp từ chối yêu cầu
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Trong một số trường hợp nhất định, chúng tôi có thể từ chối yêu cầu nếu thông tin:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '• Chỉ được sử dụng cho mục đích phân tích nội bộ và không ảnh hưởng trực tiếp đến quyền lợi của Quý khách.\n'
-                        '• Liên quan đến việc giải quyết tranh chấp, bảo mật kinh doanh hoặc tuân thủ quy định pháp luật.\n'
-                        '• Việc cung cấp hoặc xử lý vượt quá khả năng hợp lý về chi phí và nguồn lực so với lợi ích mang lại.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Mọi yêu cầu hợp lệ của Quý khách sẽ được xem xét và xử lý trong thời gian sớm nhất có thể, phù hợp với quy định pháp luật hiện hành.',
-                    style: TextStyle(fontSize: 14, height: 1.5, fontStyle: FontStyle.italic),
-                  ),
-                ],
-              ),
-            ),
-
-            // 6. Bảo mật dữ liệu
-            const Text(
-              '6. Bảo mật dữ liệu',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Chúng tôi cam kết bảo mật thông tin cá nhân của Quý khách và áp dụng nhiều biện pháp kỹ thuật '
-                  'cũng như quản lý để ngăn chặn việc truy cập, sử dụng hoặc tiết lộ trái phép. Cụ thể, chúng tôi thực hiện:',
-            ),
-
-            _buildContentSection(
-              title: '',
-              items: [
-                'Giới hạn quyền truy cập: Thông tin cá nhân chỉ được truy cập bởi nhân sự có thẩm quyền và trong phạm vi cần thiết để thực hiện công việc.',
-                'Ứng dụng công nghệ bảo mật: Sử dụng tường lửa, hệ thống phát hiện xâm nhập và các giải pháp an ninh khác nhằm ngăn chặn hành vi truy cập trái phép.',
-                'Mã hóa dữ liệu: Triển khai chứng chỉ SSL 256-bit để bảo vệ dữ liệu trong quá trình truyền tải, đảm bảo thông tin không bị đọc trộm hoặc thay đổi.',
-                'Quản lý vòng đời dữ liệu: Xóa hoặc ẩn danh thông tin cá nhân khi không còn cần thiết cho mục đích lưu giữ, trừ khi pháp luật yêu cầu bảo quản lâu hơn.',
-                'Đào tạo và giám sát nội bộ: Nhân viên được hướng dẫn về quy trình bảo mật và chịu trách nhiệm tuân thủ chính sách bảo vệ dữ liệu.',
-              ],
-            ),
-
-            // Box: Trường hợp bị tấn công
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.red.withOpacity(0.3)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Trong trường hợp hệ thống bị tấn công trái phép dẫn đến mất mát hoặc rò rỉ dữ liệu cá nhân, GVmarket sẽ:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '• Kịp thời thông báo cho cơ quan chức năng có thẩm quyền để điều tra, xử lý.\n'
-                        '• Chủ động thông tin cho khách hàng bị ảnh hưởng, đồng thời đưa ra biện pháp khắc phục và hỗ trợ cần thiết.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-
-            _buildContentParagraph(
-              'Mặc dù chúng tôi nỗ lực tối đa để bảo mật dữ liệu, xin lưu ý rằng không có hệ thống nào đảm bảo '
-                  'an toàn tuyệt đối. Do đó, chúng tôi khuyến nghị Quý khách bảo mật thông tin đăng nhập của mình '
-                  'và thông báo ngay cho chúng tôi nếu phát hiện hành vi truy cập trái phép.',
-            ),
-
-            // 7. Thời gian lưu giữ dữ liệu
-            _buildContentSection(
-              title: '7. Thời gian lưu giữ dữ liệu',
-              items: [
-                'Chúng tôi sẽ lưu giữ thông tin cá nhân của Quý khách trong khoảng thời gian cần thiết để thực hiện các mục đích đã nêu trong chính sách này hoặc trong thời hạn luật pháp quy định.',
-                'Khi mục đích thu thập không còn phù hợp hoặc hết thời hạn lưu giữ theo quy định, chúng tôi sẽ tiến hành xóa, ẩn danh hoặc hủy bỏ thông tin một cách an toàn, trừ khi có yêu cầu khác từ cơ quan có thẩm quyền.',
-              ],
-            ),
-
-            // 8. Thay đổi chính sách
-            _buildContentSection(
-              title: '8. Thay đổi chính sách',
-              items: [
-                'Chính sách bảo mật này có thể được điều chỉnh, cập nhật hoặc bổ sung theo từng thời điểm để phù hợp với thay đổi trong hoạt động kinh doanh, yêu cầu pháp luật hoặc quy định quản lý mới.',
-                'Chính sách này được xây dựng và thực hiện phù hợp với Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân và các quy định pháp luật Việt Nam có liên quan.',
-                'Mọi sửa đổi sẽ được công bố công khai trên Nền tảng của chúng tôi, và phiên bản cập nhật sẽ có hiệu lực ngay khi được đăng tải.',
-              ],
-            ),
-
-            _buildContentParagraph(
-              'Chúng tôi khuyến khích Quý khách thường xuyên xem lại để nắm rõ cách thức chúng tôi bảo vệ thông tin cá nhân của Quý khách.',
-            ),
-
-            // 9. Giải quyết khiếu nại
-            _buildContentSection(
-              title: '9. Giải quyết khiếu nại và tranh chấp về dữ liệu cá nhân',
-              items: [
-                'Trong trường hợp có tranh chấp hoặc khiếu nại liên quan đến việc xử lý dữ liệu cá nhân, GVmarket sẽ tiếp nhận, xem xét và phản hồi trong vòng 15 ngày làm việc kể từ khi nhận được yêu cầu hợp lệ. Trường hợp phức tạp hơn, thời hạn phản hồi có thể kéo dài nhưng không quá 30 ngày làm việc.',
-                'Trong trường hợp cần thiết, chúng tôi có thể yêu cầu Quý khách cung cấp thêm tài liệu xác minh để hỗ trợ quá trình xử lý khiếu nại.',
-                'Mọi yêu cầu sẽ được xử lý trên tinh thần thiện chí, hợp tác và tuân thủ pháp luật hiện hành nhằm bảo đảm quyền lợi hợp pháp của khách hàng.',
-              ],
-            ),
-
-            // 10. Liên hệ hỗ trợ
-            const Text(
-              '10. Liên hệ hỗ trợ',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Nếu Quý khách có bất kỳ câu hỏi, đề nghị truy cập, chỉnh sửa, xóa dữ liệu cá nhân hoặc khiếu nại '
-                  'liên quan đến việc bảo mật thông tin, vui lòng liên hệ với chúng tôi qua địa chỉ sau:',
-            ),
-
-            // Box: Thông tin công ty
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '➤ Công ty TNHH Brand New K',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text('Địa chỉ trụ sở chính: 11A đường số 52, KDC Văn Minh, phường Bình Trưng, Thành Phố Hồ Chí Minh.', style: TextStyle(fontSize: 14, height: 1.5)),
-                  Text('Email: brandnewk.marketing@gmail.com', style: TextStyle(fontSize: 14, height: 1.5)),
-                  Text('Điện thoại: 028 2211 2280', style: TextStyle(fontSize: 14, height: 1.5)),
-                ],
-              ),
-            ),
-
-            // Box: Bộ phận phụ trách
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '➤ Bộ phận/Nhân viên phụ trách bảo vệ dữ liệu cá nhân',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text('Tên Bộ phận/Nhân viên: Nguyễn Anh Khoa - Giám đốc', style: TextStyle(fontSize: 14, height: 1.5)),
-                  Text('Email: brandnewk.marketing@gmail.com', style: TextStyle(fontSize: 14, height: 1.5)),
-                  Text('Điện thoại: 028 2211 2280', style: TextStyle(fontSize: 14, height: 1.5)),
-                ],
-              ),
-            ),
+            _buildContactInfo(),
           ],
         ),
       ),
@@ -958,96 +472,8 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tiêu đề chính
-            const Text(
-              'CHÍNH SÁCH ĐỔI, TRẢ & HOÀN TIỀN',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
+            const Text('CHÍNH SÁCH ĐỔI, TRẢ & HOÀN TIỀN', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
             const SizedBox(height: 16),
-
-            // 1. Phạm vi áp dụng
-            _buildContentSection(
-              title: '1. Phạm vi áp dụng',
-              items: [
-                'Chính sách này được áp dụng cho mọi đơn hàng mua sắm tại GVmarket, bao gồm các hình thức mua trực tuyến trên website, đặt hàng qua điện thoại hoặc mua trực tiếp tại cửa hàng/đại lý chính thức của công ty.',
-              ],
-            ),
-
-            // 2. Trường hợp chấp nhận đổi, trả
-            _buildContentSection(
-              title: '2. Trường hợp chấp nhận đổi, trả',
-              items: [
-                'Sản phẩm bị lỗi kỹ thuật từ nhà sản xuất (thiếu bộ phận, hư hỏng, sai tiêu chuẩn chất lượng).',
-                'Sản phẩm gặp tình trạng móp méo, nứt vỡ hoặc trầy xước trong quá trình vận chuyển đến tay Quý khách.',
-                'Sản phẩm được giao có hạn sử dụng không đảm bảo (hết hạn hoặc sắp hết hạn).',
-                'Sản phẩm giao sai về số lượng, mẫu mã, chủng loại so với đơn hàng.',
-              ],
-            ),
-
-            // Box: Lưu ý đổi trả vì lý do cá nhân
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.amber.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.amber.withOpacity(0.3)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    '⚠️ Lưu ý:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Trường hợp đổi trả vì lý do cá nhân (không còn nhu cầu, không thích màu/mẫu, v.v.) sẽ không được áp dụng, '
-                        'ngoại trừ khi sản phẩm vẫn còn nguyên niêm phong, chưa qua sử dụng, và GVmarket đồng ý hỗ trợ trên tinh thần thiện chí. '
-                        'Khi đó, mọi chi phí phát sinh (vận chuyển, xử lý đơn hàng, vật tư đóng gói, v.v.) sẽ do Quý khách chi trả.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-
-            // 3. Trường hợp không chấp nhận đổi, trả
-            _buildContentSection(
-              title: '3. Trường hợp không chấp nhận đổi, trả',
-              items: [
-                'Sản phẩm quà tặng, sản phẩm khuyến mãi đặc biệt hoặc sản phẩm được ghi rõ là "không áp dụng đổi trả".',
-                'Sản phẩm đã quá thời hạn đổi trả (07 ngày kể từ ngày nhận hàng).',
-                'Sản phẩm đã được sử dụng, có dấu hiệu bóc tem/niêm phong, tháo dỡ.',
-                'Sản phẩm bị thiếu hoặc hư hỏng bao bì, tem nhãn, phụ kiện, quà tặng đi kèm do lỗi bảo quản hay tác động từ phía Quý khách.',
-                'Sản phẩm có dấu hiệu bị tác động bên ngoài như trầy xước, bám bẩn, ám mùi lạ hoặc hư hỏng do điều kiện bảo quản không phù hợp.',
-                'Sản phẩm không mua từ hệ thống chính thức của GVmarket.',
-              ],
-            ),
-
-            // 4. Điều kiện đổi, trả
-            _buildContentSection(
-              title: '4. Điều kiện đổi, trả',
-              items: [
-                'Sản phẩm phải còn nguyên vẹn, đầy đủ tem nhãn, phụ kiện, quà tặng kèm theo.',
-                'Có chứng từ mua hàng hợp lệ (số đơn hàng, hóa đơn, phiếu giao hàng hoặc biên lai thanh toán).',
-                'Quý khách cần cung cấp hình ảnh/video mở hộp sản phẩm (nếu sản phẩm lỗi do vận chuyển) để làm căn cứ xử lý khiếu nại.',
-              ],
-            ),
-
-            // 5. Thời gian đổi, trả
-            _buildContentSection(
-              title: '5. Thời gian đổi, trả',
-              items: [
-                'Ngay tại thời điểm giao nhận hàng: Quý khách có quyền từ chối nhận nếu phát hiện lỗi.',
-                'Thời hạn tiếp nhận yêu cầu: GVmarket chỉ chấp nhận xử lý yêu cầu đổi trả/hoàn tiền trong vòng 07 ngày kể từ ngày Quý khách nhận hàng (ngày nhận hàng được xác định theo dữ liệu từ hệ thống của đơn vị vận chuyển).',
-              ],
-            ),
-
-            // Box: Thời hạn 07 ngày
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
@@ -1059,54 +485,37 @@ class ProfileScreen extends StatelessWidget {
                 children: const [
                   Icon(Icons.access_time, color: Colors.blue, size: 20),
                   SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Thời hạn đổi trả: 07 ngày kể từ ngày nhận hàng',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
-                    ),
-                  ),
+                  Text('Thời hạn đổi trả: 07 ngày kể từ ngày nhận hàng', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue)),
                 ],
               ),
             ),
-
-            // 6. Quy trình đổi trả
             _buildContentSection(
-              title: '6. Quy trình đổi trả',
+              title: '1. Trường hợp được đổi, trả',
               items: [
-                'Quý khách liên hệ hotline/email để thông báo "Yêu cầu đổi trả" và nêu rõ lý do.',
-                'Bộ phận CSKH tiếp nhận, kiểm tra thông tin và hướng dẫn gửi sản phẩm về trung tâm xử lý.',
-                'Sau khi nhận sản phẩm và xác nhận tình trạng, GVmarket sẽ tiến hành đổi sản phẩm mới hoặc hoàn tiền theo quy định.',
+                'Sản phẩm bị lỗi kỹ thuật từ nhà sản xuất.',
+                'Sản phẩm bị hư hỏng trong quá trình vận chuyển.',
+                'Sản phẩm hết hạn hoặc sắp hết hạn sử dụng.',
+                'Giao sai số lượng, mẫu mã so với đơn hàng.',
+              ],
+            ),
+            _buildContentSection(
+              title: '2. Trường hợp KHÔNG được đổi, trả',
+              items: [
+                'Sản phẩm quà tặng, khuyến mãi.',
+                'Quá thời hạn 07 ngày.',
+                'Đã sử dụng, bóc tem/niêm phong.',
+                'Thiếu/hư hỏng bao bì do lỗi khách hàng.',
+              ],
+            ),
+            _buildContentSection(
+              title: '3. Quy trình đổi trả',
+              items: [
+                'Liên hệ hotline/email thông báo "Yêu cầu đổi trả".',
+                'Bộ phận CSKH kiểm tra và hướng dẫn gửi sản phẩm.',
+                'Xác nhận tình trạng → Đổi sản phẩm mới hoặc hoàn tiền.',
               ],
               isNumberedList: true,
             ),
-
-            // 7. Chi phí đổi trả
-            _buildContentSection(
-              title: '7. Chi phí đổi trả',
-              items: [
-                'Nếu lỗi từ nhà sản xuất hoặc vận chuyển: GVmarket chịu toàn bộ chi phí đổi trả và giao hàng lại.',
-                'Nếu đổi trả do lý do cá nhân/ngoài chính sách: Quý khách chịu chi phí vận chuyển 2 chiều và chi phí phát sinh.',
-                'Trường hợp đổi sản phẩm có giá trị cao hơn: Quý khách cần thanh toán thêm phần chênh lệch.',
-                'Trường hợp đổi sang sản phẩm khác loại: Sản phẩm muốn đổi phải có giá trị bằng hoặc cao hơn sản phẩm đã mua. Nếu sản phẩm đổi có giá thấp hơn, khoản chênh lệch sẽ không được hoàn lại.',
-              ],
-            ),
-
-            // 8. Hoàn tiền
-            const Text(
-              '8. Hoàn tiền',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Nguyên tắc: Việc hoàn tiền được thực hiện theo đúng phương thức thanh toán ban đầu (tiền mặt, chuyển khoản ngân hàng, ví điện tử).',
-            ),
-
-            // Box: Thời gian xử lý hoàn tiền
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
@@ -1117,103 +526,13 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(
-                    '⏱️ Thời gian xử lý hoàn tiền:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
+                  Text('⏱️ Thời gian hoàn tiền:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                   SizedBox(height: 8),
-                  Text(
-                    '• Ví điện tử/Cổng thanh toán: 3 – 5 ngày làm việc\n'
-                        '• Chuyển khoản ngân hàng: 5 – 7 ngày làm việc\n'
-                        '• Thanh toán quốc tế (Visa/MasterCard): Thời gian có thể kéo dài hơn tùy theo quy định của ngân hàng',
-                    style: TextStyle(fontSize: 14, height: 1.6),
-                  ),
+                  Text('• Ví điện tử: 3 – 5 ngày làm việc\n• Chuyển khoản: 5 – 7 ngày làm việc', style: TextStyle(fontSize: 14, height: 1.6)),
                 ],
               ),
             ),
-
-            _buildContentSection(
-              title: '',
-              items: [
-                'GVmarket chỉ tiếp nhận và giải quyết yêu cầu hoàn tiền một lần cho mỗi đơn hàng hợp lệ trong vòng 07 ngày kể từ ngày Quý khách nhận hàng.',
-                'Với đơn hàng có sử dụng voucher/gift card, GVmarket sẽ hoàn lại bằng voucher/gift card thay vì tiền mặt.',
-              ],
-            ),
-
-            // Box: Lưu ý hoàn tiền
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.orange.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.orange.withOpacity(0.3)),
-              ),
-              child: const Text(
-                'Lưu ý: Thời hạn hoàn tiền có thể thay đổi theo quy định của ngân hàng hoặc đối tác thanh toán; '
-                    'trong trường hợp này, GVmarket sẽ chủ động thông báo đến Quý khách.',
-                style: TextStyle(fontSize: 14, height: 1.5, fontStyle: FontStyle.italic),
-              ),
-            ),
-
-            // 9. Liên hệ hỗ trợ
-            const Text(
-              '9. Liên hệ hỗ trợ',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Nếu Quý khách có bất kỳ câu hỏi hay cần được hỗ trợ, xin vui lòng liên hệ với chúng tôi theo thông tin dưới đây:',
-            ),
-
-            // Box: Thông tin liên hệ
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.phone, size: 18, color: Colors.green),
-                      SizedBox(width: 8),
-                      Text('Hotline: 028 2211 2280', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: const [
-                      Icon(Icons.email, size: 18, color: Colors.blue),
-                      SizedBox(width: 8),
-                      Text('Email: brandnewk.marketing@gmail.com', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.location_on, size: 18, color: Colors.red),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Địa chỉ: 11A đường số 52, KDC Văn Minh, phường Bình Trưng, Thành Phố Hồ Chí Minh.',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            _buildContactInfo(),
           ],
         ),
       ),
@@ -1228,98 +547,16 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tiêu đề chính
-            const Text(
-              'CHÍNH SÁCH THANH TOÁN',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
+            const Text('CHÍNH SÁCH THANH TOÁN', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
             const SizedBox(height: 16),
-
-            // 1. Phạm vi áp dụng
             _buildContentSection(
-              title: '1. Phạm vi áp dụng',
+              title: '1. Các hình thức thanh toán',
               items: [
-                'Chính sách này được áp dụng cho mọi đơn hàng mua sắm tại GVmarket, bao gồm các hình thức mua trực tuyến trên website, đặt hàng qua điện thoại hoặc mua trực tiếp tại cửa hàng/đại lý chính thức của công ty.',
+                'COD - Thanh toán khi nhận hàng.',
+                'Thanh toán trực tuyến: Thẻ ATM, Visa, MasterCard, JCB.',
+                'Chuyển khoản ngân hàng.',
               ],
             ),
-
-            // 2. Các hình thức thanh toán
-            const Text(
-              '2. Các hình thức thanh toán',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // a. COD
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'a. Thanh toán khi nhận hàng (COD)',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '• Quý khách thanh toán trực tiếp bằng tiền mặt cho nhân viên giao hàng ngay sau khi đã kiểm tra sản phẩm.\n'
-                        '• Trường hợp giao hàng đến địa chỉ khác với địa chỉ đăng ký, Quý khách cần thanh toán trước toàn bộ giá trị đơn hàng.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-
-            // b. Thanh toán trực tuyến
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'b. Thanh toán trực tuyến qua cổng thanh toán',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Chúng tôi cung cấp nhiều phương thức:',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '• Thẻ ATM nội địa (có đăng ký Internet Banking)\n'
-                        '• Thẻ tín dụng/thẻ ghi nợ quốc tế (Visa, MasterCard, JCB)',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '• Quý khách thực hiện thanh toán trực tiếp tại hệ thống trên website khi hoàn tất đặt hàng.\n'
-                        '• Hệ thống thanh toán của GVmarket tuân thủ chuẩn bảo mật PCI DSS, đảm bảo an toàn cho dữ liệu thẻ và thông tin cá nhân.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-
-            // c. Chuyển khoản ngân hàng
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
@@ -1330,36 +567,12 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(
-                    'c. Chuyển khoản ngân hàng',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
+                  Text('Khi chuyển khoản, ghi rõ:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                   SizedBox(height: 8),
-                  Text(
-                    '• Quý khách có thể thanh toán bằng chuyển khoản tại quầy giao dịch/ATM hoặc Internet Banking.\n'
-                        '• Thông tin chuyển khoản (chủ tài khoản, số tài khoản, ngân hàng) sẽ được hiển thị khi xác nhận đơn hàng.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Khi chuyển khoản, Quý khách cần ghi rõ nội dung:',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '"Tên người đặt hàng – Số điện thoại – Mã đơn hàng – Nội dung thanh toán"',
-                    style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic, color: Colors.deepOrange),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '• Sau khi chuyển khoản, Quý khách vui lòng thông báo cho GVmarket qua hotline/email để thuận tiện đối soát.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
+                  Text('"Tên – SĐT – Mã đơn hàng"', style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic, color: Colors.deepOrange)),
                 ],
               ),
             ),
-
-            // Box: Thời gian xác nhận giao dịch
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
@@ -1370,162 +583,20 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(
-                    '⏱️ Thời gian xác nhận giao dịch:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
+                  Text('⏱️ Thời gian xác nhận:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                   SizedBox(height: 8),
-                  Text(
-                    '• Cùng ngân hàng: trong vòng 30 phút\n'
-                        '• Khác ngân hàng: trong vòng 24 giờ\n\n'
-                        'Nếu quá thời gian trên chưa có xác nhận, Quý khách cần liên hệ lại để được hỗ trợ.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
+                  Text('• Cùng ngân hàng: 30 phút\n• Khác ngân hàng: 24 giờ', style: TextStyle(fontSize: 14, height: 1.5)),
                 ],
               ),
             ),
-
-            // 3. Quy định chung về thanh toán
             _buildContentSection(
-              title: '3. Quy định chung về thanh toán',
+              title: '2. Bảo mật thanh toán',
               items: [
-                'Quý khách có trách nhiệm cung cấp thông tin chính xác khi thực hiện thanh toán, đồng thời lưu giữ hóa đơn/chứng từ (sao kê, biên lai, email xác nhận) để làm căn cứ đối chiếu.',
-                'GVmarket không chịu trách nhiệm trong các trường hợp chậm trễ hoặc thất lạc đơn hàng phát sinh từ thông tin thanh toán sai hoặc thiếu.',
-                'Với một số đơn hàng đặc biệt (giá trị cao, đặt trước, hoặc giao đến vùng sâu – vùng xa), GVmarket có quyền yêu cầu Quý khách thanh toán trước toàn bộ hoặc một phần giá trị đơn hàng.',
-                'Mọi chi phí giao dịch phát sinh từ phía ngân hàng hoặc cổng thanh toán (nếu có) sẽ do Quý khách chịu.',
+                'Hệ thống tuân thủ chuẩn bảo mật PCI DSS.',
+                'Không lưu giữ, tiết lộ thông tin thẻ/tài khoản cho bên thứ ba.',
               ],
             ),
-
-            // 4. Bảo mật thanh toán
-            _buildContentSection(
-              title: '4. Bảo mật thanh toán',
-              items: [
-                'Thông tin thanh toán của Quý khách được mã hóa và xử lý qua hệ thống bảo mật đạt chuẩn quốc tế.',
-                'GVmarket cam kết không lưu giữ, tiết lộ hay chia sẻ thông tin thẻ/tài khoản thanh toán của Quý khách cho bất kỳ bên thứ ba nào, ngoại trừ đối tác thanh toán được ủy quyền và cơ quan có thẩm quyền theo quy định pháp luật.',
-              ],
-            ),
-
-            // 5. Quyền và nghĩa vụ
-            const Text(
-              '5. Quyền và nghĩa vụ',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // Box: Quyền và nghĩa vụ của GVmarket
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    '➤ Của GVmarket:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '• Cung cấp đầy đủ thông tin, hướng dẫn để Quý khách thực hiện thanh toán chính xác.\n'
-                        '• Đảm bảo an toàn cho hệ thống thanh toán.\n'
-                        '• Xác nhận giao dịch và đơn hàng trong thời gian quy định.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-
-            // Box: Quyền và nghĩa vụ của khách hàng
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    '➤ Của khách hàng:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    '• Thực hiện thanh toán đúng phương thức, đúng số tiền và đúng thời hạn.\n'
-                        '• Chủ động thông báo cho GVmarket sau khi chuyển khoản để được xác nhận.\n'
-                        '• Chịu trách nhiệm về tính hợp pháp của nguồn tiền và thông tin thanh toán đã cung cấp.',
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-
-            // 6. Liên hệ hỗ trợ
-            const Text(
-              '6. Liên hệ hỗ trợ',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Nếu Quý khách có bất kỳ câu hỏi hay cần được hỗ trợ, xin vui lòng liên hệ với chúng tôi theo thông tin dưới đây:',
-            ),
-
-            // Box: Thông tin liên hệ
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.phone, size: 18, color: Colors.green),
-                      SizedBox(width: 8),
-                      Text('Hotline: 028 2211 2280', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: const [
-                      Icon(Icons.email, size: 18, color: Colors.blue),
-                      SizedBox(width: 8),
-                      Text('Email: brandnewk.marketing@gmail.com', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.location_on, size: 18, color: Colors.red),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Địa chỉ: 11A đường số 52, KDC Văn Minh, phường Bình Trưng, Thành Phố Hồ Chí Minh.',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            _buildContactInfo(),
           ],
         ),
       ),
@@ -1540,29 +611,8 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tiêu đề chính
-            const Text(
-              'CHÍNH SÁCH BẢO HÀNH',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
+            const Text('CHÍNH SÁCH BẢO HÀNH', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
             const SizedBox(height: 16),
-
-            // 1. Những trường hợp được bảo hành
-            const Text(
-              '1. Những trường hợp được bảo hành',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // Box: Trường hợp được bảo hành
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
@@ -1578,178 +628,43 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Sản phẩm vẫn còn thời hạn bảo hành sẽ được bảo hành theo tiêu chuẩn của nhà sản xuất và theo cam kết mua hàng giữa GVmarket với khách hàng.',
+                      'Sản phẩm còn thời hạn bảo hành sẽ được bảo hành theo tiêu chuẩn của nhà sản xuất.',
                       style: TextStyle(fontSize: 14, height: 1.5),
                     ),
                   ),
                 ],
               ),
             ),
-
-            // 2. Những trường hợp bị từ chối bảo hành
-            const Text(
-              '2. Những trường hợp bị từ chối bảo hành',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+            _buildContentSection(
+              title: 'Trường hợp KHÔNG được bảo hành:',
+              items: [
+                'Sản phẩm đã hết thời hạn bảo hành.',
+                'Hư hỏng do sử dụng không đúng cách.',
+                'Hư hỏng do bất khả kháng: lũ lụt, cháy nổ, sét đánh...',
+                'Không có hóa đơn mua hàng hợp lệ.',
+                'Tự gây hư hỏng, trầy xước sản phẩm.',
+              ],
             ),
-            const SizedBox(height: 12),
-
-            // Box: Trường hợp từ chối bảo hành
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.red.withOpacity(0.3)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.cancel, color: Colors.red, size: 20),
-                      SizedBox(width: 8),
-                      Text(
-                        'Các trường hợp không được bảo hành:',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  _buildWarrantyItem('1', 'Sản phẩm đã hết thời hạn bảo hành.'),
-                  _buildWarrantyItem('2', 'Hư hỏng do người tiêu dùng gây nên hoặc sử dụng không đúng cách theo hướng dẫn sử dụng.'),
-                  _buildWarrantyItem('3', 'Xảy ra hư hỏng trong một số trường hợp bất khả kháng như: lũ lụt, cháy nổ, động đất, sét đánh trúng…'),
-                  _buildWarrantyItem('4', 'Không có hóa đơn gốc mua hàng hợp lệ của GVmarket.'),
-                  _buildWarrantyItem('5', 'Tự gây nên tình trạng hư hỏng, trầy xước sản phẩm.'),
-                ],
-              ),
-            ),
-
-            // Box: Lưu ý
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.amber.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.amber.withOpacity(0.3)),
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Icon(Icons.info, color: Colors.amber, size: 20),
                   SizedBox(width: 8),
                   Expanded(
-                    child: Text(
-                      'Quý khách vui lòng giữ lại hóa đơn mua hàng để được hỗ trợ bảo hành khi cần thiết.',
-                      style: TextStyle(fontSize: 14, height: 1.5, fontStyle: FontStyle.italic),
-                    ),
+                    child: Text('Vui lòng giữ hóa đơn mua hàng để được hỗ trợ bảo hành.', style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic)),
                   ),
                 ],
               ),
             ),
-
-            // Liên hệ hỗ trợ
-            const Text(
-              'Liên hệ hỗ trợ',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Nếu Quý khách có bất kỳ câu hỏi hay cần được hỗ trợ về bảo hành, xin vui lòng liên hệ với chúng tôi:',
-            ),
-
-            // Box: Thông tin liên hệ
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.phone, size: 18, color: Colors.green),
-                      SizedBox(width: 8),
-                      Text('Hotline: 028 2211 2280', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: const [
-                      Icon(Icons.email, size: 18, color: Colors.blue),
-                      SizedBox(width: 8),
-                      Text('Email: brandnewk.marketing@gmail.com', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.location_on, size: 18, color: Colors.red),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Địa chỉ: 11A đường số 52, KDC Văn Minh, phường Bình Trưng, Thành Phố Hồ Chí Minh.',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            _buildContactInfo(),
           ],
         ),
-      ),
-    );
-  }
-
-  // Helper widget cho warranty items
-  Widget _buildWarrantyItem(String number, String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 20,
-            height: 20,
-            decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.2),
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                number,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(fontSize: 14, height: 1.5),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -1762,147 +677,8 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tiêu đề chính
-            const Text(
-              'CHÍNH SÁCH VẬN CHUYỂN VÀ GIAO NHẬN',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
+            const Text('CHÍNH SÁCH VẬN CHUYỂN', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
             const SizedBox(height: 16),
-
-            // 1. Phạm vi áp dụng
-            _buildContentSection(
-              title: '1. Phạm vi áp dụng',
-              items: [
-                'Chính sách này được áp dụng cho mọi đơn hàng mua sắm tại GVmarket, bao gồm các hình thức mua trực tuyến trên website, đặt hàng qua điện thoại hoặc mua trực tiếp tại cửa hàng/đại lý chính thức của công ty.',
-              ],
-            ),
-
-            // 2. Hình thức giao hàng
-            const Text(
-              '2. Hình thức giao hàng',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Hiện tại GVmarket giao hàng trên toàn quốc. Một số khu vực đặc biệt (như vùng sâu, vùng xa, hải đảo hoặc nơi khó tiếp cận) có thể phát sinh thêm chi phí và thời gian vận chuyển; khi đó chúng tôi sẽ thông báo trước cho Quý khách. Chúng tôi cung cấp những hình thức giao hàng như sau:',
-            ),
-
-            // Box: Hình thức giao hàng
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Nhận hàng trực tiếp
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.store, color: Colors.blue, size: 20),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Nhận hàng trực tiếp', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                            SizedBox(height: 4),
-                            Text('Quý khách có thể đến mua và nhận hàng trực tiếp tại cửa hàng hoặc kho của công ty.', style: TextStyle(fontSize: 14, height: 1.4)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  // Giao hàng tận nơi
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.local_shipping, color: Colors.blue, size: 20),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Giao hàng tận nơi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                            SizedBox(height: 4),
-                            Text('Chúng tôi hợp tác với các đơn vị vận chuyển uy tín trên toàn quốc để đảm bảo giao hàng nhanh chóng và an toàn.', style: TextStyle(fontSize: 14, height: 1.4)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  // Giao hàng hỏa tốc
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.flash_on, color: Colors.orange, size: 20),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Giao hàng hỏa tốc', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                            SizedBox(height: 4),
-                            Text('Với các đơn hàng cần giao gấp, Quý khách vui lòng liên hệ trực tiếp với chúng tôi để được hỗ trợ nhanh chóng.', style: TextStyle(fontSize: 14, height: 1.4)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            // Box: Lưu ý
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.amber.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.amber.withOpacity(0.3)),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Icon(Icons.warning_amber, color: Colors.amber, size: 20),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Lưu ý: Để đảm bảo việc giao nhận được thuận lợi và kịp thời, Quý khách vui lòng nhập đúng và đủ các thông tin theo yêu cầu khi đặt hàng. GVmarket không chịu trách nhiệm nếu phát sinh sự cố giao hàng chậm hoặc thất lạc vì lỗi thông tin cung cấp từ phía Quý khách.',
-                      style: TextStyle(fontSize: 14, height: 1.5),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // 3. Phí vận chuyển
-            const Text(
-              '3. Phí vận chuyển',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // Box: Miễn phí vận chuyển
             Container(
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(12),
@@ -1916,40 +692,19 @@ class ProfileScreen extends StatelessWidget {
                   Icon(Icons.local_offer, color: Colors.green, size: 24),
                   SizedBox(width: 12),
                   Expanded(
-                    child: Text(
-                      'MIỄN PHÍ vận chuyển cho đơn hàng từ 1.000.000 VNĐ trở lên\n(không áp dụng đồng thời với các chương trình khuyến mãi hoặc giảm giá)',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.green),
-                    ),
+                    child: Text('MIỄN PHÍ vận chuyển cho đơn từ 1.000.000 VNĐ', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.green)),
                   ),
                 ],
               ),
             ),
-
             _buildContentSection(
-              title: '',
+              title: '1. Hình thức giao hàng',
               items: [
-                'Với các đơn hàng có giá trị dưới mức trên, phí vận chuyển sẽ được tính theo biểu phí của đơn vị vận chuyển tùy thuộc vào địa chỉ nhận hàng, khối lượng và kích thước bưu kiện.',
-                'Mức phí cụ thể sẽ được thông báo cho Quý khách trước khi xác nhận đơn hàng.',
-                'Trong một số trường hợp đặc biệt (hàng cồng kềnh, hàng dễ vỡ hoặc khu vực xa trung tâm), phí vận chuyển có thể phát sinh thêm và sẽ được thông báo trước cho Quý khách.',
+                'Nhận hàng trực tiếp: Tại cửa hàng hoặc kho.',
+                'Giao hàng tận nơi: Hợp tác với đơn vị vận chuyển uy tín.',
+                'Giao hàng hỏa tốc: Liên hệ trực tiếp để hỗ trợ.',
               ],
             ),
-
-            // 4. Thời gian xử lý và giao hàng
-            const Text(
-              '4. Thời gian xử lý và giao hàng',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            _buildContentParagraph(
-              'Đơn hàng được xác nhận sẽ được xử lý trong vòng 24 giờ làm việc.',
-            ),
-
-            // Box: Thời gian giao hàng
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
@@ -1960,64 +715,20 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(
-                    '⏱️ Thời gian giao hàng dự kiến:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
+                  Text('⏱️ Thời gian giao hàng dự kiến:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                   SizedBox(height: 12),
-                  // Nội thành
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      children: [
-                        Icon(Icons.location_city, size: 18, color: Colors.purple),
-                        SizedBox(width: 8),
-                        Expanded(child: Text('Nội thành Hà Nội/TP. Hồ Chí Minh:', style: TextStyle(fontSize: 14))),
-                        Text('1 – 2 ngày', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ),
-                  // Các tỉnh/thành
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      children: [
-                        Icon(Icons.map, size: 18, color: Colors.purple),
-                        SizedBox(width: 8),
-                        Expanded(child: Text('Các tỉnh/thành khác:', style: TextStyle(fontSize: 14))),
-                        Text('2 – 5 ngày', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ),
-                  // Khu vực xa
-                  Row(
-                    children: [
-                      Icon(Icons.terrain, size: 18, color: Colors.purple),
-                      SizedBox(width: 8),
-                      Expanded(child: Text('Khu vực xa, hải đảo:', style: TextStyle(fontSize: 14))),
-                      Text('5 – 7 ngày', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                    ],
-                  ),
+                  Text('• Nội thành HN/HCM: 1 – 2 ngày\n• Các tỉnh khác: 2 – 5 ngày\n• Khu vực xa, hải đảo: 5 – 7 ngày', style: TextStyle(fontSize: 14, height: 1.6)),
                 ],
               ),
             ),
-
-            _buildContentParagraph(
-              'Trong những trường hợp bất khả kháng như thiên tai, dịch bệnh, lưu lượng đơn hàng tăng cao (dịp Lễ/Tết) hoặc lỗi phát sinh ngoài ý muốn, thời gian giao hàng có thể kéo dài hơn. Khi đó, chúng tôi sẽ chủ động thông báo và thỏa thuận lại với Quý khách.',
-            ),
-
-            // 5. Quy định khi nhận hàng
             _buildContentSection(
-              title: '5. Quy định khi nhận hàng',
+              title: '2. Quy định khi nhận hàng',
               items: [
-                'Quý khách cần kiểm tra kỹ lưỡng tình trạng hàng hóa, số lượng và đối chiếu với đơn hàng đã đặt.',
-                'Nếu phát hiện tình trạng sai sản phẩm, thiếu hàng, hư hỏng hoặc dấu hiệu mở niêm phong, Quý khách vui lòng từ chối nhận hàng và liên hệ ngay với bộ phận chăm sóc khách hàng để được hỗ trợ nhanh chóng.',
-                'Để bảo đảm quyền lợi, chúng tôi khuyến nghị Quý khách quay video quá trình mở hộp ngay khi nhận hàng. Đây sẽ là cơ sở quan trọng để giải quyết khiếu nại (nếu có).',
-                'Trong vòng 24 giờ kể từ khi nhận hàng, nếu phát sinh lỗi liên quan đến vận chuyển, Quý khách cần liên hệ ngay với chúng tôi để được hỗ trợ kịp thời.',
+                'Kiểm tra kỹ tình trạng hàng hóa, số lượng.',
+                'Nếu phát hiện lỗi → Từ chối nhận và liên hệ ngay hotline.',
+                'Khuyến nghị: Quay video mở hộp để bảo đảm quyền lợi.',
               ],
             ),
-
-            // Box: Khuyến nghị quay video
             Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
@@ -2030,434 +741,14 @@ class ProfileScreen extends StatelessWidget {
                   Icon(Icons.videocam, color: Colors.blue, size: 24),
                   SizedBox(width: 12),
                   Expanded(
-                    child: Text(
-                      'Khuyến nghị: Quay video quá trình mở hộp để bảo đảm quyền lợi khi khiếu nại!',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.blue),
-                    ),
+                    child: Text('Khuyến nghị: Quay video mở hộp để bảo đảm quyền lợi!', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.blue)),
                   ),
                 ],
               ),
             ),
-
-            // 6. Trách nhiệm trong quá trình vận chuyển
-            _buildContentSection(
-              title: '6. Trách nhiệm trong quá trình vận chuyển',
-              items: [
-                'GVmarket chịu trách nhiệm về hàng hóa trong suốt quá trình vận chuyển cho đến khi được giao thành công cho Quý khách.',
-                'Sau khi Quý khách ký xác nhận đã nhận hàng, trách nhiệm đối với sản phẩm sẽ được chuyển giao cho Quý khách.',
-                'Tất cả đơn hàng đều có mã vận đơn để Quý khách tiện theo dõi trạng thái giao hàng.',
-                'Trong trường hợp đơn hàng bị thất lạc hoặc hư hỏng do lỗi vận chuyển, GVmarket sẽ phối hợp với đơn vị vận chuyển để xử lý và đảm bảo quyền lợi của Quý khách.',
-              ],
-            ),
-
-            // 7. Ngoại lệ và điều khoản đặc biệt
-            _buildContentSection(
-              title: '7. Ngoại lệ và điều khoản đặc biệt',
-              items: [
-                'Chính sách vận chuyển này không áp dụng cho hàng khuyến mãi, quà tặng hoặc các sản phẩm thuộc chương trình ưu đãi đặc biệt.',
-                'Trong cùng một thời điểm, chỉ áp dụng một chính sách khuyến mãi/ưu đãi vận chuyển cao nhất cho đơn hàng.',
-                'Chính sách này có thể được điều chỉnh tùy theo từng chương trình bán hàng cụ thể. Mọi thay đổi sẽ được công bố công khai trên website GVmarket.',
-              ],
-            ),
-
-            // 8. Liên hệ hỗ trợ
-            const Text(
-              '8. Liên hệ hỗ trợ',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            _buildContentParagraph(
-              'Nếu Quý khách có bất kỳ câu hỏi hay cần được hỗ trợ, xin vui lòng liên hệ với chúng tôi theo thông tin dưới đây:',
-            ),
-
-            // Box: Thông tin liên hệ
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.phone, size: 18, color: Colors.green),
-                      SizedBox(width: 8),
-                      Text('Hotline: 028 2211 2280', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: const [
-                      Icon(Icons.email, size: 18, color: Colors.blue),
-                      SizedBox(width: 8),
-                      Text('Email: brandnewk.marketing@gmail.com', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Icon(Icons.location_on, size: 18, color: Colors.red),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Địa chỉ: 11A đường số 52, KDC Văn Minh, phường Bình Trưng, Thành Phố Hồ Chí Minh.',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            // Box: Cam kết
-            Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: const [
-                  Icon(Icons.verified, color: Colors.green, size: 24),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      'Chúng tôi luôn nỗ lực mang đến dịch vụ giao hàng nhanh chóng, an toàn và minh bạch nhằm bảo đảm sự hài lòng cao nhất của Quý khách.',
-                      style: TextStyle(fontSize: 14, height: 1.5, fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildContactInfo(),
           ],
         ),
-      ),
-    );
-  }
-
-  void _showHelpCenter(BuildContext context) {
-    _showContentDialog(
-      context: context,
-      title: 'Trung tâm trợ giúp',
-      content: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Tiêu đề chính
-            const Text(
-              'CÂU HỎI THƯỜNG GẶP',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // ==========================================
-            // 1. ĐẶT HÀNG & THANH TOÁN
-            // ==========================================
-            _buildHelpSectionHeader(Icons.shopping_cart, 'Đặt hàng & Thanh toán', Colors.blue),
-
-            _buildContentQA(
-              question: 'Làm thế nào để đặt hàng?',
-              answer: 'Truy cập website/ứng dụng → Chọn sản phẩm → Thêm vào giỏ hàng → Nhập thông tin giao hàng → Chọn phương thức thanh toán → Xác nhận đơn hàng. Hệ thống sẽ gửi thông tin xác nhận qua email/điện thoại.',
-            ),
-
-            _buildContentQA(
-              question: 'GVmarket hỗ trợ những phương thức thanh toán nào?',
-              answer: '• COD (thanh toán khi nhận hàng)\n• Chuyển khoản ngân hàng\n• Thẻ ATM nội địa (Internet Banking)\n• Thẻ quốc tế: Visa, MasterCard, JCB',
-            ),
-
-            _buildContentQA(
-              question: 'Khi chuyển khoản cần ghi nội dung gì?',
-              answer: 'Ghi rõ: "Tên người đặt hàng – Số điện thoại – Mã đơn hàng – Nội dung thanh toán". Sau khi chuyển khoản, vui lòng thông báo cho GVmarket qua hotline/email để được xác nhận nhanh chóng.',
-            ),
-
-            _buildContentQA(
-              question: 'Thời gian xác nhận giao dịch chuyển khoản là bao lâu?',
-              answer: '• Cùng ngân hàng: trong vòng 30 phút\n• Khác ngân hàng: trong vòng 24 giờ\nNếu quá thời gian trên chưa có xác nhận, vui lòng liên hệ hotline.',
-            ),
-
-            _buildContentQA(
-              question: 'Thanh toán có an toàn không?',
-              answer: 'Có. Hệ thống thanh toán của GVmarket tuân thủ chuẩn bảo mật PCI DSS. Chúng tôi cam kết không lưu giữ, tiết lộ hay chia sẻ thông tin thẻ/tài khoản thanh toán của Quý khách cho bất kỳ bên thứ ba nào.',
-            ),
-
-            const Divider(height: 32),
-
-            // ==========================================
-            // 2. VẬN CHUYỂN & GIAO NHẬN
-            // ==========================================
-            _buildHelpSectionHeader(Icons.local_shipping, 'Vận chuyển & Giao nhận', Colors.orange),
-
-            _buildContentQA(
-              question: 'GVmarket giao hàng trong bao lâu?',
-              answer: '• Nội thành Hà Nội/TP.HCM: 1 – 2 ngày làm việc\n• Các tỉnh/thành khác: 2 – 5 ngày làm việc\n• Khu vực xa, hải đảo: 5 – 7 ngày làm việc\n\nĐơn hàng được xử lý trong vòng 24 giờ sau khi xác nhận.',
-            ),
-
-            _buildContentQA(
-              question: 'Phí vận chuyển được tính như thế nào?',
-              answer: '• MIỄN PHÍ vận chuyển cho đơn hàng từ 1.000.000 VNĐ trở lên\n• Đơn hàng dưới mức trên: phí tính theo biểu phí của đơn vị vận chuyển, tùy thuộc địa chỉ, khối lượng và kích thước bưu kiện.\n\nMức phí cụ thể sẽ được thông báo trước khi xác nhận đơn hàng.',
-            ),
-
-            _buildContentQA(
-              question: 'Làm sao để theo dõi đơn hàng?',
-              answer: 'Tất cả đơn hàng đều có mã vận đơn. Quý khách có thể theo dõi trạng thái giao hàng thông qua:\n• Đăng nhập tài khoản → Đơn hàng của tôi\n• Tra cứu trên website đơn vị vận chuyển với mã vận đơn',
-            ),
-
-            _buildContentQA(
-              question: 'Cần làm gì khi nhận hàng?',
-              answer: '• Kiểm tra kỹ tình trạng hàng hóa, số lượng và đối chiếu với đơn hàng\n• Nếu phát hiện sai sản phẩm, thiếu hàng, hư hỏng hoặc mở niêm phong → Từ chối nhận và liên hệ ngay hotline\n• Khuyến nghị: Quay video quá trình mở hộp để bảo đảm quyền lợi khi khiếu nại',
-            ),
-
-            const Divider(height: 32),
-
-            // ==========================================
-            // 3. ĐỔI TRẢ & HOÀN TIỀN
-            // ==========================================
-            _buildHelpSectionHeader(Icons.autorenew, 'Đổi trả & Hoàn tiền', Colors.green),
-
-            _buildContentQA(
-              question: 'Thời hạn đổi trả là bao lâu?',
-              answer: '07 ngày kể từ ngày nhận hàng (theo dữ liệu từ hệ thống đơn vị vận chuyển). Quý khách có thể từ chối nhận ngay tại thời điểm giao hàng nếu phát hiện lỗi.',
-            ),
-
-            _buildContentQA(
-              question: 'Trường hợp nào được đổi trả?',
-              answer: '• Sản phẩm bị lỗi kỹ thuật từ nhà sản xuất\n• Sản phẩm bị móp méo, nứt vỡ, trầy xước do vận chuyển\n• Sản phẩm hết hạn hoặc sắp hết hạn sử dụng\n• Giao sai số lượng, mẫu mã, chủng loại',
-            ),
-
-            _buildContentQA(
-              question: 'Trường hợp nào KHÔNG được đổi trả?',
-              answer: '• Sản phẩm quà tặng, khuyến mãi hoặc ghi rõ "không áp dụng đổi trả"\n• Quá thời hạn 07 ngày\n• Đã sử dụng, bóc tem/niêm phong, tháo dỡ\n• Thiếu/hư hỏng bao bì, tem nhãn, phụ kiện do lỗi khách hàng\n• Không mua từ hệ thống chính thức GVmarket',
-            ),
-
-            _buildContentQA(
-              question: 'Quy trình đổi trả như thế nào?',
-              answer: '1. Liên hệ hotline/email thông báo "Yêu cầu đổi trả" và nêu rõ lý do\n2. Bộ phận CSKH tiếp nhận, kiểm tra và hướng dẫn gửi sản phẩm\n3. Sau khi nhận và xác nhận tình trạng → Đổi sản phẩm mới hoặc hoàn tiền',
-            ),
-
-            _buildContentQA(
-              question: 'Ai chịu phí đổi trả?',
-              answer: '• Lỗi từ nhà sản xuất hoặc vận chuyển: GVmarket chịu toàn bộ chi phí\n• Đổi trả do lý do cá nhân: Quý khách chịu phí vận chuyển 2 chiều',
-            ),
-
-            _buildContentQA(
-              question: 'Thời gian hoàn tiền là bao lâu?',
-              answer: '• Ví điện tử/Cổng thanh toán: 3 – 5 ngày làm việc\n• Chuyển khoản ngân hàng: 5 – 7 ngày làm việc\n• Thẻ quốc tế (Visa/MasterCard): Có thể kéo dài hơn tùy ngân hàng\n\nĐơn hàng sử dụng voucher/gift card sẽ được hoàn lại bằng voucher/gift card.',
-            ),
-
-            const Divider(height: 32),
-
-            // ==========================================
-            // 4. BẢO HÀNH
-            // ==========================================
-            _buildHelpSectionHeader(Icons.verified_user, 'Bảo hành', Colors.purple),
-
-            _buildContentQA(
-              question: 'Sản phẩm có được bảo hành không?',
-              answer: 'Có. Sản phẩm còn thời hạn bảo hành sẽ được bảo hành theo tiêu chuẩn của nhà sản xuất và theo cam kết mua hàng giữa GVmarket với khách hàng. Chi tiết điều kiện, thời hạn và phạm vi bảo hành được công bố tại phần thông tin sản phẩm hoặc phiếu bảo hành đi kèm.',
-            ),
-
-            _buildContentQA(
-              question: 'Trường hợp nào KHÔNG được bảo hành?',
-              answer: '• Sản phẩm đã hết thời hạn bảo hành\n• Hư hỏng do người tiêu dùng gây nên hoặc sử dụng không đúng cách\n• Hư hỏng do bất khả kháng: lũ lụt, cháy nổ, động đất, sét đánh...\n• Không có hóa đơn gốc mua hàng hợp lệ\n• Tự gây nên tình trạng hư hỏng, trầy xước',
-            ),
-
-            _buildContentQA(
-              question: 'Cần giữ những gì để được bảo hành?',
-              answer: 'Quý khách vui lòng giữ lại:\n• Hóa đơn mua hàng gốc\n• Phiếu bảo hành (nếu có)\n• Bao bì, hộp sản phẩm (nếu có thể)',
-            ),
-
-            const Divider(height: 32),
-
-            // ==========================================
-            // 5. TÀI KHOẢN & BẢO MẬT
-            // ==========================================
-            _buildHelpSectionHeader(Icons.security, 'Tài khoản & Bảo mật', Colors.teal),
-
-            _buildContentQA(
-              question: 'Thông tin cá nhân của tôi có được bảo mật không?',
-              answer: 'Có. GVmarket cam kết:\n• Không bán, trao đổi hoặc chia sẻ thông tin cá nhân cho bên thứ ba vì mục đích thương mại\n• Mã hóa dữ liệu bằng chứng chỉ SSL 256-bit\n• Tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân',
-            ),
-
-            _buildContentQA(
-              question: 'Tôi quên mật khẩu, phải làm sao?',
-              answer: 'Nhấn "Quên mật khẩu" tại trang đăng nhập → Nhập email/số điện thoại đã đăng ký → Làm theo hướng dẫn để đặt lại mật khẩu mới.',
-            ),
-
-            _buildContentQA(
-              question: 'Làm sao để xem/chỉnh sửa thông tin cá nhân?',
-              answer: 'Đăng nhập tài khoản → Vào trang Hồ sơ → Chỉnh sửa thông tin. Hoặc liên hệ email hỗ trợ để yêu cầu truy cập, chỉnh sửa hoặc xóa dữ liệu cá nhân.',
-            ),
-
-            _buildContentQA(
-              question: 'Quyền của tôi với dữ liệu cá nhân là gì?',
-              answer: '• Xem và chỉnh sửa thông tin cá nhân\n• Yêu cầu truy cập, chỉnh sửa hoặc xóa dữ liệu\n• Rút lại sự đồng ý thu thập, sử dụng dữ liệu\n\nLưu ý: Việc rút đồng ý có thể ảnh hưởng đến khả năng cung cấp dịch vụ.',
-            ),
-
-            const Divider(height: 32),
-
-            // ==========================================
-            // 6. LIÊN HỆ HỖ TRỢ
-            // ==========================================
-            _buildHelpSectionHeader(Icons.support_agent, 'Liên hệ hỗ trợ', Colors.red),
-
-            _buildContentQA(
-              question: 'Làm sao để liên hệ GVmarket?',
-              answer: '• Hotline: 028 2211 2280\n• Email: brandnewk.marketing@gmail.com\n• Địa chỉ: 11A đường số 52, KDC Văn Minh, phường Bình Trưng, TP. Hồ Chí Minh',
-            ),
-
-            _buildContentQA(
-              question: 'Thời gian xử lý khiếu nại là bao lâu?',
-              answer: '• Khiếu nại thông thường: 15 ngày làm việc\n• Trường hợp phức tạp: Không quá 30 ngày làm việc\n\nMọi yêu cầu sẽ được xử lý trên tinh thần thiện chí, hợp tác và tuân thủ pháp luật.',
-            ),
-
-            const SizedBox(height: 16),
-
-            // Box: Liên hệ nhanh
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(Icons.headset_mic, color: Colors.blue, size: 24),
-                      SizedBox(width: 8),
-                      Text(
-                        'Cần hỗ trợ thêm?',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: const [
-                      Icon(Icons.phone, size: 18, color: Colors.green),
-                      SizedBox(width: 8),
-                      Text('Hotline: 028 2211 2280', style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: const [
-                      Icon(Icons.email, size: 18, color: Colors.blue),
-                      SizedBox(width: 8),
-                      Text('Email: brandnewk.marketing@gmail.com', style: TextStyle(fontSize: 14)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Helper widget cho section header trong Help Center
-  Widget _buildHelpSectionHeader(IconData icon, String title, Color color) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: color, size: 22),
-          const SizedBox(width: 8),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showContactSupport(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Liên hệ hỗ trợ'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.phone, color: Colors.green),
-              title: const Text('Gọi Hotline'),
-              subtitle: Text(AppConstants.companyPhone),
-              onTap: () {
-                Navigator.pop(context);
-                // launchUrl(Uri.parse('tel:${AppConstants.companyPhone}'));
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.email, color: Colors.blue),
-              title: const Text('Gửi Email'),
-              subtitle: Text(AppConstants.companyEmail),
-              onTap: () {
-                Navigator.pop(context);
-                // launchUrl(Uri.parse('mailto:${AppConstants.companyEmail}'));
-              },
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Đóng'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _rateApp(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Đánh giá ứng dụng'),
-        content: const Text(
-          'Bạn có thích ứng dụng không? Hãy để lại đánh giá 5 sao trên App Store để ủng hộ chúng tôi!',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Để sau'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // launchUrl(Uri.parse('https://apps.apple.com/app/idXXXXXXXX'));
-            },
-            child: const Text('Đánh giá ngay'),
-          ),
-        ],
       ),
     );
   }
@@ -2485,42 +776,22 @@ class ProfileScreen extends StatelessWidget {
         expand: false,
         builder: (context, scrollController) => Column(
           children: [
-            // Handle bar
             Container(
               margin: const EdgeInsets.only(top: 12),
               width: 40,
               height: 4,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(2),
-              ),
+              decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(2)),
             ),
-
-            // Title
             Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  Expanded(
-                    child: Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
+                  Expanded(child: Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+                  IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
                 ],
               ),
             ),
-
             const Divider(height: 1),
-
-            // Content
             Expanded(
               child: SingleChildScrollView(
                 controller: scrollController,

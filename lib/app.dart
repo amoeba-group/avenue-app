@@ -2,12 +2,25 @@ import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/category_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/contact_screen.dart';
 import 'screens/profile_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'utils/constants.dart';
 
-/// Widget chính của ứng dụng
-/// Quản lý navigation và các tab
+/// ══════════════════════════════════════════════════════════════════════════════
+/// Widget chính của ứng dụng GVmarket
+/// ══════════════════════════════════════════════════════════════════════════════
+///
+/// 5 tabs:
+/// ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+/// │ Trang    │ Sản      │ Tài      │ Hỗ trợ   │ Giới     │
+/// │ chủ      │ phẩm     │ khoản    │          │ thiệu    │
+/// ├──────────┼──────────┼──────────┼──────────┼──────────┤
+/// │ 🏠       │ 🛍️       │ 👤       │ 🎧       │ ℹ️       │
+/// │ WebView  │ WebView  │ WebView  │ NATIVE   │ NATIVE   │
+/// └──────────┴──────────┴──────────┴──────────┴──────────┘
+///
+/// ══════════════════════════════════════════════════════════════════════════════
 class GVMarketApp extends StatelessWidget {
   const GVMarketApp({super.key});
 
@@ -60,7 +73,9 @@ class GVMarketApp extends StatelessWidget {
   }
 }
 
-/// Màn hình chính với Bottom Navigation
+/// ══════════════════════════════════════════════════════════════════════════════
+/// Màn hình chính với Bottom Navigation (5 tabs)
+/// ══════════════════════════════════════════════════════════════════════════════
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -69,38 +84,57 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // Tab hiện tại
+  // ─────────────────────────────────────────────────────────────────────────────
+  // State variables
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  /// Tab hiện tại
   int _currentIndex = 0;
 
-  // Trạng thái đăng nhập
+  /// Trạng thái đăng nhập (dùng để đổi title tab Tài khoản)
   bool _isLoggedIn = false;
 
-  // Keys để truy cập state của các screen
-  final GlobalKey<HomeScreenState> _homeKey = GlobalKey();
-  final GlobalKey<LoginScreenState> _loginKey = GlobalKey();
-  final GlobalKey<CategoryScreenState> _categoryKey = GlobalKey();
+  // ─────────────────────────────────────────────────────────────────────────────
+  // GlobalKeys để truy cập state của các WebView screens
+  // ─────────────────────────────────────────────────────────────────────────────
 
+  final GlobalKey<HomeScreenState> _homeKey = GlobalKey();
+  final GlobalKey<CategoryScreenState> _categoryKey = GlobalKey();
+  final GlobalKey<LoginScreenState> _loginKey = GlobalKey();
+
+  // ─────────────────────────────────────────────────────────────────────────────
   // Lấy title động cho AppBar
+  // ─────────────────────────────────────────────────────────────────────────────
+
   String get _currentTitle {
     switch (_currentIndex) {
       case 0:
         return 'GV market';
       case 1:
-        return 'Danh mục';
+        return 'Sản phẩm';
       case 2:
       // Đổi title dựa trên trạng thái đăng nhập
-        return _isLoggedIn ? 'Cá nhân' : 'Đăng nhập';
+      //   return _isLoggedIn ? 'Tài khoản' : 'Đăng nhập';
+        return 'Tài khoản';
       case 3:
-        return 'Liên hệ';
+        return 'Hỗ trợ';
+      case 4:
+        return 'Giới thiệu';
       default:
-        return 'GV market';
+        return AppConstants.appName;
     }
   }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Build UI
+  // ─────────────────────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // ═══════════════════════════════════════════════════════════════════════
       // AppBar
+      // ═══════════════════════════════════════════════════════════════════════
       appBar: AppBar(
         title: Text(
           _currentTitle,
@@ -108,46 +142,66 @@ class _MainScreenState extends State<MainScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // Nút refresh cho WebView screens
+        // Nút refresh cho WebView screens (tab 0, 1, 2)
         actions: _buildAppBarActions(),
       ),
 
-      // Body - Hiển thị screen tương ứng
+      // ═══════════════════════════════════════════════════════════════════════
+      // Body - IndexedStack giữ state của tất cả tabs
+      // ═══════════════════════════════════════════════════════════════════════
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          // Tab 0: Trang chủ
+          // ─────────────────────────────────────────────────────────────────────
+          // Tab 0: TRANG CHỦ (WebView - gvmarket.vn)
+          // ─────────────────────────────────────────────────────────────────────
           HomeScreen(
             key: _homeKey,
             onLoginStatusChanged: _handleLoginStatusChanged,
           ),
 
-          // Tab 1: Danh mục (WebView shop)
+          // ─────────────────────────────────────────────────────────────────────
+          // Tab 1: SẢN PHẨM (WebView - gvmarket.vn/shop)
+          // ─────────────────────────────────────────────────────────────────────
           CategoryScreen(key: _categoryKey),
 
-          // Tab 2: Đăng nhập / Cá nhân
+          // ─────────────────────────────────────────────────────────────────────
+          // Tab 2: TÀI KHOẢN (WebView - /web/login hoặc /my)
+          // ─────────────────────────────────────────────────────────────────────
           LoginScreen(
             key: _loginKey,
             isLoggedIn: _isLoggedIn,
-            // ✅ SỬA: Dùng callback chung cho cả login và logout
             onLoginStatusChanged: _handleLoginStatusChanged,
           ),
 
-          // Tab 3: Liên hệ
+          // ─────────────────────────────────────────────────────────────────────
+          // Tab 3: HỖ TRỢ ⭐ NATIVE (ContactScreen)
+          // - FAQ, Liên hệ, Social media
+          // ─────────────────────────────────────────────────────────────────────
+          const ContactScreen(),
+
+          // ─────────────────────────────────────────────────────────────────────
+          // Tab 4: GIỚI THIỆU ⭐ NATIVE (ProfileScreen)
+          // - Thông tin công ty, Chính sách pháp lý
+          // ─────────────────────────────────────────────────────────────────────
           const ProfileScreen(),
         ],
       ),
 
-      // Bottom Navigation Bar
+      // ═══════════════════════════════════════════════════════════════════════
+      // Bottom Navigation Bar (5 tabs)
+      // ═══════════════════════════════════════════════════════════════════════
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
-        isLoggedIn: _isLoggedIn,
       ),
     );
   }
 
-  /// ✅ MỚI: Xử lý khi trạng thái đăng nhập thay đổi (login hoặc logout)
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Xử lý khi trạng thái đăng nhập thay đổi
+  // ─────────────────────────────────────────────────────────────────────────────
+
   void _handleLoginStatusChanged(bool isLoggedIn) {
     // Chỉ xử lý nếu trạng thái thực sự thay đổi
     if (_isLoggedIn == isLoggedIn) return;
@@ -175,9 +229,8 @@ class _MainScreenState extends State<MainScreen> {
         ),
       );
 
-      // Nếu đang ở tab Cá nhân (index 2), load lại URL đăng nhập
+      // Nếu đang ở tab Tài khoản (index 2), load lại URL đăng nhập
       if (_currentIndex == 2) {
-        // Delay một chút để setState hoàn thành trước
         Future.delayed(const Duration(milliseconds: 100), () {
           _loginKey.currentState?.loadInitialUrl();
         });
@@ -185,66 +238,83 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  /// Xử lý khi tap vào tab
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Xử lý khi tap vào tab
+  // ─────────────────────────────────────────────────────────────────────────────
+
   void _onTabTapped(int index) {
     if (index == _currentIndex) {
-      // Click vào tab đang active → Load về URL gốc
+      // Click vào tab đang active → Load về URL gốc (cho WebView tabs)
       _loadInitialUrlForTab(index);
     } else {
       // Chuyển sang tab khác
       _loadInitialUrlForTab(index);
-
       setState(() {
         _currentIndex = index;
       });
     }
   }
 
-  /// Load về URL gốc cho tab tương ứng
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Load về URL gốc cho tab tương ứng (chỉ áp dụng cho WebView tabs)
+  // ─────────────────────────────────────────────────────────────────────────────
+
   void _loadInitialUrlForTab(int index) {
     switch (index) {
       case 0:
+      // Tab Trang chủ (WebView)
         _homeKey.currentState?.loadInitialUrl();
         break;
       case 1:
+      // Tab Sản phẩm (WebView)
         _categoryKey.currentState?.loadInitialUrl();
         break;
       case 2:
+      // Tab Tài khoản (WebView)
         _loginKey.currentState?.loadInitialUrl();
         break;
-    // Tab 3 (Profile) không phải WebView nên không cần xử lý
+    // Tab 3 (Hỗ trợ) và Tab 4 (Giới thiệu) là NATIVE → không cần xử lý
     }
   }
 
-  /// Build các nút action cho AppBar
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Build các nút action cho AppBar
+  // ─────────────────────────────────────────────────────────────────────────────
+
   List<Widget>? _buildAppBarActions() {
     // Chỉ hiện nút refresh cho WebView screens (tab 0, 1, 2)
-    if (_currentIndex == 0 || _currentIndex == 1 || _currentIndex == 2) {
+    if (_currentIndex <= 2) {
       return [
         // Nút reload trang hiện tại
         IconButton(
-          icon: const Icon(Icons.refresh),
-          tooltip: 'Làm mới trang hiện tại',
+          icon: const Icon(Icons.refresh_rounded),
+          tooltip: 'Làm mới trang',
           onPressed: () {
-            if (_currentIndex == 0) {
-              _homeKey.currentState?.reload();
-            } else if (_currentIndex == 1) {
-              _categoryKey.currentState?.reload();
-            } else if (_currentIndex == 2) {
-              _loginKey.currentState?.reload();
+            switch (_currentIndex) {
+              case 0:
+                _homeKey.currentState?.reload();
+                break;
+              case 1:
+                _categoryKey.currentState?.reload();
+                break;
+              case 2:
+                _loginKey.currentState?.reload();
+                break;
             }
           },
         ),
         // Nút về trang chủ của tab (URL gốc)
         IconButton(
           icon: const Icon(Icons.home_outlined),
-          tooltip: 'Về trang chủ',
+          tooltip: 'Về trang gốc',
           onPressed: () {
             _loadInitialUrlForTab(_currentIndex);
           },
         ),
       ];
     }
+
+    // Tab 3, 4 (NATIVE) → không cần nút refresh
     return null;
   }
 }
