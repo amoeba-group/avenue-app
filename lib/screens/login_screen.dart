@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../services/connectivity_service.dart';
+import '../services/local_storage_service.dart';
 import '../widgets/offline_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../utils/constants.dart';
@@ -67,6 +68,7 @@ class LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _initConnectivity();
+    // _initWebView() bây giờ là async, cần gọi mà không đợi
     _initWebView();
   }
 
@@ -83,9 +85,11 @@ class LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  void _initWebView() {
+  Future<void> _initWebView() async {
     // Load URL phù hợp với trạng thái đăng nhập ban đầu
-    final initialUrl = widget.isLoggedIn
+    // Kiểm tra trạng thái đăng nhập đã lưu trong LocalStorage
+    final savedLoginState = await LocalStorageService.readBool('webview_logged_in') ?? false;
+    final initialUrl = (widget.isLoggedIn || savedLoginState)
         ? AppConstants.accountUrl
         : AppConstants.loginUrl;
 
@@ -130,14 +134,16 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   /// ✅ SỬA: Kiểm tra trạng thái đăng nhập từ URL
-  /// - /my → đã đăng nhập → callback(true)
-  /// - /web/login → đã đăng xuất → callback(false)
-  void _checkLoginStatus(String url) {
+  /// - /my → đã đăng nhập → callback(true) và lưu state
+  /// - /web/login → đã đăng xuất → callback(false) và xóa state
+  void _checkLoginStatus(String url) async {
     if (url.contains('/my')) {
-      // Đã đăng nhập
+      // Đã đăng nhập - lưu trạng thái vào LocalStorage
+      await LocalStorageService.saveBool('webview_logged_in', true);
       widget.onLoginStatusChanged?.call(true);
     } else if (url.contains('/web/login')) {
-      // Đã đăng xuất hoặc chưa đăng nhập
+      // Đã đăng xuất hoặc chưa đăng nhập - xóa trạng thái
+      await LocalStorageService.saveBool('webview_logged_in', false);
       widget.onLoginStatusChanged?.call(false);
     }
   }
