@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'app.dart';
 import 'services/connectivity_service.dart';
 import 'services/notification_service.dart';
+import 'services/local_storage_service.dart';
+import 'config/env_config.dart';
 
 /// Entry point của ứng dụng
 /// 
@@ -35,12 +37,15 @@ void main() async {
 
 /// Khởi tạo các services cần thiết
 Future<void> _initializeServices() async {
-  // 1. Khởi tạo Connectivity Service
+  // 1. Khởi tạo Environment Config
+  await EnvConfig().init();
+
+  // 2. Khởi tạo Local Storage Service (SharedPreferences)
+  await LocalStorageService.init();
+
+  // 3. Khởi tạo Connectivity Service
   ConnectivityService().initialize();
-  
-  // 2. Khởi tạo Notification Service
-  // (Uncomment khi đã cấu hình Firebase)
+
+  // 4. Khởi tạo Notification Service
   await NotificationService().initialize();
-  
-  // 3. Các service khác...
 }
