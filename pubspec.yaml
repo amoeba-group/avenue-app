@@ -52,14 +52,42 @@ flutter:
   assets:
     - assets/
 
+# ══════════════════════════════════════════════════════════════════════════════
+# FLUTTER LAUNCHER ICONS - App Icon
+# ══════════════════════════════════════════════════════════════════════════════
 flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/icon/icon.png"
   remove_alpha_ios: true
 
+# ══════════════════════════════════════════════════════════════════════════════
+# FLUTTER NATIVE SPLASH - Splash Screen (màn hình chờ khi mở app)
+# ══════════════════════════════════════════════════════════════════════════════
+flutter_native_splash:
+  # Màu nền splash screen
+  color: "#FFFFFF"
 
+  # Logo hiển thị ở giữa màn hình
+  image: assets/icon_app.png
 
+  # Căn giữa logo
+  branding_mode: center
 
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Android 12+ (Splash Screen API mới)
+  # ─────────────────────────────────────────────────────────────────────────────
+  android_12:
+    color: "#FFFFFF"
+    image: assets/icon_app.png
+    icon_background_color: "#FFFFFF"
 
+  # ─────────────────────────────────────────────────────────────────────────────
+  # iOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  ios: true
 
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Web (tắt nếu không cần)
+  # ─────────────────────────────────────────────────────────────────────────────
+  web: false

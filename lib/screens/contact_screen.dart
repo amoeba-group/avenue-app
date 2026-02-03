@@ -172,7 +172,7 @@ class ContactScreen extends StatelessWidget {
           title: 'Website',
           subtitle: AppConstants.companyWebsite,
           description: 'Truy cập website chính thức',
-          onTap: () => _launchUrl('https://${AppConstants.companyWebsite}'),
+          onTap: () => _launchUrl('${AppConstants.companyWebsite}'),
         ),
       ],
     );

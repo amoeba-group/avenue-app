@@ -103,29 +103,6 @@ class _MainScreenState extends State<MainScreen> {
   final GlobalKey<LoginScreenState> _loginKey = GlobalKey();
 
   // ─────────────────────────────────────────────────────────────────────────────
-  // Lấy title động cho AppBar
-  // ─────────────────────────────────────────────────────────────────────────────
-
-  String get _currentTitle {
-    switch (_currentIndex) {
-      case 0:
-        return 'GV market';
-      case 1:
-        return 'Sản phẩm';
-      case 2:
-      // Đổi title dựa trên trạng thái đăng nhập
-      //   return _isLoggedIn ? 'Tài khoản' : 'Đăng nhập';
-        return 'Tài khoản';
-      case 3:
-        return 'Hỗ trợ';
-      case 4:
-        return 'Giới thiệu';
-      default:
-        return AppConstants.appName;
-    }
-  }
-
-  // ─────────────────────────────────────────────────────────────────────────────
   // Build UI
   // ─────────────────────────────────────────────────────────────────────────────
 
@@ -133,59 +110,61 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // ═══════════════════════════════════════════════════════════════════════
-      // AppBar
+      // AppBar - ĐÃ ẨN
       // ═══════════════════════════════════════════════════════════════════════
-      appBar: AppBar(
-        title: Text(
-          _currentTitle,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        // Nút refresh cho WebView screens (tab 0, 1, 2)
-        actions: _buildAppBarActions(),
-      ),
+      // Không khai báo appBar = ẩn hoàn toàn
 
       // ═══════════════════════════════════════════════════════════════════════
       // Body - IndexedStack giữ state của tất cả tabs
+      // SafeArea đảm bảo nội dung không bị che bởi:
+      // - Notch (iPhone X trở lên)
+      // - Dynamic Island (iPhone 14 Pro trở lên)
+      // - Punch-hole camera (Samsung, Xiaomi, etc.)
+      // - Status bar (tất cả thiết bị)
       // ═══════════════════════════════════════════════════════════════════════
-      body: IndexedStack(
-        index: _currentIndex,
-        children: [
-          // ─────────────────────────────────────────────────────────────────────
-          // Tab 0: TRANG CHỦ (WebView - gvmarket.vn)
-          // ─────────────────────────────────────────────────────────────────────
-          HomeScreen(
-            key: _homeKey,
-            onLoginStatusChanged: _handleLoginStatusChanged,
-          ),
+      body: SafeArea(
+        // Giữ padding cho status bar phía trên
+        top: true,
+        // Không cần padding dưới vì đã có BottomNavigationBar
+        bottom: false,
+        child: IndexedStack(
+          index: _currentIndex,
+          children: [
+            // ─────────────────────────────────────────────────────────────────────
+            // Tab 0: TRANG CHỦ (WebView - gvmarket.vn)
+            // ─────────────────────────────────────────────────────────────────────
+            HomeScreen(
+              key: _homeKey,
+              onLoginStatusChanged: _handleLoginStatusChanged,
+            ),
 
-          // ─────────────────────────────────────────────────────────────────────
-          // Tab 1: SẢN PHẨM (WebView - gvmarket.vn/shop)
-          // ─────────────────────────────────────────────────────────────────────
-          CategoryScreen(key: _categoryKey),
+            // ─────────────────────────────────────────────────────────────────────
+            // Tab 1: SẢN PHẨM (WebView - gvmarket.vn/shop)
+            // ─────────────────────────────────────────────────────────────────────
+            CategoryScreen(key: _categoryKey),
 
-          // ─────────────────────────────────────────────────────────────────────
-          // Tab 2: TÀI KHOẢN (WebView - /web/login hoặc /my)
-          // ─────────────────────────────────────────────────────────────────────
-          LoginScreen(
-            key: _loginKey,
-            isLoggedIn: _isLoggedIn,
-            onLoginStatusChanged: _handleLoginStatusChanged,
-          ),
+            // ─────────────────────────────────────────────────────────────────────
+            // Tab 2: TÀI KHOẢN (WebView - /web/login hoặc /my)
+            // ─────────────────────────────────────────────────────────────────────
+            LoginScreen(
+              key: _loginKey,
+              isLoggedIn: _isLoggedIn,
+              onLoginStatusChanged: _handleLoginStatusChanged,
+            ),
 
-          // ─────────────────────────────────────────────────────────────────────
-          // Tab 3: HỖ TRỢ ⭐ NATIVE (ContactScreen)
-          // - FAQ, Liên hệ, Social media
-          // ─────────────────────────────────────────────────────────────────────
-          const ContactScreen(),
+            // ─────────────────────────────────────────────────────────────────────
+            // Tab 3: HỖ TRỢ ⭐ NATIVE (ContactScreen)
+            // - FAQ, Liên hệ, Social media
+            // ─────────────────────────────────────────────────────────────────────
+            const ContactScreen(),
 
-          // ─────────────────────────────────────────────────────────────────────
-          // Tab 4: GIỚI THIỆU ⭐ NATIVE (ProfileScreen)
-          // - Thông tin công ty, Chính sách pháp lý
-          // ─────────────────────────────────────────────────────────────────────
-          const ProfileScreen(),
-        ],
+            // ─────────────────────────────────────────────────────────────────────
+            // Tab 4: GIỚI THIỆU ⭐ NATIVE (ProfileScreen)
+            // - Thông tin công ty, Chính sách pháp lý
+            // ─────────────────────────────────────────────────────────────────────
+            const ProfileScreen(),
+          ],
+        ),
       ),
 
       // ═══════════════════════════════════════════════════════════════════════
@@ -275,46 +254,5 @@ class _MainScreenState extends State<MainScreen> {
         break;
     // Tab 3 (Hỗ trợ) và Tab 4 (Giới thiệu) là NATIVE → không cần xử lý
     }
-  }
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Build các nút action cho AppBar
-  // ─────────────────────────────────────────────────────────────────────────────
-
-  List<Widget>? _buildAppBarActions() {
-    // Chỉ hiện nút refresh cho WebView screens (tab 0, 1, 2)
-    if (_currentIndex <= 2) {
-      return [
-        // Nút reload trang hiện tại
-        IconButton(
-          icon: const Icon(Icons.refresh_rounded),
-          tooltip: 'Làm mới trang',
-          onPressed: () {
-            switch (_currentIndex) {
-              case 0:
-                _homeKey.currentState?.reload();
-                break;
-              case 1:
-                _categoryKey.currentState?.reload();
-                break;
-              case 2:
-                _loginKey.currentState?.reload();
-                break;
-            }
-          },
-        ),
-        // Nút về trang chủ của tab (URL gốc)
-        IconButton(
-          icon: const Icon(Icons.home_outlined),
-          tooltip: 'Về trang gốc',
-          onPressed: () {
-            _loadInitialUrlForTab(_currentIndex);
-          },
-        ),
-      ];
-    }
-
-    // Tab 3, 4 (NATIVE) → không cần nút refresh
-    return null;
   }
 }
