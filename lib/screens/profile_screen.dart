@@ -346,49 +346,89 @@ class ProfileScreen extends StatelessWidget {
             _buildContentParagraph(
               'Khi truy cập và sử dụng website https://gvmarket.vn/ (sau đây gọi là "Website"), '
                   'Quý khách đồng ý với các điều kiện giao dịch chung dưới đây. Chúng tôi có quyền '
-                  'điều chỉnh, bổ sung các điều kiện này vào bất kỳ thời điểm nào.',
+                  'điều chỉnh, bổ sung các điều kiện này vào bất kỳ thời điểm nào và sẽ công bố công khai '
+                  'trên Website. Việc tiếp tục sử dụng dịch vụ sau khi có thay đổi đồng nghĩa với việc '
+                  'Quý khách chấp nhận các nội dung đã được cập nhật.',
             ),
             _buildContentSection(
               title: 'Điều 1. Nguyên tắc chung',
               items: [
-                'Website được xây dựng và vận hành bởi GVmarket nhằm cung cấp thông tin, giới thiệu và bán sản phẩm/dịch vụ.',
-                'Khách hàng khi giao dịch trên Website được hiểu là đã đồng ý và tuân thủ các điều kiện giao dịch chung.',
+                'Website được xây dựng và vận hành bởi GVmarket nhằm cung cấp thông tin, giới thiệu và bán sản phẩm/dịch vụ đến người tiêu dùng.',
+                'Khách hàng khi tham gia giao dịch trên Website được hiểu là đã tìm hiểu, đồng ý và tuân thủ các điều kiện giao dịch chung cũng như các chính sách liên quan được công bố tại Website.',
               ],
             ),
             _buildContentSection(
-              title: 'Điều 2. Quy trình giao dịch',
+              title: 'Điều 2. Phạm vi áp dụng',
               items: [
-                'Truy cập Website, lựa chọn sản phẩm/dịch vụ, thực hiện đặt hàng.',
-                'Hệ thống ghi nhận đơn hàng.',
-                'Thanh toán theo phương thức đã lựa chọn.',
-                'Xác nhận đơn hàng qua email/điện thoại.',
-                'Giao hàng/cung cấp dịch vụ theo thỏa thuận.',
+                'Website cung cấp sản phẩm/dịch vụ trên toàn lãnh thổ Việt Nam. Việc cung cấp sản phẩm/dịch vụ ra ngoài lãnh thổ Việt Nam (nếu có) sẽ tuân theo quy định riêng được công bố kèm theo từng sản phẩm.',
+                'Website có thể tạm ngừng hoạt động để bảo trì, nâng cấp hoặc khắc phục sự cố kỹ thuật, trong trường hợp đó chúng tôi sẽ thông báo trên Website trước (nếu có thể).',
               ],
-              isNumberedList: true,
             ),
             _buildContentSection(
-              title: 'Điều 3. Quyền và nghĩa vụ của GVmarket',
+              title: 'Điều 3. Quy trình giao dịch',
               items: [
-                'Đảm bảo chất lượng hàng hóa/dịch vụ đúng như thông tin đã công bố.',
-                'Cung cấp đầy đủ hóa đơn, chứng từ theo quy định pháp luật.',
-                'Duy trì hoạt động bình thường, an toàn và bảo mật của Website.',
-                'Bảo mật thông tin khách hàng theo chính sách bảo mật.',
+                'Khách hàng truy cập Website, lựa chọn sản phẩm/dịch vụ, thực hiện đặt hàng và cung cấp đầy đủ thông tin cá nhân cần thiết.',
+                'Hệ thống Website ghi nhận đơn hàng.',
+                'Khách hàng tiến hành thanh toán theo phương thức đã lựa chọn (nếu có).',
+                'Sau khi hệ thống xác nhận thông tin đặt hàng và/hoặc thanh toán thành công, Website sẽ gửi thông tin xác nhận đơn hàng qua email/điện thoại cho Quý khách.',
+                'Website tiến hành giao hàng/cung cấp dịch vụ theo thỏa thuận.',
+                'Quý khách có quyền khiếu nại, yêu cầu đổi trả hoặc bảo hành theo chính sách công bố.',
+                'Mọi biểu phí, thời gian xử lý, điều kiện hạn chế (nếu có) sẽ được công bố công khai trong từng chính sách liên quan (vận chuyển, thanh toán, đổi trả, hoàn tiền).',
+                'Chính sách bảo hành: GVmarket áp dụng chính sách bảo hành theo quy định của nhà sản xuất đối với từng sản phẩm cụ thể. Chi tiết điều kiện, thời hạn và phạm vi bảo hành được công bố tại phần thông tin sản phẩm hoặc phiếu bảo hành đi kèm. Với sản phẩm không có chính sách bảo hành riêng, GVmarket không chịu trách nhiệm bảo hành ngoài phạm vi lỗi sản xuất/nhà cung cấp.',
+              ],
+              // isNumberedList: true,
+            ),
+            _buildContentSection(
+              title: 'Điều 4. Quyền và nghĩa vụ của GVmarket',
+              items: [
+                'Đảm bảo chất lượng hàng hóa/dịch vụ cung cấp đúng như thông tin đã công bố trên Website.',
+                'Cung cấp đầy đủ hóa đơn, chứng từ theo quy định pháp luật (nếu có).',
+                'Duy trì hoạt động bình thường, an toàn và bảo mật của Website, trừ trường hợp bất khả kháng.',
+                'Bảo mật thông tin khách hàng theo chính sách bảo mật được công bố.',
+                'Có quyền từ chối, hủy đơn hàng trong trường hợp: (i) khách hàng cung cấp thông tin không chính xác; (ii) khách hàng vi phạm nghĩa vụ thanh toán; hoặc (iii) sản phẩm/dịch vụ không còn khả năng cung cấp.',
+                'Có quyền giới hạn số lượng sản phẩm trên mỗi đơn hàng hoặc từ chối các đơn hàng bất thường (ví dụ: đặt số lượng lớn bất thường, nghi ngờ mục đích đầu cơ hoặc gian lận).',
               ],
             ),
             _buildContentSection(
-              title: 'Điều 4. Quyền và nghĩa vụ của khách hàng',
+              title: 'Điều 5. Quyền và nghĩa vụ của khách hàng',
               items: [
                 'Cung cấp thông tin chính xác, đầy đủ khi đăng ký và đặt hàng.',
-                'Thanh toán đầy đủ giá trị đơn hàng.',
-                'Không sử dụng Website để thực hiện hành vi gian lận, vi phạm pháp luật.',
-                'Chịu trách nhiệm bảo mật thông tin tài khoản.',
+                'Thanh toán đầy đủ giá trị đơn hàng theo đúng phương thức đã lựa chọn.',
+                'Không sử dụng Website để thực hiện các hành vi gian lận, vi phạm pháp luật, gây cản trở hoặc ảnh hưởng đến quyền lợi của Website và khách hàng khác.',
+                'Kiểm tra tình trạng hàng hóa/dịch vụ ngay khi nhận và phản hồi kịp thời cho Website nếu phát sinh khiếu nại.',
+                'Chịu trách nhiệm về tính hợp pháp của thông tin do Quý khách cung cấp.',
+                'Có trách nhiệm bảo mật thông tin tài khoản (tên đăng nhập, mật khẩu) và chịu trách nhiệm đối với mọi hoạt động phát sinh từ tài khoản của mình trên Website.',
               ],
             ),
             _buildContentSection(
-              title: 'Điều 5. Giải quyết tranh chấp',
+              title: 'Điều 6. Quyền sở hữu trí tuệ',
               items: [
-                'Mọi tranh chấp sẽ được ưu tiên giải quyết bằng thương lượng và hòa giải.',
-                'Nếu không đạt được thỏa thuận, tranh chấp sẽ được giải quyết tại Tòa án theo quy định pháp luật Việt Nam.',
+                'Toàn bộ nội dung, thiết kế, hình ảnh, phần mềm, mã nguồn, cơ sở dữ liệu, nhãn hiệu, biểu trưng và các tài sản trí tuệ khác hiển thị trên Website thuộc quyền sở hữu hợp pháp của GVmarket hoặc bên thứ ba được cấp phép.',
+                'Nghiêm cấm mọi hành vi sao chép, phát tán, sử dụng cho mục đích thương mại nếu không có sự đồng ý bằng văn bản từ GVmarket.',
+              ],
+            ),
+            _buildContentSection(
+              title: 'Điều 7. Giới hạn trách nhiệm và miễn trừ trách nhiệm',
+              items: [
+                'GVmarket không chịu trách nhiệm trong trường hợp dịch vụ bị gián đoạn do sự cố kỹ thuật, bất khả kháng hoặc nguyên nhân khách quan ngoài khả năng kiểm soát.',
+                'GVmarket không chịu trách nhiệm với những thiệt hại phát sinh từ việc Quý khách sử dụng Website không đúng hướng dẫn hoặc vi phạm pháp luật.',
+                'GVmarket không chịu trách nhiệm đối với những thiệt hại gián tiếp, hệ quả hoặc mất lợi nhuận phát sinh từ việc sử dụng Website hoặc sản phẩm/dịch vụ.',
+                'Trong mọi trường hợp, trách nhiệm tối đa của GVmarket đối với khách hàng (nếu có) sẽ không vượt quá tổng giá trị đơn hàng gây tranh chấp.',
+              ],
+            ),
+            _buildContentSection(
+              title: 'Điều 8. Giải quyết tranh chấp',
+              items: [
+                'Mọi tranh chấp phát sinh từ giao dịch trên Website sẽ được ưu tiên giải quyết bằng thương lượng và hòa giải.',
+                'Nếu không đạt được thỏa thuận, tranh chấp sẽ được giải quyết tại Tòa án hoặc cơ quan có thẩm quyền theo quy định của pháp luật Việt Nam.',
+              ],
+            ),
+            _buildContentSection(
+              title: 'Điều 9. Hiệu lực thi hành',
+              items: [
+                'Các điều kiện giao dịch chung này có hiệu lực kể từ ngày đăng tải trên Website.',
+                'Chúng tôi có quyền sửa đổi, bổ sung nội dung vào bất kỳ thời điểm nào. Quý khách vui lòng thường xuyên truy cập Website và cập nhật thông tin mới nhất được công bố.',
+                'Các chính sách khác (thanh toán, giao hàng, đổi trả, bảo mật, v.v.) được công bố trên Website là bộ phận không tách rời của điều kiện giao dịch chung này.',
               ],
             ),
             _buildContactInfo(),
