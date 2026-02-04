@@ -329,7 +329,9 @@ class ProfileScreen extends StatelessWidget {
             children: [
               const Icon(Icons.location_on, size: 16, color: Colors.red),
               const SizedBox(width: 8),
-              Text(AppConstants.companyAddress, style: const TextStyle(fontSize: 14)),
+              Expanded(
+                child: Text(AppConstants.companyAddress, style: const TextStyle(fontSize: 14)),
+              ),
             ],
           ),
         ],
@@ -672,10 +674,15 @@ class ProfileScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
-                children: const [
-                  Icon(Icons.access_time, color: Colors.blue, size: 20),
-                  SizedBox(width: 8),
-                  Text('Thời hạn đổi trả: 07 ngày kể từ ngày nhận hàng', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue)),
+                children: [
+                  const Icon(Icons.access_time, color: Colors.blue, size: 20),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Thời hạn đổi trả: 07 ngày kể từ ngày nhận hàng',
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
+                    ),
+                  ),
                 ],
               ),
             ),
