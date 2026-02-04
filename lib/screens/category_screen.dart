@@ -6,7 +6,17 @@ import '../widgets/loading_widget.dart';
 import '../utils/constants.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({super.key});
+  /// Callback khi cần chuyển tab (URL navigate đến tab khác)
+  final Function(int)? onTabChangeRequested;
+
+  /// Tab index hiện tại của màn hình này
+  final int currentTabIndex;
+
+  const CategoryScreen({
+    super.key,
+    this.onTabChangeRequested,
+    this.currentTabIndex = 1,
+  });
 
   @override
   State<CategoryScreen> createState() => CategoryScreenState();
@@ -20,7 +30,7 @@ class CategoryScreenState extends State<CategoryScreen> {
   int _loadingProgress = 0;
   Timer? _loadingTimer;
 
-  // ✅ Định nghĩa URL gốc để dễ quản lý
+  // Định nghĩa URL gốc để dễ quản lý
   static const String _initialUrl = 'https://gvmarket.vn/shop';
 
   @override
@@ -36,19 +46,20 @@ class CategoryScreenState extends State<CategoryScreen> {
       ..enableZoom(true)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onPageStarted: (_) {
+          onPageStarted: (url) {  // ✅ SỬA: Nhận url thay vì _
             setState(() {
               _isLoading = true;
               _loadingProgress = 0;
             });
             _startLoadingTimer();
           },
-          onPageFinished: (_) {
+          onPageFinished: (url) {  // ✅ SỬA: Nhận url thay vì _
             _cancelLoadingTimer();
             setState(() {
               _isLoading = false;
               _loadingProgress = 100;
             });
+            _checkTabSwitch(url);  // ✅ THÊM: Kiểm tra chuyển tab
           },
           onProgress: (progress) {
             setState(() {
@@ -83,7 +94,7 @@ class CategoryScreenState extends State<CategoryScreen> {
     _controller.reload();
   }
 
-  /// ✅ MỚI: Load về URL gốc (giống click vào <a href=""> trên website)
+  /// Load về URL gốc (giống click vào <a href=""> trên website)
   void loadInitialUrl() {
     setState(() {
       _isLoading = true;
@@ -114,6 +125,18 @@ class CategoryScreenState extends State<CategoryScreen> {
     final uri = Uri.tryParse(url);
     if (uri == null || uri.host.isEmpty) return false;
     return !uri.host.contains(AppConstants.mainDomain);
+  }
+
+  /// ✅ MỚI: Kiểm tra nếu URL thuộc về tab khác → yêu cầu chuyển tab
+  /// Ví dụ: User ở tab Sản phẩm, click link /my → chuyển sang tab Tài khoản
+  void _checkTabSwitch(String url) {
+    final targetTabIndex = AppConstants.getTabIndexFromUrl(url);
+
+    // Nếu URL thuộc tab khác và khác tab hiện tại → request chuyển tab
+    if (targetTabIndex != -1 && targetTabIndex != widget.currentTabIndex) {
+      print('🔄 CategoryScreen: URL belongs to tab $targetTabIndex, requesting tab switch');
+      widget.onTabChangeRequested?.call(targetTabIndex);
+    }
   }
 
   @override

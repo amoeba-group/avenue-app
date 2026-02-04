@@ -5,51 +5,89 @@ class AppConstants {
   // ============================================
   // THÔNG TIN WEBSITE
   // ============================================
-  
+
   /// URL trang chủ website
   static const String homeUrl = 'https://gvmarket.vn/';
-  
+
+  /// URL trang sản phẩm
+  static const String shopUrl = 'https://gvmarket.vn/shop/';
+
   /// URL trang đăng nhập
   static const String loginUrl = 'https://gvmarket.vn/web/login/';
-  
+
   /// URL trang tài khoản (sau khi đã đăng nhập)
   static const String accountUrl = 'https://gvmarket.vn/my/';
-  
+
   /// Domain chính (để kiểm tra link internal/external)
   static const String mainDomain = 'gvmarket.vn';
-  
+
+  // ============================================
+  // URL PATTERNS CHO TAB DETECTION
+  // ============================================
+
+  /// Patterns cho Tab 2 (Sản phẩm)
+  static const List<String> shopPatterns = ['/shop', '/collections', '/products'];
+
+  /// Patterns cho Tab 3 (Tài khoản)
+  static const List<String> accountPatterns = ['/my', '/web/login', '/account'];
+
+  /// Xác định tab index dựa trên URL
+  /// Returns: 0=Trang chủ, 1=Sản phẩm, 2=Tài khoản, -1=không đổi tab
+  static int getTabIndexFromUrl(String url) {
+    final uri = Uri.tryParse(url);
+    if (uri == null) return -1;
+
+    final path = uri.path.toLowerCase();
+
+    // Check Tab 3: Tài khoản
+    for (final pattern in accountPatterns) {
+      if (path.startsWith(pattern)) return 2;
+    }
+
+    // Check Tab 2: Sản phẩm
+    for (final pattern in shopPatterns) {
+      if (path.startsWith(pattern)) return 1;
+    }
+
+    // Trang chủ (path rỗng hoặc chỉ có /)
+    if (path.isEmpty || path == '/') return 0;
+
+    // Không match pattern nào → giữ nguyên tab hiện tại
+    return -1;
+  }
+
   // ============================================
   // THÔNG TIN CÔNG TY
   // ============================================
-  
+
   /// Tên công ty
   static const String companyName = 'CÔNG TY TNHH  Brand New K';
-  
+
   /// Địa chỉ công ty
   static const String companyAddress = '11A đường số 52, KDC Văn Minh, phường Bình Trưng, Thành Phố Hồ Chí Minh';
-  
+
   /// Số điện thoại
   static const String companyPhone = '028 2211 2280';
-  
+
   /// Email hỗ trợ
   static const String companyEmail = 'brandnewk.marketing@gmail.com';
-  
+
   /// Website
   static const String companyWebsite = 'https://gvmarket.vn';
-  
+
   /// Mã số thuế
   static const String companyTaxCode = '0317785276';
-  
+
   // ============================================
   // THÔNG TIN ỨNG DỤNG
   // ============================================
-  
+
   /// Tên ứng dụng
   static const String appName = 'GV market';
-  
+
   /// Phiên bản ứng dụng
   static const String appVersion = '1.0.0';
-  
+
   /// Mô tả ngắn
   static const String appDescription = 'Ứng dụng mua sắm trực tuyến tiện lợi';
 }
@@ -60,11 +98,11 @@ class AppColors {
   static const int primaryColorValue = 0xFF2196F3;  // Xanh dương
   static const int secondaryColorValue = 0xFF4CAF50; // Xanh lá
   static const int accentColorValue = 0xFFFF9800;   // Cam
-  
+
   // Màu nền
   static const int backgroundColorValue = 0xFFF5F5F5;
   static const int cardColorValue = 0xFFFFFFFF;
-  
+
   // Màu text
   static const int textPrimaryValue = 0xFF212121;
   static const int textSecondaryValue = 0xFF757575;

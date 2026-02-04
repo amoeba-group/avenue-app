@@ -135,13 +135,19 @@ class _MainScreenState extends State<MainScreen> {
             // ─────────────────────────────────────────────────────────────────────
             HomeScreen(
               key: _homeKey,
+              currentTabIndex: 0,
               onLoginStatusChanged: _handleLoginStatusChanged,
+              onTabChangeRequested: _handleTabChangeRequest,  // ✅ THÊM
             ),
 
             // ─────────────────────────────────────────────────────────────────────
             // Tab 1: SẢN PHẨM (WebView - gvmarket.vn/shop)
             // ─────────────────────────────────────────────────────────────────────
-            CategoryScreen(key: _categoryKey),
+            CategoryScreen(
+              key: _categoryKey,
+              currentTabIndex: 1,
+              onTabChangeRequested: _handleTabChangeRequest,  // ✅ THÊM
+            ),
 
             // ─────────────────────────────────────────────────────────────────────
             // Tab 2: TÀI KHOẢN (WebView - /web/login hoặc /my)
@@ -149,7 +155,9 @@ class _MainScreenState extends State<MainScreen> {
             LoginScreen(
               key: _loginKey,
               isLoggedIn: _isLoggedIn,
+              currentTabIndex: 2,
               onLoginStatusChanged: _handleLoginStatusChanged,
+              onTabChangeRequested: _handleTabChangeRequest,
             ),
 
             // ─────────────────────────────────────────────────────────────────────
@@ -175,6 +183,28 @@ class _MainScreenState extends State<MainScreen> {
         onTap: _onTabTapped,
       ),
     );
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Xử lý khi WebView yêu cầu chuyển tab
+  // Ví dụ: User đang ở tab Trang chủ, click link /my → chuyển sang tab Tài khoản
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  void _handleTabChangeRequest(int targetTabIndex) {
+    // Chỉ xử lý nếu tab đích hợp lệ và khác tab hiện tại
+    if (targetTabIndex == _currentIndex) return;
+    if (targetTabIndex < 0 || targetTabIndex > 4) return;
+
+    print('🔄 Tab change requested: $_currentIndex → $targetTabIndex');
+
+    setState(() {
+      _currentIndex = targetTabIndex;
+    });
+
+    // Load URL gốc cho tab đích
+    Future.delayed(const Duration(milliseconds: 100), () {
+      _loadInitialUrlForTab(targetTabIndex);
+    });
   }
 
   // ─────────────────────────────────────────────────────────────────────────────

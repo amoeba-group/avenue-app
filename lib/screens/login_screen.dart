@@ -12,8 +12,14 @@ import '../utils/constants.dart';
 /// - Chưa login: hiển thị trang đăng nhập
 /// - Đã login: hiển thị trang tài khoản cá nhân
 class LoginScreen extends StatefulWidget {
-  /// ✅ SỬA: Callback khi trạng thái đăng nhập thay đổi (login hoặc logout)
+  /// Callback khi trạng thái đăng nhập thay đổi (login hoặc logout)
   final Function(bool)? onLoginStatusChanged;
+
+  /// Callback khi cần chuyển tab (URL navigate đến tab khác)
+  final Function(int)? onTabChangeRequested;
+
+  /// Tab index hiện tại của màn hình này
+  final int currentTabIndex;
 
   /// Trạng thái đăng nhập (để biết load URL nào)
   final bool isLoggedIn;
@@ -21,6 +27,8 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({
     super.key,
     this.onLoginStatusChanged,
+    this.onTabChangeRequested,
+    this.currentTabIndex = 2,  // Default = Tab Tài khoản
     this.isLoggedIn = false,
   });
 
@@ -83,7 +91,6 @@ class LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _initConnectivity();
-    // _initWebView() bây giờ là async, cần gọi mà không đợi
     _initWebView();
   }
 
@@ -129,6 +136,7 @@ class LoginScreenState extends State<LoginScreen> {
               _loadingProgress = 100;
             });
             _checkLoginStatus(url);
+            _checkTabSwitch(url);  // ✅ Kiểm tra chuyển tab
           },
           onProgress: (progress) {
             setState(() {
@@ -184,7 +192,7 @@ class LoginScreenState extends State<LoginScreen> {
     return !uri.host.contains(AppConstants.mainDomain);
   }
 
-  /// ✅ SỬA: Kiểm tra trạng thái đăng nhập từ URL
+  /// Kiểm tra trạng thái đăng nhập từ URL
   /// - /my → đã đăng nhập → callback(true) và lưu state
   /// - /web/login → đã đăng xuất → callback(false) và xóa state
   void _checkLoginStatus(String url) async {
@@ -196,6 +204,17 @@ class LoginScreenState extends State<LoginScreen> {
       // Đã đăng xuất hoặc chưa đăng nhập - xóa trạng thái
       await LocalStorageService.saveBool('webview_logged_in', false);
       widget.onLoginStatusChanged?.call(false);
+    }
+  }
+
+  /// Kiểm tra nếu URL thuộc về tab khác → yêu cầu chuyển tab
+  void _checkTabSwitch(String url) {
+    final targetTabIndex = AppConstants.getTabIndexFromUrl(url);
+
+    // Nếu URL thuộc tab khác và khác tab hiện tại → request chuyển tab
+    if (targetTabIndex != -1 && targetTabIndex != widget.currentTabIndex) {
+      print('🔄 URL belongs to tab $targetTabIndex, requesting tab switch');
+      widget.onTabChangeRequested?.call(targetTabIndex);
     }
   }
 

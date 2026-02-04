@@ -12,9 +12,17 @@ class HomeScreen extends StatefulWidget {
   /// Callback để thông báo đã đăng nhập (từ URL)
   final Function(bool)? onLoginStatusChanged;
 
+  /// Callback khi cần chuyển tab (URL navigate đến tab khác)
+  final Function(int)? onTabChangeRequested;
+
+  /// Tab index hiện tại của màn hình này
+  final int currentTabIndex;
+
   const HomeScreen({
     super.key,
     this.onLoginStatusChanged,
+    this.onTabChangeRequested,
+    this.currentTabIndex = 0,
   });
 
   @override
@@ -42,7 +50,7 @@ class HomeScreenState extends State<HomeScreen> {
     _controller.reload();
   }
 
-  /// ✅ MỚI: Load về URL gốc (giống click vào <a href=""> trên website)
+  /// Load về URL gốc (giống click vào <a href=""> trên website)
   void loadInitialUrl() {
     setState(() {
       _isLoading = true;
@@ -100,6 +108,7 @@ class HomeScreenState extends State<HomeScreen> {
               _loadingProgress = 100;
             });
             _checkLoginStatus(url);
+            _checkTabSwitch(url);  // ✅ THÊM: Kiểm tra chuyển tab
           },
           onProgress: (progress) {
             setState(() {
@@ -150,7 +159,7 @@ class HomeScreenState extends State<HomeScreen> {
     return !uri.host.contains(AppConstants.mainDomain);
   }
 
-  /// ✅ SỬA: Chỉ thay đổi trạng thái khi URL rõ ràng cho biết login/logout
+  /// Chỉ thay đổi trạng thái khi URL rõ ràng cho biết login/logout
   /// - /my → đã login → callback(true)
   /// - /web/login → chưa login/đã logout → callback(false)
   /// - Các URL khác (/, /shop, /product...) → KHÔNG thay đổi trạng thái
@@ -163,6 +172,18 @@ class HomeScreenState extends State<HomeScreen> {
       widget.onLoginStatusChanged?.call(false);
     }
     // Các URL khác (/, /shop, ...) → KHÔNG gọi callback, giữ nguyên trạng thái
+  }
+
+  /// ✅ MỚI: Kiểm tra nếu URL thuộc về tab khác → yêu cầu chuyển tab
+  /// Ví dụ: User ở tab Trang chủ, click link /my → chuyển sang tab Tài khoản
+  void _checkTabSwitch(String url) {
+    final targetTabIndex = AppConstants.getTabIndexFromUrl(url);
+
+    // Nếu URL thuộc tab khác và khác tab hiện tại → request chuyển tab
+    if (targetTabIndex != -1 && targetTabIndex != widget.currentTabIndex) {
+      print('🔄 HomeScreen: URL belongs to tab $targetTabIndex, requesting tab switch');
+      widget.onTabChangeRequested?.call(targetTabIndex);
+    }
   }
 
   Future<bool> onWillPop() async {
