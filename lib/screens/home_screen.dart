@@ -32,16 +32,12 @@ class HomeScreenState extends State<HomeScreen> {
   String _currentUrl = AppConstants.homeUrl;
   int _loadingProgress = 0;
 
-  // Timeout timer để tự động ẩn loading sau 15 giây
-  Timer? _loadingTimer;
-
   /// Reload trang hiện tại
   void reload() {
     setState(() {
       _isLoading = true;
       _loadingProgress = 0;
     });
-    _startLoadingTimer();
     _controller.reload();
   }
 
@@ -52,7 +48,6 @@ class HomeScreenState extends State<HomeScreen> {
       _hasError = false;
       _loadingProgress = 0;
     });
-    _startLoadingTimer();
     _controller.loadRequest(Uri.parse(AppConstants.homeUrl));
   }
 
@@ -97,10 +92,8 @@ class HomeScreenState extends State<HomeScreen> {
               _currentUrl = url;
               _loadingProgress = 0;
             });
-            _startLoadingTimer();
           },
           onPageFinished: (url) {
-            _cancelLoadingTimer();
             setState(() {
               _isLoading = false;
               _loadingProgress = 100;
@@ -119,7 +112,6 @@ class HomeScreenState extends State<HomeScreen> {
           },
           onWebResourceError: (error) {
             if (error.errorCode == -1 || error.errorCode == -6) return;
-            _cancelLoadingTimer();
             setState(() {
               _hasError = true;
               _isLoading = false;
@@ -137,30 +129,12 @@ class HomeScreenState extends State<HomeScreen> {
           },
           onHttpError: (error) {
             if (error.response?.statusCode == 404) {
-              _cancelLoadingTimer();
               setState(() => _hasError = true);
             }
           },
         ),
       )
       ..loadRequest(Uri.parse(AppConstants.homeUrl));
-  }
-
-  /// Bắt đầu timer để tự động ẩn loading sau 15 giây
-  void _startLoadingTimer() {
-    _cancelLoadingTimer();
-    _loadingTimer = Timer(const Duration(seconds: 15), () {
-      if (_isLoading) {
-        setState(() => _isLoading = false);
-        print('⏱️ Loading timeout - force hiding loading screen');
-      }
-    });
-  }
-
-  /// Hủy loading timer
-  void _cancelLoadingTimer() {
-    _loadingTimer?.cancel();
-    _loadingTimer = null;
   }
 
   bool _isExternalLink(String url) {
@@ -194,7 +168,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    _cancelLoadingTimer();
     _connectivityService.dispose();
     super.dispose();
   }
