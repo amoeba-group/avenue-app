@@ -248,6 +248,105 @@ Service để xử lý Firebase Cloud Messaging và local notifications.
 
 ---
 
+### 6. URLLauncherService
+**File**: [`url_launcher_service.dart`](url_launcher_service.dart)
+
+Service để xử lý việc mở các URL external (Facebook, TikTok, external websites, etc.) trong browser/app bên ngoài.
+
+**Chức năng**:
+- Launch URLs trong external browser/app
+- Xử lý các loại URLs: http, https, tel, mailto, sms
+- Kiểm tra xem URL có thể launch được không
+- Error handling
+- Có thể tái sử dụng ở nhiều nơi (WebView screens, native screens)
+
+**Usage - Cơ bản**:
+```dart
+final service = URLLauncherService();
+
+// Mở URL trong external browser/app
+await service.launchURL('https://www.facebook.com/GVmarket.Vietnam');
+await service.launchURL('https://www.tiktok.com/@gvmarket.vn');
+
+// Mở URL với mode cụ thể
+await service.launchURL(
+  'https://example.com',
+  mode: LaunchMode.externalApplication, // default
+);
+```
+
+**Usage - Phone, Email, SMS**:
+```dart
+// Gọi điện
+await service.launchPhone('0123456789');
+
+// Gửi email
+await service.launchEmail(
+  'info@gvmarket.vn',
+  subject: 'Hỏi về sản phẩm',
+  body: 'Xin chào, tôi muốn hỏi về...',
+);
+
+// Gửi SMS
+await service.launchSMS('0123456789', body: 'Hello');
+```
+
+**Usage - Kiểm tra trước khi launch**:
+```dart
+// Check xem URL có thể launch được không
+final canLaunch = await service.canLaunch('https://example.com');
+if (canLaunch) {
+  await service.launchURL('https://example.com');
+}
+
+// Kiểm tra loại URL
+final scheme = service.getURLScheme('tel:0123456789'); // Returns: 'tel'
+
+// Kiểm tra external link
+final isExternal = service.isExternalLink(
+  'https://facebook.com/page',
+  'gvmarket.vn',
+); // Returns: true
+```
+
+**Usage - Trong WebView**:
+```dart
+class MyScreenState extends State<MyScreen> {
+  final URLLauncherService _urlLauncherService = URLLauncherService();
+
+  void _initWebView() {
+    _controller = WebViewController()
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onNavigationRequest: (request) {
+            // Check nếu là external link
+            if (_isExternalLink(request.url)) {
+              // Launch trong external browser/app
+              _urlLauncherService.launchURL(request.url);
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      );
+  }
+
+  bool _isExternalLink(String url) {
+    final uri = Uri.tryParse(url);
+    if (uri == null || uri.host.isEmpty) return false;
+    return !uri.host.contains('gvmarket.vn');
+  }
+}
+```
+
+**LaunchMode Options**:
+- `LaunchMode.externalApplication`: Mở trong browser/app bên ngoài (default)
+- `LaunchMode.platformDefault`: Để OS quyết định
+- `LaunchMode.inAppWebView`: Mở trong in-app browser (iOS Safari View)
+- `LaunchMode.externalNonBrowserApplication`: Mở trong app native (không phải browser)
+
+---
+
 ## 🔧 Integration với Repository Pattern
 
 Các services này được sử dụng trong Repository layer:

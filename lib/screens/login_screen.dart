@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../services/connectivity_service.dart';
 import '../services/local_storage_service.dart';
+import '../services/url_launcher_service.dart';
 import '../widgets/offline_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../utils/constants.dart';
@@ -29,6 +30,7 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> {
   late final WebViewController _controller;
   final ConnectivityService _connectivityService = ConnectivityService();
+  final URLLauncherService _urlLauncherService = URLLauncherService();
 
   bool _isLoading = true;
   bool _hasError = false;
@@ -118,6 +120,8 @@ class LoginScreenState extends State<LoginScreen> {
           },
           onNavigationRequest: (request) {
             if (_isExternalLink(request.url)) {
+              // Launch URL trong external browser/app
+              _urlLauncherService.launchURL(request.url);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;

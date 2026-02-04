@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../services/url_launcher_service.dart';
 import '../widgets/loading_widget.dart';
+import '../utils/constants.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -11,6 +13,8 @@ class CategoryScreen extends StatefulWidget {
 
 class CategoryScreenState extends State<CategoryScreen> {
   late final WebViewController _controller;
+  final URLLauncherService _urlLauncherService = URLLauncherService();
+
   bool _isLoading = true;
 
   // ✅ Định nghĩa URL gốc để dễ quản lý
@@ -35,6 +39,14 @@ class CategoryScreenState extends State<CategoryScreen> {
           onPageFinished: (_) {
             setState(() => _isLoading = false);
           },
+          onNavigationRequest: (request) {
+            if (_isExternalLink(request.url)) {
+              // Launch URL trong external browser/app (Facebook, TikTok, etc.)
+              _urlLauncherService.launchURL(request.url);
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
         ),
       )
       ..loadRequest(Uri.parse(_initialUrl));
@@ -51,6 +63,12 @@ class CategoryScreenState extends State<CategoryScreen> {
       _isLoading = true;
     });
     _controller.loadRequest(Uri.parse(_initialUrl));
+  }
+
+  bool _isExternalLink(String url) {
+    final uri = Uri.tryParse(url);
+    if (uri == null || uri.host.isEmpty) return false;
+    return !uri.host.contains(AppConstants.mainDomain);
   }
 
   @override

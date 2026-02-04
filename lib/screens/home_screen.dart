@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../services/connectivity_service.dart';
+import '../services/url_launcher_service.dart';
 import '../widgets/offline_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../utils/constants.dart';
@@ -22,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   late final WebViewController _controller;
   final ConnectivityService _connectivityService = ConnectivityService();
+  final URLLauncherService _urlLauncherService = URLLauncherService();
 
   bool _isLoading = true;
   bool _hasError = false;
@@ -98,7 +100,8 @@ class HomeScreenState extends State<HomeScreen> {
             final url = request.url;
 
             if (_isExternalLink(url)) {
-              _launchExternalUrl(url);
+              // Launch URL trong external browser/app (Facebook, TikTok, etc.)
+              _urlLauncherService.launchURL(url);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
@@ -117,30 +120,6 @@ class HomeScreenState extends State<HomeScreen> {
     final uri = Uri.tryParse(url);
     if (uri == null || uri.host.isEmpty) return false;
     return !uri.host.contains(AppConstants.mainDomain);
-  }
-
-  Future<void> _launchExternalUrl(String url) async {
-    final shouldOpen = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Mở liên kết ngoài'),
-        content: const Text('Bạn có muốn mở liên kết này trong trình duyệt?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Hủy'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Mở'),
-          ),
-        ],
-      ),
-    );
-
-    if (shouldOpen == true) {
-      // launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    }
   }
 
   /// ✅ SỬA: Chỉ thay đổi trạng thái khi URL rõ ràng cho biết login/logout
