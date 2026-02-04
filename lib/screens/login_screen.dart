@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../services/connectivity_service.dart';
@@ -35,9 +36,16 @@ class LoginScreenState extends State<LoginScreen> {
   bool _isLoading = true;
   bool _hasError = false;
   bool _isConnected = true;
+  int _loadingProgress = 0;
+  Timer? _loadingTimer;
 
   /// Reload trang hiện tại
   void reload() {
+    setState(() {
+      _isLoading = true;
+      _loadingProgress = 0;
+    });
+    _startLoadingTimer();
     _controller.reload();
   }
 
@@ -48,7 +56,10 @@ class LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
       _hasError = false;
+      _loadingProgress = 0;
     });
+
+    _startLoadingTimer();
 
     final url = widget.isLoggedIn
         ? AppConstants.accountUrl  // https://gvmarket.vn/my/
@@ -62,7 +73,9 @@ class LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
       _hasError = false;
+      _loadingProgress = 0;
     });
+    _startLoadingTimer();
     _controller.loadRequest(Uri.parse(AppConstants.accountUrl));
   }
 
@@ -105,14 +118,31 @@ class LoginScreenState extends State<LoginScreen> {
             setState(() {
               _isLoading = true;
               _hasError = false;
+              _loadingProgress = 0;
             });
+            _startLoadingTimer();
           },
           onPageFinished: (url) {
-            setState(() => _isLoading = false);
+            _cancelLoadingTimer();
+            setState(() {
+              _isLoading = false;
+              _loadingProgress = 100;
+            });
             _checkLoginStatus(url);
+          },
+          onProgress: (progress) {
+            setState(() {
+              _loadingProgress = progress;
+            });
+            // Tự động ẩn loading khi đạt 90%
+            if (progress >= 90 && _isLoading) {
+              _cancelLoadingTimer();
+              setState(() => _isLoading = false);
+            }
           },
           onWebResourceError: (error) {
             if (error.errorCode == -1 || error.errorCode == -6) return;
+            _cancelLoadingTimer();
             setState(() {
               _hasError = true;
               _isLoading = false;
@@ -129,6 +159,23 @@ class LoginScreenState extends State<LoginScreen> {
         ),
       )
       ..loadRequest(Uri.parse(initialUrl));
+  }
+
+  /// Bắt đầu timer để tự động ẩn loading sau 15 giây
+  void _startLoadingTimer() {
+    _cancelLoadingTimer();
+    _loadingTimer = Timer(const Duration(seconds: 15), () {
+      if (_isLoading) {
+        setState(() => _isLoading = false);
+        print('⏱️ Loading timeout - force hiding loading screen');
+      }
+    });
+  }
+
+  /// Hủy loading timer
+  void _cancelLoadingTimer() {
+    _loadingTimer?.cancel();
+    _loadingTimer = null;
   }
 
   bool _isExternalLink(String url) {
@@ -158,6 +205,13 @@ class LoginScreenState extends State<LoginScreen> {
       return false;
     }
     return true;
+  }
+
+  @override
+  void dispose() {
+    _cancelLoadingTimer();
+    _connectivityService.dispose();
+    super.dispose();
   }
 
   @override
