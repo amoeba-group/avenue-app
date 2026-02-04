@@ -31,6 +31,7 @@ class HomeScreenState extends State<HomeScreen> {
   bool _isConnected = true;
   String _currentUrl = AppConstants.homeUrl;
   int _loadingProgress = 0;
+  Timer? _loadingTimer;
 
   /// Reload trang hiện tại
   void reload() {
@@ -135,6 +136,12 @@ class HomeScreenState extends State<HomeScreen> {
         ),
       )
       ..loadRequest(Uri.parse(AppConstants.homeUrl));
+  }
+
+  /// Hủy loading timer
+  void _cancelLoadingTimer() {
+    _loadingTimer?.cancel();
+    _loadingTimer = null;
   }
 
   bool _isExternalLink(String url) {
