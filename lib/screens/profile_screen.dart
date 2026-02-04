@@ -782,12 +782,25 @@ class ProfileScreen extends StatelessWidget {
             _buildContentSection(
               title: '2/ Các hình thức thanh toán',
               items: [
-                'a. Thanh toán khi nhận hàng (COD): \nQuý khách thanh toán trực tiếp cho nhân viên giao hàng khi nhận sản phẩm.\nTrường hợp giao hàng đến địa chỉ khác với địa chỉ đăng ký, Quý khách cần thanh toán trước toàn bộ giá trị đơn hàng.',
-                'b. Thanh toán trực tuyến qua cổng thanh toán\n- Chúng tôi cung cấp nhiều phương thức:\nThẻ ATM nội địa (có đăng ký Internet Banking).\nThẻ tín dụng/thẻ ghi nợ quốc tế (Visa, MasterCard, JCB).',
-                'Quý khách thực hiện thanh toán trực tiếp tại hệ thống trên website khi hoàn tất đặt hàng.',
-                'Hệ thống thanh toán của GVmarket tuân thủ chuẩn bảo mật PCI DSS, đảm bảo an toàn cho dữ liệu thẻ và thông tin cá nhân.',
-                'c. Chuyển khoản ngân hàng\nQuý khách có thể thanh toán bằng chuyển khoản tại quầy giao dịch/ATM hoặc Internet Banking.\nThông tin chuyển khoản (chủ tài khoản, số tài khoản, ngân hàng) sẽ được hiển thị khi xác nhận đơn hàng.\nKhi chuyển khoản, Quý khách cần ghi rõ nội dung:\n“Tên người đặt hàng – Số điện thoại – Mã đơn hàng – Nội dung thanh toán”\nSau khi chuyển khoản, Quý khách vui lòng thông báo cho GVmarket qua hotline/email để thuận tiện đối soát.\nThời gian xác nhận giao dịch:\nCùng ngân hàng: trong vòng 30 phút.\nKhác ngân hàng: trong vòng 24 giờ.\nNếu quá thời gian trên chưa có xác nhận, Quý khách cần liên hệ lại để được hỗ trợ.',
               ],
+            ),
+            _buildContentParagraph(
+              'a. Thanh toán khi nhận hàng (COD)',
+            ),
+            _buildContentParagraph(
+              '- Quý khách thanh toán trực tiếp cho nhân viên giao hàng khi nhận sản phẩm.\n- Trường hợp giao hàng đến địa chỉ khác với địa chỉ đăng ký, Quý khách cần thanh toán trước toàn bộ giá trị đơn hàng.',
+            ),
+            _buildContentParagraph(
+              'b. Thanh toán trực tuyến qua cổng thanh toán',
+            ),
+            _buildContentParagraph(
+              '- Chúng tôi cung cấp nhiều phương thức:\n - Thẻ ATM nội địa (có đăng ký Internet Banking).\n - Thẻ tín dụng/thẻ ghi nợ quốc tế (Visa, MasterCard, JCB).\n- Quý khách thực hiện thanh toán trực tiếp tại hệ thống trên website khi hoàn tất đặt hàng.\n - Hệ thống thanh toán của GVmarket tuân thủ chuẩn bảo mật PCI DSS, đảm bảo an toàn cho dữ liệu thẻ và thông tin cá nhân.',
+            ),
+            _buildContentParagraph(
+              'c. Chuyển khoản ngân hàng',
+            ),
+            _buildContentParagraph(
+              '- Quý khách có thể thanh toán bằng chuyển khoản tại quầy giao dịch/ATM hoặc Internet Banking.\n - Thông tin chuyển khoản (chủ tài khoản, số tài khoản, ngân hàng) sẽ được hiển thị khi xác nhận đơn hàng.\n - Khi chuyển khoản, Quý khách cần ghi rõ nội dung:\n - “Tên người đặt hàng – Số điện thoại – Mã đơn hàng – Nội dung thanh toán”\n - Sau khi chuyển khoản, Quý khách vui lòng thông báo cho GVmarket qua hotline/email để thuận tiện đối soát.\n- Thời gian xác nhận giao dịch:\n- Cùng ngân hàng: trong vòng 30 phút.\n- Khác ngân hàng: trong vòng 24 giờ.\n- Nếu quá thời gian trên chưa có xác nhận, Quý khách cần liên hệ lại để được hỗ trợ.',
             ),
             _buildContentSection(
               title: '3/ Quy định chung về thanh toán',
@@ -808,11 +821,25 @@ class ProfileScreen extends StatelessWidget {
             _buildContentSection(
               title: '5/ Quyền và nghĩa vụ',
               items: [
-                '➤ Của GVmarket:',
+              ],
+            ),
+            _buildContentParagraph(
+              '➤ Của GVmarket:',
+            ),
+            _buildContentSection(
+              title: '',
+              items: [
                 'Cung cấp đầy đủ thông tin, hướng dẫn để Quý khách thực hiện thanh toán chính xác.',
                 'Đảm bảo an toàn cho hệ thống thanh toán.',
                 'Xác nhận giao dịch và đơn hàng trong thời gian quy định.',
-                '➤ Của khách hàng:',
+              ],
+            ),
+            _buildContentParagraph(
+              '➤ Của khách hàng:',
+            ),
+            _buildContentSection(
+              title: '',
+              items: [
                 'Thực hiện thanh toán đúng phương thức, đúng số tiền và đúng thời hạn.',
                 'Chủ động thông báo cho GVmarket sau khi chuyển khoản để được xác nhận.',
                 'Chịu trách nhiệm về tính hợp pháp của nguồn tiền và thông tin thanh toán đã cung cấp.',
