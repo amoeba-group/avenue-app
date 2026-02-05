@@ -7,6 +7,7 @@ import '../services/url_launcher_service.dart';
 import '../widgets/offline_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../utils/constants.dart';
+import '../utils/webview_helper.dart';
 
 /// Màn hình Đăng nhập / Cá nhân - Hiển thị WebView
 /// - Chưa login: hiển thị trang đăng nhập
@@ -137,6 +138,7 @@ class LoginScreenState extends State<LoginScreen> {
             });
             _checkLoginStatus(url);
             _checkTabSwitch(url);  // ✅ Kiểm tra chuyển tab
+            WebViewHelper.disableCameraCapture(_controller);
           },
           onProgress: (progress) {
             setState(() {

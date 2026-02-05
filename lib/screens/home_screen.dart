@@ -6,6 +6,7 @@ import '../services/url_launcher_service.dart';
 import '../widgets/offline_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../utils/constants.dart';
+import '../utils/webview_helper.dart';
 
 /// Màn hình Trang chủ - Hiển thị WebView của website
 class HomeScreen extends StatefulWidget {
@@ -109,6 +110,7 @@ class HomeScreenState extends State<HomeScreen> {
             });
             _checkLoginStatus(url);
             _checkTabSwitch(url);  // ✅ THÊM: Kiểm tra chuyển tab
+            WebViewHelper.disableCameraCapture(_controller);
           },
           onProgress: (progress) {
             setState(() {

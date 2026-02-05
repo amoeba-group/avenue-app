@@ -4,6 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../services/url_launcher_service.dart';
 import '../widgets/loading_widget.dart';
 import '../utils/constants.dart';
+import '../utils/webview_helper.dart';
 
 class CategoryScreen extends StatefulWidget {
   /// Callback khi cần chuyển tab (URL navigate đến tab khác)
@@ -60,6 +61,7 @@ class CategoryScreenState extends State<CategoryScreen> {
               _loadingProgress = 100;
             });
             _checkTabSwitch(url);  // ✅ THÊM: Kiểm tra chuyển tab
+            WebViewHelper.disableCameraCapture(_controller);
           },
           onProgress: (progress) {
             setState(() {
