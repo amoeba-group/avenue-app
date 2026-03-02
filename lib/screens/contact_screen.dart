@@ -760,15 +760,15 @@ class ContactScreen extends StatelessWidget {
                 _launchEmail(AppConstants.companyEmail);
               },
             ),
-            // ListTile(
-            //   leading: const Icon(Icons.chat, color: Colors.orange),
-            //   title: const Text('Chat Zalo'),
-            //   subtitle: const Text('Hỗ trợ nhanh qua Zalo'),
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //     _launchUrl('https://zalo.me/0282112280');
-            //   },
-            // ),
+            ListTile(
+              leading: const Icon(Icons.chat, color: Colors.orange),
+              title: const Text('Chat Zalo'),
+              subtitle: const Text('Hỗ trợ nhanh qua Zalo'),
+              onTap: () {
+                Navigator.pop(context);
+                _launchUrl('https://zalo.me/2421520364944941552');
+              },
+            ),
           ],
         ),
         actions: [

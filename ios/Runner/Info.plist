@@ -77,5 +77,11 @@
 			<string>UIInterfaceOrientationLandscapeLeft</string>
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
+		<key>NSCameraUsageDescription</key>
+        <string>Ứng dụng cần quyền truy cập camera để chụp ảnh chứng từ thanh toán</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>Ứng dụng cần quyền truy cập thư viện ảnh để chọn ảnh chứng từ thanh toán</string>
+        <key>NSMicrophoneUsageDescription</key>
+        <string>Ứng dụng cần quyền truy cập microphone</string>
 	</dict>
 </plist>
