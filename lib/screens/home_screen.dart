@@ -110,7 +110,7 @@ class HomeScreenState extends State<HomeScreen> {
             });
             _checkLoginStatus(url);
             _checkTabSwitch(url);  // ✅ THÊM: Kiểm tra chuyển tab
-            WebViewHelper.disableCameraCapture(_controller);
+            WebViewHelper.setupForDevice(_controller, context);
           },
           onProgress: (progress) {
             setState(() {

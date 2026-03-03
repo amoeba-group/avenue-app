@@ -61,7 +61,7 @@ class CategoryScreenState extends State<CategoryScreen> {
               _loadingProgress = 100;
             });
             _checkTabSwitch(url);  // ✅ THÊM: Kiểm tra chuyển tab
-            WebViewHelper.disableCameraCapture(_controller);
+            WebViewHelper.setupForDevice(_controller, context);
           },
           onProgress: (progress) {
             setState(() {

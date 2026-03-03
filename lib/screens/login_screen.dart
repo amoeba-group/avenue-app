@@ -138,7 +138,7 @@ class LoginScreenState extends State<LoginScreen> {
             });
             _checkLoginStatus(url);
             _checkTabSwitch(url);  // ✅ Kiểm tra chuyển tab
-            WebViewHelper.disableCameraCapture(_controller);
+            WebViewHelper.setupForDevice(_controller, context);
           },
           onProgress: (progress) {
             setState(() {

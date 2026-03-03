@@ -11,6 +11,8 @@ import 'utils/constants.dart';
 /// Widget chính của ứng dụng GVmarket
 /// ══════════════════════════════════════════════════════════════════════════════
 ///
+/// Universal App - Hỗ trợ cả iPhone và iPad
+///
 /// 5 tabs:
 /// ┌──────────┬──────────┬──────────┬──────────┬──────────┐
 /// │ Trang    │ Sản      │ Tài      │ Hỗ trợ   │ Giới     │
@@ -75,6 +77,7 @@ class GVMarketApp extends StatelessWidget {
 
 /// ══════════════════════════════════════════════════════════════════════════════
 /// Màn hình chính với Bottom Navigation (5 tabs)
+/// Hỗ trợ cả iPhone và iPad với responsive layout
 /// ══════════════════════════════════════════════════════════════════════════════
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -103,6 +106,14 @@ class _MainScreenState extends State<MainScreen> {
   final GlobalKey<LoginScreenState> _loginKey = GlobalKey();
 
   // ─────────────────────────────────────────────────────────────────────────────
+  // Helper: Kiểm tra iPad
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  bool _isTablet(BuildContext context) {
+    return MediaQuery.of(context).size.shortestSide >= 600;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
   // Build UI
   // ─────────────────────────────────────────────────────────────────────────────
 
@@ -110,17 +121,13 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // ═══════════════════════════════════════════════════════════════════════
-      // AppBar - ĐÃ ẨN
-      // ═══════════════════════════════════════════════════════════════════════
-      // Không khai báo appBar = ẩn hoàn toàn
-
-      // ═══════════════════════════════════════════════════════════════════════
       // Body - IndexedStack giữ state của tất cả tabs
       // SafeArea đảm bảo nội dung không bị che bởi:
       // - Notch (iPhone X trở lên)
       // - Dynamic Island (iPhone 14 Pro trở lên)
       // - Punch-hole camera (Samsung, Xiaomi, etc.)
       // - Status bar (tất cả thiết bị)
+      // - Home indicator trên iPad
       // ═══════════════════════════════════════════════════════════════════════
       body: SafeArea(
         // Giữ padding cho status bar phía trên
@@ -137,7 +144,7 @@ class _MainScreenState extends State<MainScreen> {
               key: _homeKey,
               currentTabIndex: 0,
               onLoginStatusChanged: _handleLoginStatusChanged,
-              onTabChangeRequested: _handleTabChangeRequest,  // ✅ THÊM
+              onTabChangeRequested: _handleTabChangeRequest,
             ),
 
             // ─────────────────────────────────────────────────────────────────────
@@ -146,7 +153,7 @@ class _MainScreenState extends State<MainScreen> {
             CategoryScreen(
               key: _categoryKey,
               currentTabIndex: 1,
-              onTabChangeRequested: _handleTabChangeRequest,  // ✅ THÊM
+              onTabChangeRequested: _handleTabChangeRequest,
             ),
 
             // ─────────────────────────────────────────────────────────────────────

@@ -8,6 +8,7 @@ import '../utils/constants.dart';
 /// - Thông tin công ty
 /// - Cài đặt & Pháp lý (6 chính sách)
 ///
+/// Hỗ trợ responsive layout cho cả iPhone và iPad
 /// Trang này rất quan trọng để Apple approve!
 /// Apple yêu cầu app phải có tính năng native, không chỉ là wrapper website
 class ProfileScreen extends StatelessWidget {

@@ -36,6 +36,11 @@ class AppBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Responsive: tăng kích thước trên iPad
+    final isTablet = MediaQuery.of(context).size.shortestSide >= 600;
+    final iconSize = isTablet ? 28.0 : 24.0;
+    final fontSize = isTablet ? 12.0 : 11.0;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -66,15 +71,15 @@ class AppBottomNavBar extends StatelessWidget {
           type: BottomNavigationBarType.fixed,
 
           // ─────────────────────────────────────────────
-          // Style
+          // Style - Responsive cho cả iPhone và iPad
           // ─────────────────────────────────────────────
           backgroundColor: Colors.white,
           elevation: 0,
           selectedItemColor: Theme.of(context).primaryColor,
           unselectedItemColor: const Color(0xFF9E9E9E),
-          selectedFontSize: 11,
-          unselectedFontSize: 11,
-          iconSize: 24,
+          selectedFontSize: fontSize,
+          unselectedFontSize: fontSize,
+          iconSize: iconSize,
 
           // ─────────────────────────────────────────────
           // Tab Items
