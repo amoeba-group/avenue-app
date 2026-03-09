@@ -1,7 +1,7 @@
 name: avenue
 description: "Ứng dụng GVMarket - Mua sắm tiện lợi"
 publish_to: 'none'
-version: 1.0.0+20
+version: 1.0.0+21
 
 environment:
   sdk: ^3.8.1
