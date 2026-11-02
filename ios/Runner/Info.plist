@@ -7,7 +7,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>amoeba Avenue</string>
+		<string>GV Market</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -22,16 +22,52 @@
 		<string>$(FLUTTER_BUILD_NAME)</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.889643954329-ovmfq58hgb0bq5235h6h6lag7sobst1j</string>
+				</array>
+			</dict>
+		</array>
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
+		<key>GIDClientID</key>
+		<string>889643954329-ovmfq58hgb0bq5235h6h6lag7sobst1j.apps.googleusercontent.com</string>
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false/>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>fbapi</string>
+			<string>fb-messenger-share-api</string>
+			<string>fbauth2</string>
+			<string>fbshareextension</string>
+		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>remote-notification</string>
+			<string>fetch</string>
+		</array>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
+		<key>UIStatusBarHidden</key>
+		<false/>
+		<key>UIRequiresFullScreen</key>
+		<true/>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
@@ -43,21 +79,11 @@
 			<string>UIInterfaceOrientationLandscapeLeft</string>
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
-		<key>UIStatusBarHidden</key>
-		<false/>
-        <key>GIDClientID</key>
-        <string>385417541679-vg8o7f0r04u2oltd24kqiqiia93k4j2q.apps.googleusercontent.com</string>
-        <key>CFBundleURLTypes</key>
-        <array>
-            <dict>
-                <key>CFBundleTypeRole</key>
-                <string>Editor</string>
-                <key>CFBundleURLSchemes</key>
-                <array>
-                    <string>com.googleusercontent.apps.385417541679-vg8o7f0r04u2oltd24kqiqiia93k4j2q</string>
-                </array>
-            </dict>
-        </array>
-
-    </dict>
+		<key>NSCameraUsageDescription</key>
+		<string>Ứng dụng cần quyền truy cập camera để chụp ảnh chứng từ thanh toán</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Ứng dụng cần quyền truy cập thư viện ảnh để chọn ảnh chứng từ thanh toán</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Ứng dụng cần quyền truy cập microphone</string>
+	</dict>
 </plist>

@@ -1,8 +1,7 @@
 name: avenue
-description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-version: 1.0.0+2
+description: "Ứng dụng GVMarket - Mua sắm tiện lợi"
+publish_to: 'none'
+version: 1.0.0+21
 
 environment:
   sdk: ^3.8.1
@@ -11,35 +10,84 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   cupertino_icons: ^1.0.8
+  intl: ^0.20.2
+  http: ^1.5.0
+  dio: ^5.9.0
+  intl_utils: ^2.8.8
+  url_launcher: ^6.3.2
+  loading_overlay: ^0.5.0
+  provider: ^6.1.5+1
+  google_fonts: ^6.3.2
+  firebase_core: ^4.1.1
+  firebase_messaging: ^16.0.2
+  firebase_crashlytics: ^5.0.2
+  flutter_native_splash: ^2.4.7
   webview_flutter: ^4.4.2
   flutter_svg: ^2.2.0
   sign_in_with_apple: ^7.0.1
   google_sign_in: ^7.1.1
+  flutter_facebook_auth: ^7.1.2
   shared_preferences: ^2.5.3
+  connectivity_plus: ^7.0.0
+  flutter_local_notifications: ^19.2.1
+  flutter_secure_storage: ^9.2.4
+  new_version_plus: ^0.1.1
+  webview_flutter_wkwebview: ^3.23.2
+  firebase_remote_config: ^6.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
-  flutter_native_splash: ^2.4.6
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
 
-
   assets:
-    - assets/ic_logo.svg
-    - assets/logo_new.jpg
+    - assets/
 
-flutter_native_splash:
-  color: "#ffffff"
-  image: assets/logo_new.jpg
+# ══════════════════════════════════════════════════════════════════════════════
+# FLUTTER LAUNCHER ICONS - App Icon
+# ══════════════════════════════════════════════════════════════════════════════
+flutter_launcher_icons:
   android: true
   ios: true
-  web: false
+  image_path: "assets/icon/icon.png"
+  remove_alpha_ios: true
 
+# ══════════════════════════════════════════════════════════════════════════════
+# FLUTTER NATIVE SPLASH - Splash Screen (màn hình chờ khi mở app)
+# ══════════════════════════════════════════════════════════════════════════════
+flutter_native_splash:
+  # Màu nền splash screen
+  color: "#FFFFFF"
+
+  # Logo hiển thị ở giữa màn hình
+  image: assets/icon_app.png
+
+  # Căn giữa logo
+  branding_mode: center
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Android 12+ (Splash Screen API mới)
+  # ─────────────────────────────────────────────────────────────────────────────
   android_12:
-    image: assets/logo_new.jpg
-    icon_background_color: "#ffffff"
+    color: "#FFFFFF"
+    image: assets/icon_app.png
+    icon_background_color: "#FFFFFF"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # iOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  ios: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Web (tắt nếu không cần)
+  # ─────────────────────────────────────────────────────────────────────────────
+  web: false

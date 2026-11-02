@@ -15,11 +15,12 @@ val keyProperties = Properties().apply {
 }
 
 android {
-    namespace = "com.amoeba.avenue"
+    namespace = "com.amoeba.gvmarket"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -29,8 +30,8 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.amoeba.avenue"
-        minSdk = 23
+        applicationId = "com.amoeba.gvmarket"
+        minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -38,7 +39,7 @@ android {
 
     signingConfigs {
         if (keyProperties.isNotEmpty()) {
-            create("release") {
+            create("prod") {
                 storeFile = file(keyProperties["storeFile"] as String)
                 storePassword = keyProperties["storePassword"] as String
                 keyAlias = keyProperties["keyAlias"] as String
@@ -56,6 +57,26 @@ android {
             }
         }
     }
+
+    flavorDimensions += "app"
+
+    productFlavors {
+        create("dev") {
+            dimension = "app"
+            applicationId = "com.amoeba.gvmarket.dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "GVMarket Dev")
+            manifestPlaceholders["facebookAppId"] = "824602119947976"
+        }
+
+        create("prod") {
+            dimension = "app"
+            applicationId = "com.amoeba.avenue.gvmarket"
+            resValue("string", "app_name", "GV Market")
+            signingConfig = signingConfigs.getByName("prod")
+            manifestPlaceholders["facebookAppId"] = "1325878712414469"
+        }
+    }
 }
 
 flutter {
@@ -64,4 +85,6 @@ flutter {
 
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }
+

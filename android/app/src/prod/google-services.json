@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "889643954329",
+    "project_id": "gv-market-dev-f1953",
+    "storage_bucket": "gv-market-dev-f1953.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889643954329:android:ecc278de5fccd6f8320808",
+        "android_client_info": {
+          "package_name": "com.amoeba.avenue.gvmarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889643954329-27pb0uga968ek389fehfkaelqggugtcn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI98a-jxuuJapVIpWNtRbuDyEi2Cd3GBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889643954329-27pb0uga968ek389fehfkaelqggugtcn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "889643954329-8anuqftfk22m2a16790mgj9ubpeab4s6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amoeba.gvmarket"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889643954329:android:e881f16491a9bb59320808",
+        "android_client_info": {
+          "package_name": "com.amoeba.gvmarket.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889643954329-9ba8s4n6054o0u3cqoj30g8l606qea64.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amoeba.gvmarket.dev",
+            "certificate_hash": "49680cdbf592098b0fc9ad33856058e8b78c7017"
+          }
+        },
+        {
+          "client_id": "889643954329-27pb0uga968ek389fehfkaelqggugtcn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI98a-jxuuJapVIpWNtRbuDyEi2Cd3GBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889643954329-27pb0uga968ek389fehfkaelqggugtcn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "889643954329-8anuqftfk22m2a16790mgj9ubpeab4s6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amoeba.gvmarket"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
